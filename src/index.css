@@ -1,0 +1,72 @@
+:root {
+  /* Core brand colors */
+  --c-dark-red: #780000;
+  --c-red: #C1121F;
+  --c-bright-red: #E30613;
+  --c-dark-blue: #003049;
+  --c-white: #FFFFFF;
+
+  /* Neutrals */
+  --c-gray-100: #F8F9FA;
+  --c-gray-200: #E9ECEF;
+  --c-gray-300: #DEE2E6;
+  --c-gray-400: #CED4DA;
+  --c-gray-500: #ADB5BD;
+  --c-gray-600: #6C757D;
+  --c-gray-700: #495057;
+  --c-gray-800: #343A40;
+  --c-gray-900: #212529;
+
+  /* Typography */
+  --font-family-base: 'Nunito', sans-serif;
+}
+
+[data-theme='dark'] {
+  --c-white: #1A1A1A;
+  --c-dark-blue: #E9ECEF;
+  --c-gray-100: #121212;
+  --c-gray-200: #212529;
+  --c-gray-300: #343A40;
+  --c-gray-400: #495057;
+  --c-gray-500: #6C757D;
+  --c-gray-600: #ADB5BD;
+  --c-gray-700: #CED4DA;
+  --c-gray-800: #DEE2E6;
+  --c-gray-900: #F8F9FA;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-base);
+  color: var(--c-gray-900);
+  background-color: var(--c-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Material Symbols fix for vertical alignment */
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  vertical-align: middle;
+}

@@ -1,0 +1,168 @@
+.auth-layout {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--c-white);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Red abstract shapes for background */
+.auth-bg-shape {
+    position: absolute;
+    background-image: url('../assets/auth-shape.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.shape-left {
+    width: 600px;
+    height: 800px;
+    top: 10%;
+    left: -200px;
+    transform: rotate(15deg);
+}
+
+.shape-right {
+    width: 400px;
+    height: 600px;
+    bottom: -200px;
+    right: -100px;
+    transform: rotate(-25deg);
+}
+
+.auth-header {
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 32px;
+    border-bottom: 2px solid var(--c-gray-300);
+    background-color: var(--c-white);
+}
+
+.logo-pill {
+    background-color: var(--c-dark-red);
+    color: var(--c-white);
+    padding: 8px 24px;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon-white {
+    font-variation-settings: 'FILL' 1;
+}
+
+.logo-text-white {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.auth-header-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.auth-hint {
+    color: var(--c-red);
+}
+
+.auth-link {
+    color: #0066FF;
+    /* Distinctive blue link color from design */
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.auth-link:hover {
+    text-decoration-thickness: 2px;
+}
+
+.auth-main {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Inner Form Container shared by Login/Register */
+.auth-form-container {
+    background-color: #F4A5A8;
+    /* Light pink/red background of the form */
+    border-radius: 40px;
+    padding: 32px 48px;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.auth-form-title {
+    background-color: var(--c-white);
+    color: var(--c-red);
+    text-align: center;
+    padding: 12px;
+    border-radius: 24px;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.auth-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 14px 48px 14px 20px;
+    border-radius: 24px;
+    border: none;
+    font-size: 16px;
+    color: var(--c-red);
+    outline: none;
+    font-family: var(--font-family-base);
+}
+
+.auth-input::placeholder {
+    color: #F4A5A8;
+}
+
+.auth-input-icon {
+    position: absolute;
+    right: 16px;
+    color: var(--c-red);
+    font-variation-settings: 'FILL' 1;
+}
+
+.auth-submit-btn {
+    background-color: var(--c-white);
+    color: var(--c-red);
+    border: none;
+    padding: 14px 24px;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    align-self: center;
+    cursor: pointer;
+    transition: transform 0.1s;
+    margin-top: 8px;
+}
+
+.auth-submit-btn:hover {
+    transform: scale(1.05);
+}

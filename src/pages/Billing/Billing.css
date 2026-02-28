@@ -1,0 +1,127 @@
+.billing-page .page-title {
+    color: var(--c-dark-blue);
+    font-weight: 300;
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.tabs-header {
+    display: flex;
+    gap: 0;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--c-dark-blue);
+    border: 1px solid var(--c-gray-400);
+    background-color: var(--c-white);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Giving the tabs a rounded look on the edges */
+.tab-btn:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.tab-btn:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.tab-btn:not(:last-child) {
+    border-right: none;
+}
+
+.tab-btn.active {
+    background-color: var(--c-red);
+    color: var(--c-white);
+    border-color: var(--c-red);
+    position: relative;
+    z-index: 1;
+    /* Keep border over siblings */
+}
+
+/* Red line below tabs spanning full width */
+.tab-divider {
+    height: 1px;
+    background-color: var(--c-gray-300);
+    width: 100%;
+    margin-top: -1px;
+    /* Overlap with tab borders slightly */
+    margin-bottom: 32px;
+}
+
+/* Red themed card for balance */
+.billing-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 48px 64px;
+    background-color: var(--c-white);
+    border: 1px solid var(--c-dark-blue);
+    /* Assuming dark blue based on design, maybe it's dark red. Looks bluish-grey */
+    border-radius: 8px;
+    /* Soft shadow if needed, but looks flat in design */
+}
+
+.billing-main-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.balance-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--c-gray-600);
+}
+
+.balance-amount {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--c-dark-blue);
+}
+
+.billing-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 40%;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--c-gray-600);
+}
+
+.detail-value {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--c-dark-blue);
+}
+
+.placeholder-content {
+    padding: 32px;
+    background-color: var(--c-white);
+    border-radius: 8px;
+    border: 1px dashed var(--c-gray-400);
+    color: var(--c-gray-600);
+}
+
+/* Ensure the border color mimics the screenshot exactly (a soft blue/grey) */
+.billing-card {
+    border-color: #A3B1C6;
+    /* Adjusting border color closer to the screenshot */
+}
