@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './Billing.css';
+import { motion, AnimatePresence } from 'framer-motion';
+import styles from './Billing.module.css';
 
 export const Billing: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'general' | 'history' | 'settings'>('general');
@@ -36,7 +37,7 @@ export const Billing: React.FC = () => {
     };
 
     return (
-        <div className="page-container billing-page">
+        <div className={`page-container ${styles['billing-page']}`}>
             <div className="page-header">
                 <h1 className="page-title">Счета и оплата</h1>
                 <button className="btn-primary">
@@ -44,63 +45,85 @@ export const Billing: React.FC = () => {
                 </button>
             </div>
 
-            <div className="tabs-container">
-                <div className="tabs-header">
+            <div className={styles['tabs-container']}>
+                <div className={styles['tabs-header']}>
                     <button
-                        className={`tab-btn ${activeTab === 'general' ? 'active' : ''}`}
+                        className={`${styles['tab-btn']} ${activeTab === 'general' ? styles['active'] : ''}`}
                         onClick={() => setActiveTab('general')}
                     >
                         Общее
                     </button>
                     <button
-                        className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
+                        className={`${styles['tab-btn']} ${activeTab === 'history' ? styles['active'] : ''}`}
                         onClick={() => setActiveTab('history')}
                     >
                         История
                     </button>
                     <button
-                        className={`tab-btn ${activeTab === 'settings' ? 'active' : ''}`}
+                        className={`${styles['tab-btn']} ${activeTab === 'settings' ? styles['active'] : ''}`}
                         onClick={() => setActiveTab('settings')}
                     >
                         Настройки оплаты
                     </button>
                 </div>
-                <div className="tab-divider"></div>
+                <div className={styles['tab-divider']}></div>
 
-                <div className="tab-content">
-                    {activeTab === 'general' && (
-                        <div className="billing-card">
-                            <div className="billing-main-info">
-                                <div className="balance-label">Баланс на текущий месяц</div>
-                                <div className="balance-amount">42.00 BYN</div>
-                            </div>
-
-                            <div className="billing-details">
-                                <div className="detail-item">
-                                    <span className="detail-label">Следующий платёж:</span>
-                                    <span className="detail-value">Когда-то там</span>
+                <div className={styles['tab-content']} style={{ position: 'relative', minHeight: '400px' }}>
+                    <AnimatePresence mode="wait" initial={false}>
+                        {activeTab === 'general' && (
+                            <motion.div
+                                key="general"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 10 }}
+                                transition={{ duration: 0.2 }}
+                                className={styles['billing-card']}
+                            >
+                                <div className={styles['billing-main-info']}>
+                                    <div className={styles['balance-label']}>Баланс на текущий месяц</div>
+                                    <div className={styles['balance-amount']}>42.00 BYN</div>
                                 </div>
-                                <div className="detail-item">
-                                    <span className="detail-label">Уже внесённые средства:</span>
-                                    <span className="detail-value">Сколько-то</span>
-                                </div>
-                                <div className="detail-item">
-                                    <span className="detail-label">Итоговое использование:</span>
-                                    <span className="detail-value">Сколько-то</span>
-                                </div>
-                            </div>
-                        </div>
-                    )}
 
-                    {activeTab === 'history' && (
-                        <div className="placeholder-content">
-                            <h3>История оплат</h3>
-                            <p>Здесь будет отображаться история транзакций.</p>
-                        </div>
-                    )}
+                                <div className={styles['billing-details']}>
+                                    <div className={styles['detail-item']}>
+                                        <span className={styles['detail-label']}>Следующий платёж:</span>
+                                        <span className={styles['detail-value']}>Когда-то там</span>
+                                    </div>
+                                    <div className={styles['detail-item']}>
+                                        <span className={styles['detail-label']}>Уже внесённые средства:</span>
+                                        <span className={styles['detail-value']}>Сколько-то</span>
+                                    </div>
+                                    <div className={styles['detail-item']}>
+                                        <span className={styles['detail-label']}>Итоговое использование:</span>
+                                        <span className={styles['detail-value']}>Сколько-то</span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
 
-                    {activeTab === 'settings' && (
-                        <div className="billing-settings-form">
+                        {activeTab === 'history' && (
+                            <motion.div
+                                key="history"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 10 }}
+                                transition={{ duration: 0.2 }}
+                                className={styles['placeholder-content']}
+                            >
+                                <h3>История оплат</h3>
+                                <p>Здесь будет отображаться история транзакций.</p>
+                            </motion.div>
+                        )}
+
+                        {activeTab === 'settings' && (
+                            <motion.div
+                                key="settings"
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 10 }}
+                                transition={{ duration: 0.2 }}
+                                className={styles['billing-settings-form']}
+                            >
                             <h2 style={{ fontSize: '20px', color: 'var(--c-dark-blue)', marginBottom: '24px' }}>Платежные данные</h2>
 
                             <form style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }} onSubmit={handleSaveSettings}>
@@ -126,7 +149,6 @@ export const Billing: React.FC = () => {
                                         <span className="material-symbols-outlined" style={{ fontSize: '32px', color: 'var(--c-dark-blue)' }}>credit_card</span>
                                         <div>
                                             <div style={{ fontWeight: 'bold', color: 'var(--c-dark-blue)' }}>{card.number}</div>
-                                            <div style={{ fontSize: '12px', color: 'var(--c-gray-600)' }}>Expires {card.expires}</div>
                                         </div>
                                         <button type="button" onClick={() => handleRemoveCard(card.id)} className="btn-outline" style={{ marginLeft: 'auto', color: 'var(--c-bright-red)', borderColor: 'var(--c-bright-red)' }}>Удалить</button>
                                     </div>
@@ -148,8 +170,9 @@ export const Billing: React.FC = () => {
                                     </button>
                                 </div>
                             </form>
-                        </div>
+                        </motion.div>
                     )}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>

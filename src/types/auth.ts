@@ -31,3 +31,17 @@ export interface RegisterDto {
     surName?: string;
     phoneNumber: string;
 }
+
+export interface ChangePasswordDto {
+    oldPassword?: string;
+    newPassword?: string;
+}
+
+export interface UpdateUserDto {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    surName?: string;
+    phoneNumber?: string;
+    password?: string; // required to confirm identity when updating info based on architecture.md
+}

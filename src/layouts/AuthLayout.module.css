@@ -11,9 +11,9 @@
 /* Red abstract shapes for background */
 .auth-bg-shape {
     position: absolute;
-    background-image: url('../assets/auth-shape.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+    background: radial-gradient(circle at 30% 30%, rgba(193, 18, 31, 0.22), rgba(193, 18, 31, 0.06) 55%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(2px);
     z-index: 0;
 }
 

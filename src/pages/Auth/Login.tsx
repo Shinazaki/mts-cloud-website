@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/client';
 import { useAuth } from '../../hooks/useAuth';
+import styles from '../../layouts/AuthLayout.module.css';
 
 export const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -19,9 +20,24 @@ export const Login: React.FC = () => {
 
         try {
             const response = await api.auth.login({ username, password });
-            // Based on standard NestJS JWT implementation, token is usually in access_token or token
-            const token = response.data.access_token || response.data.token || response.data;
-            login(token, { username });
+            
+            // Backend: access_token in response header, user object in body
+            const token = response.headers['access_token'] || response.data?.access_token;
+            // Body is the User object directly
+            const user = {
+                id:          response.data?.id,
+                username:    response.data?.username    ?? username,
+                email:       response.data?.email,
+                firstName:   response.data?.firstName,
+                lastName:    response.data?.lastName,
+                surName:     response.data?.surName,
+                phoneNumber: response.data?.phoneNumber,
+            };
+            if (!token) {
+                throw new Error('Токен не получен от сервера');
+            }
+            
+            login(token, user);
             navigate('/servers');
         } catch (err: unknown) {
             const errorData = err as { response?: { data?: { message?: string } } };
@@ -32,15 +48,15 @@ export const Login: React.FC = () => {
     };
 
     return (
-        <form className="auth-form-container" onSubmit={handleSubmit}>
-            <h2 className="auth-form-title">Вход в аккаунт</h2>
+        <form className={styles['auth-form-container']} onSubmit={handleSubmit}>
+            <h2 className={styles['auth-form-title']}>Вход в аккаунт</h2>
 
-            {error && <div className="auth-error" style={{ color: 'var(--c-bright-red)', marginBottom: '16px', fontSize: '14px' }}>{error}</div>}
+            {error && <div style={{ color: 'var(--c-bright-red)', marginBottom: '16px', fontSize: '14px' }}>{error}</div>}
 
-            <div className="auth-input-wrapper">
+            <div className={styles['auth-input-wrapper']}>
                 <input
                     type="text"
-                    className="auth-input"
+                    className={styles['auth-input']}
                     placeholder="Логин (Username)"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -49,10 +65,10 @@ export const Login: React.FC = () => {
                 />
             </div>
 
-            <div className="auth-input-wrapper">
+            <div className={styles['auth-input-wrapper']}>
                 <input
                     type="password"
-                    className="auth-input"
+                    className={styles['auth-input']}
                     placeholder="Пароль"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -61,7 +77,7 @@ export const Login: React.FC = () => {
                 />
             </div>
 
-            <button type="submit" className="auth-submit-btn" disabled={loading}>
+            <button type="submit" className={styles['auth-submit-btn']} disabled={loading}>
                 {loading ? 'Вход...' : 'Войти'}
             </button>
         </form>

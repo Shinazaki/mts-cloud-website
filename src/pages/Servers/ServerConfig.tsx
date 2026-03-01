@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSettings } from '../../hooks/useSettings';
-import './Servers.css';
+import styles from './Servers.module.css';
 
 export const ServerConfig: React.FC = () => {
     const { id } = useParams();
@@ -34,17 +34,17 @@ export const ServerConfig: React.FC = () => {
     };
 
     return (
-        <div className="page-container server-config-page">
-            <div className="page-header">
+        <div className={styles['page-container']}>
+            <div className={styles['page-header']}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <button className="btn-icon" onClick={() => navigate(-1)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                    <button className={styles['btn-outline']} onClick={() => navigate(-1)}>
                         <span className="material-symbols-outlined" style={{ fontSize: '28px', color: 'var(--c-dark-blue)' }}>arrow_back</span>
                     </button>
-                    <h1 className="page-title">Изменение конфигурации</h1>
+                    <h1 className={styles['page-title']}>Изменение конфигурации</h1>
                 </div>
             </div>
 
-            <div className="billing-card" style={{ maxWidth: '800px', padding: '40px', marginTop: '24px' }}>
+            <div className="card" style={{ maxWidth: '800px', padding: '40px', marginTop: '24px' }}>
                 <h2 style={{ marginBottom: '32px', color: 'var(--c-dark-blue)' }}>{server.name}</h2>
 
                 <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -124,10 +124,10 @@ export const ServerConfig: React.FC = () => {
                     </div>
 
                     <div style={{ marginTop: '32px', display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
-                        <button type="button" className="btn-outline" onClick={() => navigate(-1)}>
+                        <button type="button" className={styles['btn-outline']} onClick={() => navigate(-1)}>
                             {t('cancel')}
                         </button>
-                        <button type="submit" className="btn-primary" disabled={isSaving} style={{ padding: '12px 32px' }}>
+                        <button type="submit" className={styles['btn-primary']} disabled={isSaving} style={{ padding: '12px 32px' }}>
                             {isSaving ? 'Применяем...' : t('save')}
                         </button>
                     </div>

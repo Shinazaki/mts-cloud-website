@@ -71,7 +71,7 @@
     border-color: var(--c-red);
 }
 
-.option-card.active {
+.active {
     border-color: var(--c-red);
     background-color: #FEF2F2;
     /* very light red */

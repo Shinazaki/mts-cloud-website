@@ -13,9 +13,12 @@ import { Settings } from './pages/Settings/Settings';
 import { Support } from './pages/Support/Support';
 import { Backups, Monitoring, Traffic, APIPage, QA, WhatsNew } from './pages/SecondaryPages/SecondaryPages';
 
-import { AuthProvider } from './contexts/AuthProvider';
 import { useAuth } from './hooks/useAuth';
-import { SettingsProvider } from './contexts/SettingsContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useSettingsStore } from './store/settingsStore';
+
+const queryClient = new QueryClient();
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -30,11 +33,34 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const ThemeSync = () => {
+  const theme = useSettingsStore((state) => state.theme);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.setAttribute('data-theme', 'dark');
+      return;
+    }
+
+    if (theme === 'system') {
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (isDark) root.setAttribute('data-theme', 'dark');
+      else root.removeAttribute('data-theme');
+      return;
+    }
+
+    root.removeAttribute('data-theme');
+  }, [theme]);
+
+  return null;
+};
+
 function App() {
   return (
-    <AuthProvider>
-      <SettingsProvider>
-        <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <ThemeSync />
+      <BrowserRouter>
           <Routes>
             <Route element={<AuthLayout />}>
               <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
@@ -60,8 +86,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-      </SettingsProvider>
-    </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

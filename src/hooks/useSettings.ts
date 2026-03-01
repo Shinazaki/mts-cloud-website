@@ -1,10 +1,15 @@
-import { useContext } from 'react';
-import { SettingsContext } from '../contexts/SettingsContext';
+import { useSettingsStore } from '../store/settingsStore';
+import { ru } from '../i18n/ru';
+import { en } from '../i18n/en';
 
 export const useSettings = () => {
-    const context = useContext(SettingsContext);
-    if (!context) {
-        throw new Error('useSettings must be used within a SettingsProvider');
-    }
-    return context;
+    const language = useSettingsStore((state) => state.language);
+    const setLanguage = useSettingsStore((state) => state.setLanguage);
+    const theme = useSettingsStore((state) => state.theme);
+    const setTheme = useSettingsStore((state) => state.setTheme);
+
+    const dict = language === 'ru' ? ru : en;
+    const t = (key: keyof typeof ru) => dict[key] || key;
+
+    return { language, setLanguage, theme, setTheme, t };
 };

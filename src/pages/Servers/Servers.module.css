@@ -46,15 +46,16 @@
 
 .search-input {
     width: 100%;
-    padding: 16px 24px;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--c-gray-500);
-    border: 1px solid var(--c-red);
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--c-gray-700);
+    border: 1px solid var(--c-gray-300);
     border-radius: 8px;
     outline: none;
-    background-color: transparent;
-    transition: box-shadow 0.2s;
+    background-color: var(--c-white);
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .search-input::placeholder {
@@ -62,15 +63,23 @@
 }
 
 .search-input:focus {
-    box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.1);
+    border-color: var(--c-red);
+    box-shadow: 0 0 0 4px rgba(193, 18, 31, 0.1);
 }
 
 .table-container {
     width: 100%;
-    border: 1px solid var(--c-red);
-    border-radius: 8px;
+    border: 1px solid var(--c-gray-300);
+    border-radius: 12px;
     background-color: var(--c-white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
+
+/* Keep rounded corners without overflow:hidden */
+.data-table thead tr:first-child th:first-child { border-top-left-radius: 12px; }
+.data-table thead tr:first-child th:last-child  { border-top-right-radius: 12px; }
+.data-table tbody tr:last-child td:first-child   { border-bottom-left-radius: 12px; }
+.data-table tbody tr:last-child td:last-child    { border-bottom-right-radius: 12px; }
 
 .data-table {
     width: 100%;
@@ -80,23 +89,35 @@
 
 .data-table th {
     padding: 16px 24px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--c-dark-blue);
-    border-bottom: 1px solid var(--c-red);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--c-gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--c-gray-200);
+    background-color: var(--c-gray-50);
 }
 
 .data-table td {
     padding: 16px 24px;
     vertical-align: middle;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--c-dark-blue);
+    transition: background-color 0.2s;
 }
 
-/* Red line between table rows as per design */
+/* Subtle line between table rows */
+.data-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--c-gray-100);
+}
+
 .data-table tbody tr:not(:last-child) {
-    border-bottom: 1px solid var(--c-red);
+    border-bottom: 1px solid var(--c-gray-200);
 }
 
 .server-name-cell {

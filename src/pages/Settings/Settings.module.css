@@ -1,0 +1,203 @@
+.settings-page .page-title {
+    color: var(--c-dark-blue);
+    font-weight: 300;
+}
+
+.settings-section {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    margin-bottom: 0;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--c-gray-200);
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.settings-subtitle {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--c-dark-blue);
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.language-toggle {
+    display: flex;
+    background-color: var(--c-gray-100);
+    border-radius: 8px;
+    padding: 4px;
+    width: max-content;
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--c-gray-600);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lang-btn:hover {
+    color: var(--c-dark-blue);
+}
+
+.active {
+    background-color: var(--c-white);
+    color: var(--c-red);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.settings-placeholder-text {
+    color: var(--c-gray-500);
+    font-size: 14px;
+}
+
+/* ── Account header ── */
+.account-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    margin-bottom: 0;
+}
+
+.account-hero {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.account-username {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--c-dark-blue);
+}
+
+.account-email {
+    font-size: 14px;
+    color: var(--c-gray-500);
+}
+
+.signout-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    color: var(--c-bright-red) !important;
+    border-color: var(--c-bright-red) !important;
+}
+
+.signout-btn:hover {
+    background-color: var(--c-bright-red) !important;
+    color: #fff !important;
+}
+
+/* ── Tabs ── */
+.tabs-bar {
+    display: flex;
+    border-bottom: 1px solid var(--c-gray-200);
+    background: transparent;
+    margin-bottom: 0;
+}
+
+.tab-btn {
+    padding: 14px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--c-gray-500);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.18s;
+    margin-bottom: -1px;
+}
+
+.tab-btn:hover {
+    color: var(--c-dark-blue);
+}
+
+.tab-active {
+    color: var(--c-red);
+    border-bottom-color: var(--c-red);
+}
+
+/* ── Password confirmation modal ── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.modal-card {
+    background: var(--c-white);
+    border-radius: 16px;
+    padding: 32px;
+    width: 400px;
+    max-width: calc(100vw - 48px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: modalIn 0.2s ease both;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+.modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--c-dark-blue);
+    margin: 0 0 8px;
+}
+
+.modal-desc {
+    font-size: 14px;
+    color: var(--c-gray-500);
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}

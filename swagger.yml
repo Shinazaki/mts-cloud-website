@@ -1,0 +1,332 @@
+openapi: 3.0.0
+info:
+  title: MTS Spacehack Backend API
+  description: API documentation
+  version: '1.0'
+  contact: {}
+paths:
+  /api:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - App
+  /api/users:
+    post:
+      operationId: UsersController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+      security:
+        - access-token: []
+      tags:
+        - Users
+    get:
+      operationId: UsersController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Users
+  /api/users/update_info:
+    patch:
+      operationId: UsersController_updateUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: Successfully updated user profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad Request (e.g. invalid data or no changes)
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+      security:
+        - access-token: []
+      tags:
+        - Users
+  /api/users/{id}:
+    get:
+      operationId: UsersController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - Users
+  /api/auth/register:
+    post:
+      operationId: AuthController_register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Auth
+  /api/auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUserDto'
+      responses:
+        '201':
+          description: ''
+      tags:
+        - Auth
+  /api/auth/refresh:
+    post:
+      operationId: AuthController_refresh
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      security:
+        - refresh-token: []
+      tags:
+        - Auth
+  /api/auth/change_password:
+    post:
+      operationId: AuthController_changePassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordDto'
+      responses:
+        '201':
+          description: Password changed successfully, returns updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security:
+        - access-token: []
+      tags:
+        - Auth
+  /api/auth/logout:
+    delete:
+      operationId: AuthController_logout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - refresh-token: []
+      tags:
+        - Auth
+  /api/auth/logout_all:
+    delete:
+      operationId: AuthController_logoutAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - refresh-token: []
+      tags:
+        - Auth
+components:
+  securitySchemes:
+    access-token:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+      in: header
+    refresh-token:
+      type: apiKey
+      in: cookie
+      name: refresh_token
+  schemas:
+    CreateUserDto:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Unique username for the user
+          example: johndoe123
+          minLength: 3
+        password:
+          type: string
+          description: Password must be at least 8 characters
+          example: '12345678'
+          format: password
+        email:
+          type: string
+          description: User email address
+          example: john.doe@example.com
+          format: email
+        firstName:
+          type: string
+          description: User first name
+          example: John
+          minLength: 2
+        lastName:
+          type: string
+          description: User last name
+          example: Doe
+          nullable: true
+        surName:
+          type: string
+          description: User surname
+          example: Nikolayevich
+          nullable: true
+        phoneNumber:
+          type: string
+          description: User phone number
+          example: '+123456789'
+      required:
+        - username
+        - password
+        - email
+        - firstName
+        - lastName
+        - phoneNumber
+    LoginUserDto:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Unique username for the user
+          example: johndoe123
+          minLength: 3
+        password:
+          type: string
+          description: Password must be at least 8 characters
+          example: '12345678'
+          format: password
+      required:
+        - username
+        - password
+    UpdateUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: New user email address
+          example: john.doe@example.com
+          format: email
+        password:
+          type: string
+          description: current password
+          example: '123456789'
+          minLength: 8
+        firstName:
+          type: string
+          description: New user first name
+          example: John
+          minLength: 2
+        lastName:
+          type: string
+          description: New user last name
+          example: Doe
+          nullable: true
+        surName:
+          type: string
+          description: User surname
+          example: Nikolayevich
+          nullable: true
+        phoneNumber:
+          type: string
+          description: User phone number
+          example: '+123456789'
+      required:
+        - password
+    ChangePasswordDto:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+          description: Current password
+          example: '12345678'
+          format: password
+        newPassword:
+          type: string
+          description: New password (must be different)
+          example: '87654321'
+          format: password
+      required:
+        - oldPassword
+        - newPassword
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        role:
+          type: string
+          example: USER
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+        username:
+          type: string
+          example: johndoe123
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+          nullable: true
+        surName:
+          type: string
+          example: Nikolayevich
+          nullable: true
+        phoneNumber:
+          type: string
+          example: '+123456789'
+        created_at:
+          type: string
+          format: date-time
+          example: '2026-03-01T10:44:26Z'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'

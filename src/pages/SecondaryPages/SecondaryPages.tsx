@@ -6,7 +6,7 @@ export const Backups: React.FC = () => {
             <div className="page-header">
                 <h1 className="page-title">Бэкапы</h1>
             </div>
-            <div className="placeholder-content">
+            <div className="card animate-enter">
                 <h3>Резервные копии</h3>
                 <p>Настройте автоматическое создание резервных копий ваших серверов.</p>
             </div>
@@ -20,7 +20,7 @@ export const Monitoring: React.FC = () => {
             <div className="page-header">
                 <h1 className="page-title">Мониторинг</h1>
             </div>
-            <div className="placeholder-content">
+            <div className="card animate-enter">
                 <h3>Графики и метрики</h3>
                 <p>Метрики использования ресурсов (CPU, RAM, Disk).</p>
             </div>
@@ -34,7 +34,7 @@ export const Traffic: React.FC = () => {
             <div className="page-header">
                 <h1 className="page-title">Трафик</h1>
             </div>
-            <div className="placeholder-content">
+            <div className="card animate-enter">
                 <h3>Использование сети</h3>
                 <p>Статистика потребления сетевого трафика.</p>
             </div>
@@ -51,7 +51,7 @@ export const APIPage: React.FC = () => {
                     Сгенерировать токен <span className="material-symbols-outlined">key</span>
                 </button>
             </div>
-            <div className="placeholder-content">
+            <div className="card animate-enter">
                 <h3>Управление ключами API</h3>
                 <p>Используйте API для программного управления ресурсами.</p>
             </div>
@@ -65,12 +65,12 @@ export const QA: React.FC = () => {
             <div className="page-header">
                 <h1 className="page-title">Q&A (Часто задаваемые вопросы)</h1>
             </div>
-            <div className="content-card" style={{ backgroundColor: 'white', padding: '24px', borderRadius: '8px', border: '1px solid var(--c-gray-300)' }}>
-                <div style={{ marginBottom: '24px' }}>
+            <div className="card animate-enter" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <div>
                     <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>Как изменить конфигурацию сервера (Расширить)?</h3>
                     <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }}>Вы можете перейти на вкладку <strong>Сервера</strong>, найти нужный сервер и нажать кнопку "Расширить". Вы также можете создать новый сервер с новой конфигурацией.</p>
                 </div>
-                <div style={{ marginBottom: '24px' }}>
+                <div>
                     <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>Как работает биллинг?</h3>
                     <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }}>Списание средств происходит ежемесячно в зависимости от потребленных ресурсов (Pay-as-you-go). Пополнить баланс можно в разделе <strong>Счета и оплата</strong>.</p>
                 </div>
@@ -89,8 +89,8 @@ export const WhatsNew: React.FC = () => {
             <div className="page-header">
                 <h1 className="page-title">Что нового?</h1>
             </div>
-            <div className="content-card" style={{ backgroundColor: 'white', padding: '24px', borderRadius: '8px', border: '1px solid var(--c-gray-300)' }}>
-                <ul style={{ listStyleType: 'none', padding: 0 }}>
+            <div className="card animate-enter">
+                <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
                     <li style={{ marginBottom: '32px', borderBottom: '1px solid var(--c-gray-100)', paddingBottom: '24px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span className="material-symbols-outlined" style={{ color: 'var(--c-red)' }}>new_releases</span>

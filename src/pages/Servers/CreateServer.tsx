@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CreateServer.css';
+import styles from './CreateServer.module.css';
 
 export const CreateServer: React.FC = () => {
     const navigate = useNavigate();
@@ -16,49 +16,49 @@ export const CreateServer: React.FC = () => {
     };
 
     return (
-        <div className="page-container create-server-page">
+        <div className={`page-container ${styles['create-server-page']}`}>
             <div className="page-header">
-                <div className="header-breadcrumbs">
-                    <button className="back-btn" onClick={() => navigate('/servers')}>
+                <div className={styles['header-breadcrumbs']}>
+                    <button className={styles['back-btn']} onClick={() => navigate('/servers')}>
                         <span className="material-symbols-outlined">arrow_back</span>
                     </button>
                     <h1 className="page-title">Новый сервер</h1>
                 </div>
             </div>
 
-            <form className="create-server-form" onSubmit={handleCreate}>
-                <div className="form-section">
+            <form className={styles['create-server-form']} onSubmit={handleCreate}>
+                <div className={`${styles['form-section']} animate-enter-d1`}>
                     <h2>Регион</h2>
-                    <div className="options-grid">
-                        <button type="button" className={`option-card ${selectedRegion === 'Moscow' ? 'active' : ''}`} onClick={() => setSelectedRegion('Moscow')}>
+                    <div className={styles['options-grid']}>
+                        <button type="button" className={`${styles['option-card']} ${selectedRegion === 'Moscow' ? styles['active'] : ''}`} onClick={() => setSelectedRegion('Moscow')}>
                             Москва
                         </button>
-                        <button type="button" className={`option-card ${selectedRegion === 'Minsk' ? 'active' : ''}`} onClick={() => setSelectedRegion('Minsk')}>
+                        <button type="button" className={`${styles['option-card']} ${selectedRegion === 'Minsk' ? styles['active'] : ''}`} onClick={() => setSelectedRegion('Minsk')}>
                             Минск
                         </button>
                     </div>
                 </div>
 
-                <div className="form-section">
+                <div className={`${styles['form-section']} animate-enter-d2`}>
                     <h2>Операционная система</h2>
-                    <div className="options-grid">
-                        <button type="button" className={`option-card ${selectedOs === 'Ubuntu 22.04' ? 'active' : ''}`} onClick={() => setSelectedOs('Ubuntu 22.04')}>
+                    <div className={styles['options-grid']}>
+                        <button type="button" className={`${styles['option-card']} ${selectedOs === 'Ubuntu 22.04' ? styles['active'] : ''}`} onClick={() => setSelectedOs('Ubuntu 22.04')}>
                             <span className="material-symbols-outlined">terminal</span> Ubuntu 22.04
                         </button>
-                        <button type="button" className={`option-card ${selectedOs === 'Debian 11' ? 'active' : ''}`} onClick={() => setSelectedOs('Debian 11')}>
+                        <button type="button" className={`${styles['option-card']} ${selectedOs === 'Debian 11' ? styles['active'] : ''}`} onClick={() => setSelectedOs('Debian 11')}>
                             <span className="material-symbols-outlined">terminal</span> Debian 11
                         </button>
-                        <button type="button" className={`option-card ${selectedOs === 'CentOS 8' ? 'active' : ''}`} onClick={() => setSelectedOs('CentOS 8')}>
+                        <button type="button" className={`${styles['option-card']} ${selectedOs === 'CentOS 8' ? styles['active'] : ''}`} onClick={() => setSelectedOs('CentOS 8')}>
                             <span className="material-symbols-outlined">terminal</span> CentOS 8
                         </button>
                     </div>
                 </div>
 
-                <div className="form-section">
+                <div className={`${styles['form-section']} animate-enter-d3`}>
                     <h2>Название сервера</h2>
                     <input
                         type="text"
-                        className="text-input"
+                        className={styles['text-input']}
                         placeholder="Введите название"
                         value={serverName}
                         onChange={(e) => setServerName(e.target.value)}
@@ -66,8 +66,8 @@ export const CreateServer: React.FC = () => {
                     />
                 </div>
 
-                <div className="form-actions">
-                    <button type="button" className="btn-cancel" onClick={() => navigate('/servers')}>Отмена</button>
+                <div className={`${styles['form-actions']} animate-enter-d4`}>
+                    <button type="button" className={styles['btn-cancel']} onClick={() => navigate('/servers')}>Отмена</button>
                     <button type="submit" className="btn-primary">Создать сервер</button>
                 </div>
             </form>
