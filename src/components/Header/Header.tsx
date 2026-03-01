@@ -51,7 +51,7 @@ export const Header: React.FC = () => {
 
         <button className={styles['btn-secondary']} onClick={() => navigate('/servers/create')}>
           <span className="material-symbols-outlined">add</span>
-          Создать
+          {t('create')}
         </button>
 
         {/* ── Icon group ── */}

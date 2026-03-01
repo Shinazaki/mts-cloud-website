@@ -142,7 +142,7 @@ export const Settings: React.FC = () => {
                 </div>
                 <button className={`btn-outline ${styles['signout-btn']}`} onClick={logout}>
                     <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>logout</span>
-                    Sign Out
+                    {t('sign_out')}
                 </button>
             </div>
 
@@ -151,11 +151,11 @@ export const Settings: React.FC = () => {
                 <button
                     className={`${styles['tab-btn']} ${activeTab === 'profile' ? styles['tab-active'] : ''}`}
                     onClick={() => setActiveTab('profile')}
-                >Profile</button>
+                >{t('tab_profile')}</button>
                 <button
                     className={`${styles['tab-btn']} ${activeTab === 'activity' ? styles['tab-active'] : ''}`}
                     onClick={() => setActiveTab('activity')}
-                >Activity</button>
+                >{t('tab_activity')}</button>
             </div>
 
             {/* ── Profile tab ── */}
@@ -254,7 +254,7 @@ export const Settings: React.FC = () => {
                     <div className="card">
                         <div style={{ textAlign: 'center', padding: '56px 24px', color: 'var(--c-gray-400)' }}>
                             <span className="material-symbols-outlined" style={{ fontSize: '52px', display: 'block', marginBottom: '16px', opacity: 0.5 }}>history</span>
-                            <p style={{ margin: 0, fontSize: '15px', fontWeight: 500 }}>История активности пока недоступна</p>
+                            <p style={{ margin: 0, fontSize: '15px', fontWeight: 500 }}>{t('activity_empty')}</p>
                         </div>
                     </div>
                 </div>

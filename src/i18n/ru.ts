@@ -32,6 +32,11 @@ export const ru = {
     security_2fa: 'Безопасность (2FA)',
     two_factor_auth: 'Двухфакторная аутентификация',
     setup_authenticator: 'Настроить Google Authenticator',
+    sign_out: 'Выйти',
+    tab_profile: 'Профиль',
+    tab_activity: 'Активность',
+    activity_empty: 'История активности пока недоступна',
+    create: 'Создать',
 
     // Servers
     edit_server: 'Редактировать сервер',

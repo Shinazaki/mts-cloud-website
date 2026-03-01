@@ -32,6 +32,11 @@ export const en = {
     security_2fa: 'Security (2FA)',
     two_factor_auth: 'Two-Factor Authentication',
     setup_authenticator: 'Setup Google Authenticator',
+    sign_out: 'Sign Out',
+    tab_profile: 'Profile',
+    tab_activity: 'Activity',
+    activity_empty: 'Activity history is not available yet',
+    create: 'Create',
 
     // Servers
     edit_server: 'Edit Server',

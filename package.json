@@ -12,6 +12,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/material-symbols-outlined": "^5.2.37",
+    "@fontsource-variable/nunito": "^5.2.7",
     "@tanstack/react-query": "^5.90.21",
     "axios": "^1.13.6",
     "framer-motion": "^12.34.3",
