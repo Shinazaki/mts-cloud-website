@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import styles from '../../Styles/PageHeaders.module.css';
 
 export const Support: React.FC = () => {
     const [tickets, setTickets] = useState<{ id: number, title: string, status: string }[]>([]);
@@ -18,8 +19,8 @@ export const Support: React.FC = () => {
 
     return (
         <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Поддержка</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Поддержка</h1>
                 {!isCreating && (
                     <button className="btn-primary" onClick={() => setIsCreating(true)}>
                         Создать тикет <span className="material-symbols-outlined">add</span>

@@ -37,7 +37,7 @@
     border-right: none;
 }
 
-.active {
+.tab-btn.active {
     background-color: var(--c-red);
     color: var(--c-white);
     border-color: var(--c-red);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './Billing.module.css';
+import headerStyles from '../../Styles/PageHeaders.module.css'
 
 export const Billing: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'general' | 'history' | 'settings'>('general');
@@ -38,8 +39,8 @@ export const Billing: React.FC = () => {
 
     return (
         <div className={`page-container ${styles['billing-page']}`}>
-            <div className="page-header">
-                <h1 className="page-title">Счета и оплата</h1>
+            <div className={headerStyles.pageHeader}>
+                <h1 className={headerStyles.pageTitle}>Счета и оплата</h1>
                 <button className="btn-primary">
                     Сделать платёж <span className="material-symbols-outlined">expand_more</span>
                 </button>
@@ -124,54 +125,54 @@ export const Billing: React.FC = () => {
                                 transition={{ duration: 0.2 }}
                                 className={styles['billing-settings-form']}
                             >
-                            <h2 style={{ fontSize: '20px', color: 'var(--c-dark-blue)', marginBottom: '24px' }}>Платежные данные</h2>
+                                <h2 style={{ fontSize: '20px', color: 'var(--c-dark-blue)', marginBottom: '24px' }}>Платежные данные</h2>
 
-                            <form style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }} onSubmit={handleSaveSettings}>
-                                <div>
-                                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>ФИО владельца</label>
-                                    <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="Иван Иванов" value={paymentDetails.name} onChange={e => setPaymentDetails({ ...paymentDetails, name: e.target.value })} required />
-                                </div>
-
-                                <div>
-                                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>Адрес выставления счета</label>
-                                    <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="ул. Примерная, д. 1, кв. 2" value={paymentDetails.address} onChange={e => setPaymentDetails({ ...paymentDetails, address: e.target.value })} required />
-                                </div>
-
-                                <div>
-                                    <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>Почтовый индекс</label>
-                                    <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="220000" value={paymentDetails.zip} onChange={e => setPaymentDetails({ ...paymentDetails, zip: e.target.value })} required />
-                                </div>
-
-                                <h3 style={{ fontSize: '18px', color: 'var(--c-dark-blue)', marginTop: '16px', marginBottom: '8px' }}>Привязанные карты</h3>
-
-                                {cards.map(card => (
-                                    <div key={card.id} style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px', border: '1px solid var(--c-gray-300)', borderRadius: '8px' }}>
-                                        <span className="material-symbols-outlined" style={{ fontSize: '32px', color: 'var(--c-dark-blue)' }}>credit_card</span>
-                                        <div>
-                                            <div style={{ fontWeight: 'bold', color: 'var(--c-dark-blue)' }}>{card.number}</div>
-                                        </div>
-                                        <button type="button" onClick={() => handleRemoveCard(card.id)} className="btn-outline" style={{ marginLeft: 'auto', color: 'var(--c-bright-red)', borderColor: 'var(--c-bright-red)' }}>Удалить</button>
+                                <form style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }} onSubmit={handleSaveSettings}>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>ФИО владельца</label>
+                                        <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="Иван Иванов" value={paymentDetails.name} onChange={e => setPaymentDetails({ ...paymentDetails, name: e.target.value })} required />
                                     </div>
-                                ))}
 
-                                {cards.length === 0 && (
-                                    <p style={{ color: 'var(--c-gray-500)', fontStyle: 'italic' }}>Нет привязанных карт.</p>
-                                )}
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>Адрес выставления счета</label>
+                                        <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="ул. Примерная, д. 1, кв. 2" value={paymentDetails.address} onChange={e => setPaymentDetails({ ...paymentDetails, address: e.target.value })} required />
+                                    </div>
 
-                                <button type="button" onClick={handleAddCard} className="btn-outline" style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span className="material-symbols-outlined">add</span> Добавить карту
-                                </button>
+                                    <div>
+                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>Почтовый индекс</label>
+                                        <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="220000" value={paymentDetails.zip} onChange={e => setPaymentDetails({ ...paymentDetails, zip: e.target.value })} required />
+                                    </div>
 
-                                <hr style={{ border: 'none', borderTop: '1px solid var(--c-gray-300)', margin: '16px 0' }} />
+                                    <h3 style={{ fontSize: '18px', color: 'var(--c-dark-blue)', marginTop: '16px', marginBottom: '8px' }}>Привязанные карты</h3>
 
-                                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    <button type="submit" className="btn-primary" disabled={isSaving}>
-                                        {isSaving ? 'Сохранение...' : 'Сохранить изменения'}
+                                    {cards.map(card => (
+                                        <div key={card.id} style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px', border: '1px solid var(--c-gray-300)', borderRadius: '8px' }}>
+                                            <span className="material-symbols-outlined" style={{ fontSize: '32px', color: 'var(--c-dark-blue)' }}>credit_card</span>
+                                            <div>
+                                                <div style={{ fontWeight: 'bold', color: 'var(--c-dark-blue)' }}>{card.number}</div>
+                                            </div>
+                                            <button type="button" onClick={() => handleRemoveCard(card.id)} className="btn-outline" style={{ marginLeft: 'auto', color: 'var(--c-bright-red)', borderColor: 'var(--c-bright-red)' }}>Удалить</button>
+                                        </div>
+                                    ))}
+
+                                    {cards.length === 0 && (
+                                        <p style={{ color: 'var(--c-gray-500)', fontStyle: 'italic' }}>Нет привязанных карт.</p>
+                                    )}
+
+                                    <button type="button" onClick={handleAddCard} className="btn-outline" style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span className="material-symbols-outlined">add</span> Добавить карту
                                     </button>
-                                </div>
-                            </form>
-                        </motion.div>
-                    )}
+
+                                    <hr style={{ border: 'none', borderTop: '1px solid var(--c-gray-300)', margin: '16px 0' }} />
+
+                                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                        <button type="submit" className="btn-primary" disabled={isSaving}>
+                                            {isSaving ? 'Сохранение...' : 'Сохранить изменения'}
+                                        </button>
+                                    </div>
+                                </form>
+                            </motion.div>
+                        )}
                     </AnimatePresence>
                 </div>
             </div>

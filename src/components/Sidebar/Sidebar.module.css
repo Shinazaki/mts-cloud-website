@@ -1,5 +1,5 @@
 .sidebar {
-    width: 220px;
+    width: 250px;
     height: 100vh;
     background-color: var(--c-dark-red);
     color: var(--c-white);
@@ -16,10 +16,10 @@
 .sidebar-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 20px 18px;
+    gap: 12px;
+    padding: 24px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .logo-icon {
@@ -29,7 +29,7 @@
 }
 
 .logo-text {
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 800;
     letter-spacing: -0.5px;
 }
@@ -41,7 +41,7 @@
 }
 
 .nav-section {
-    padding: 4px 0;
+    padding: 8px 0;
 }
 
 .nav-section-title {
@@ -49,85 +49,47 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
+    padding: 12px 24px;
     color: var(--c-white);
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     background: transparent;
-    transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s;
 }
 
 .nav-section-title:hover {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-.nav-section-title:active {
-    transform: scale(0.99);
-}
-
-.chevron {
-    transition: transform 0.22s ease;
-}
-
-.chevron-open {
-    transform: rotate(180deg);
-}
-
-.active-section {
+.nav-section-title.active-section {
     background-color: rgba(255, 255, 255, 0.1);
-}
-
-.projects-dropdown {
-    list-style: none;
-    margin: 8px 0 16px 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-.project-item {
-    padding: 8px 16px;
-    font-size: 15px;
-    color: var(--c-white);
-    cursor: pointer;
-    border-radius: 8px;
-    margin: 2px 8px;
-    transition: background-color 0.18s ease, transform 0.18s ease;
-}
-
-.project-item:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    transform: translateX(2px);
 }
 
 .nav-list {
     list-style: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
 
 .nav-item {
     display: flex;
     align-items: center;
-    padding: 11px 14px 11px 16px;
+    padding: 12px 24px 12px 48px;
     /* Indented for subsections */
     color: rgba(255, 255, 255, 0.7);
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    transition: all 0.2s;
     text-decoration: none;
-    border-radius: 10px;
-    margin: 2px 8px;
 }
 
 .nav-item:hover,
-.active {
+.nav-item.active {
     color: var(--c-white);
     background-color: rgba(255, 255, 255, 0.05);
-    transform: translateX(2px);
 }
 
-.active {
+.nav-item.active {
     background-color: var(--c-red);
 }
 
@@ -138,31 +100,17 @@
 }
 
 .nav-item:hover .nav-icon,
-.active .nav-icon {
+.nav-item.active .nav-icon {
     opacity: 1;
 }
 
 .nav-divider {
     height: 1px;
     background-color: rgba(255, 255, 255, 0.1);
-    margin: 10px 14px;
+    margin: 8px 24px;
 }
 
 .bottom-section {
-    margin-top: 0;
-    padding-bottom: 14px;
-}
-
-@media (max-width: 1100px) {
-    .sidebar {
-        width: 200px;
-    }
-
-    .logo-text {
-        font-size: 20px;
-    }
-
-    .nav-item {
-        font-size: 15px;
-    }
+    margin-top: auto;
+    padding-bottom: 24px;
 }

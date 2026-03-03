@@ -1,10 +1,10 @@
 import React from 'react';
-
+import styles from '../../Styles/PageHeaders.module.css'
 export const Backups: React.FC = () => {
     return (
         <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Бэкапы</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Бэкапы</h1>
             </div>
             <div className="card animate-enter">
                 <h3>Резервные копии</h3>
@@ -17,8 +17,8 @@ export const Backups: React.FC = () => {
 export const Monitoring: React.FC = () => {
     return (
         <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Мониторинг</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Мониторинг</h1>
             </div>
             <div className="card animate-enter">
                 <h3>Графики и метрики</h3>
@@ -31,8 +31,8 @@ export const Monitoring: React.FC = () => {
 export const Traffic: React.FC = () => {
     return (
         <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Трафик</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Трафик</h1>
             </div>
             <div className="card animate-enter">
                 <h3>Использование сети</h3>
@@ -45,8 +45,8 @@ export const Traffic: React.FC = () => {
 export const APIPage: React.FC = () => {
     return (
         <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">API</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>API</h1>
                 <button className="btn-primary">
                     Сгенерировать токен <span className="material-symbols-outlined">key</span>
                 </button>
@@ -62,8 +62,8 @@ export const APIPage: React.FC = () => {
 export const QA: React.FC = () => {
     return (
         <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Q&A (Часто задаваемые вопросы)</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Q&A (Часто задаваемые вопросы)</h1>
             </div>
             <div className="card animate-enter" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 <div>
@@ -86,8 +86,8 @@ export const QA: React.FC = () => {
 export const WhatsNew: React.FC = () => {
     return (
         <div className="page-container">
-            <div className="page-header">
-                <h1 className="page-title">Что нового?</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Что нового?</h1>
             </div>
             <div className="card animate-enter">
                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
