@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../../api/client';
+import { useSettings } from '../../hooks/useSettings';
 import styles from './Billing.module.css';
 import headerStyles from '../../Styles/PageHeaders.module.css'
 
 export const Billing: React.FC = () => {
+    const { t } = useSettings();
     const [activeTab, setActiveTab] = useState<'general' | 'history' | 'settings'>('general');
     const [cards, setCards] = useState<{ id: string, number: string, expires: string }[]>([
         { id: '1', number: 'Mastercard ending in 1234', expires: '12/25' }
@@ -69,9 +71,9 @@ export const Billing: React.FC = () => {
                 address: paymentDetails.address,
                 zip: paymentDetails.zip
             });
-            alert('Данные успешно сохранены!');
+            alert(t('billing.save_success'));
         } catch (err) {
-            alert('Ошибка при сохранении данных.');
+            alert(t('billing.save_error'));
         } finally {
             setIsSaving(false);
         }
@@ -80,9 +82,9 @@ export const Billing: React.FC = () => {
     return (
         <div className={`page-container ${styles['billing-page']}`}>
             <div className={headerStyles.pageHeader}>
-                <h1 className={headerStyles.pageTitle}>Счета и оплата</h1>
+                <h1 className={headerStyles.pageTitle}>{t('billing.title')}</h1>
                 <button className="btn-primary">
-                    Сделать платёж <span className="material-symbols-outlined">expand_more</span>
+                    {t('billing.make_payment')} <span className="material-symbols-outlined">expand_more</span>
                 </button>
             </div>
 
@@ -92,19 +94,19 @@ export const Billing: React.FC = () => {
                         className={`${styles['tab-btn']} ${activeTab === 'general' ? styles['active'] : ''}`}
                         onClick={() => setActiveTab('general')}
                     >
-                        Общее
+                        {t('billing.tab_general')}
                     </button>
                     <button
                         className={`${styles['tab-btn']} ${activeTab === 'history' ? styles['active'] : ''}`}
                         onClick={() => setActiveTab('history')}
                     >
-                        История
+                        {t('billing.tab_history')}
                     </button>
                     <button
                         className={`${styles['tab-btn']} ${activeTab === 'settings' ? styles['active'] : ''}`}
                         onClick={() => setActiveTab('settings')}
                     >
-                        Настройки оплаты
+                        {t('billing.tab_settings')}
                     </button>
                 </div>
                 <div className={styles['tab-divider']}></div>
@@ -121,21 +123,21 @@ export const Billing: React.FC = () => {
                                 className={styles['billing-card']}
                             >
                                 <div className={styles['billing-main-info']}>
-                                    <div className={styles['balance-label']}>Баланс на текущий месяц</div>
+                                    <div className={styles['balance-label']}>{t('billing.balance_label')}</div>
                                     <div className={styles['balance-amount']}>{isLoading ? '...' : balance} BYN</div>
                                 </div>
 
                                 <div className={styles['billing-details']}>
                                     <div className={styles['detail-item']}>
-                                        <span className={styles['detail-label']}>Следующий платёж:</span>
+                                        <span className={styles['detail-label']}>{t('billing.next_payment')}</span>
                                         <span className={styles['detail-value']}>Когда-то там</span>
                                     </div>
                                     <div className={styles['detail-item']}>
-                                        <span className={styles['detail-label']}>Уже внесённые средства:</span>
+                                        <span className={styles['detail-label']}>{t('billing.already_paid')}</span>
                                         <span className={styles['detail-value']}>Сколько-то</span>
                                     </div>
                                     <div className={styles['detail-item']}>
-                                        <span className={styles['detail-label']}>Итоговое использование:</span>
+                                        <span className={styles['detail-label']}>{t('billing.total_usage')}</span>
                                         <span className={styles['detail-value']}>Сколько-то</span>
                                     </div>
                                 </div>
@@ -151,8 +153,8 @@ export const Billing: React.FC = () => {
                                 transition={{ duration: 0.2 }}
                                 className={styles['placeholder-content']}
                             >
-                                <h3>История оплат</h3>
-                                <p>Здесь будет отображаться история транзакций.</p>
+                                <h3>{t('billing.history_title')}</h3>
+                                <p>{t('billing.history_placeholder')}</p>
                             </motion.div>
                         )}
 
@@ -165,25 +167,25 @@ export const Billing: React.FC = () => {
                                 transition={{ duration: 0.2 }}
                                 className={styles['billing-settings-form']}
                             >
-                                <h2 style={{ fontSize: '20px', color: 'var(--c-dark-blue)', marginBottom: '24px' }}>Платежные данные</h2>
+                                <h2 style={{ fontSize: '20px', color: 'var(--c-dark-blue)', marginBottom: '24px' }}>{t('billing.payment_details')}</h2>
 
                                 <form style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '600px' }} onSubmit={handleSaveSettings}>
                                     <div>
-                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>ФИО владельца</label>
+                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>{t('billing.owner_name')}</label>
                                         <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="Иван Иванов" value={paymentDetails.name} onChange={e => setPaymentDetails({ ...paymentDetails, name: e.target.value })} required />
                                     </div>
 
                                     <div>
-                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>Адрес выставления счета</label>
+                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>{t('billing.billing_address')}</label>
                                         <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="ул. Примерная, д. 1, кв. 2" value={paymentDetails.address} onChange={e => setPaymentDetails({ ...paymentDetails, address: e.target.value })} required />
                                     </div>
 
                                     <div>
-                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>Почтовый индекс</label>
+                                        <label style={{ display: 'block', marginBottom: '8px', color: 'var(--c-gray-600)', fontWeight: 'bold' }}>{t('billing.postal_code')}</label>
                                         <input type="text" style={{ width: '100%', padding: '12px', border: '1px solid var(--c-gray-300)', borderRadius: '8px', fontSize: '16px', backgroundColor: 'var(--c-white)', color: 'var(--c-gray-900)' }} placeholder="220000" value={paymentDetails.zip} onChange={e => setPaymentDetails({ ...paymentDetails, zip: e.target.value })} required />
                                     </div>
 
-                                    <h3 style={{ fontSize: '18px', color: 'var(--c-dark-blue)', marginTop: '16px', marginBottom: '8px' }}>Привязанные карты</h3>
+                                    <h3 style={{ fontSize: '18px', color: 'var(--c-dark-blue)', marginTop: '16px', marginBottom: '8px' }}>{t('billing.linked_cards')}</h3>
 
                                     {cards.map(card => (
                                         <div key={card.id} style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '16px', border: '1px solid var(--c-gray-300)', borderRadius: '8px' }}>
@@ -191,23 +193,23 @@ export const Billing: React.FC = () => {
                                             <div>
                                                 <div style={{ fontWeight: 'bold', color: 'var(--c-dark-blue)' }}>{card.number}</div>
                                             </div>
-                                            <button type="button" onClick={() => handleRemoveCard(card.id)} className="btn-outline" style={{ marginLeft: 'auto', color: 'var(--c-bright-red)', borderColor: 'var(--c-bright-red)' }}>Удалить</button>
+                                            <button type="button" onClick={() => handleRemoveCard(card.id)} className="btn-outline" style={{ marginLeft: 'auto', color: 'var(--c-bright-red)', borderColor: 'var(--c-bright-red)' }}>{t('billing.delete_card')}</button>
                                         </div>
                                     ))}
 
                                     {cards.length === 0 && (
-                                        <p style={{ color: 'var(--c-gray-500)', fontStyle: 'italic' }}>Нет привязанных карт.</p>
+                                        <p style={{ color: 'var(--c-gray-500)', fontStyle: 'italic' }}>{t('billing.no_cards')}</p>
                                     )}
 
                                     <button type="button" onClick={handleAddCard} className="btn-outline" style={{ alignSelf: 'flex-start', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <span className="material-symbols-outlined">add</span> Добавить карту
+                                        <span className="material-symbols-outlined">add</span> {t('billing.add_card')}
                                     </button>
 
                                     <hr style={{ border: 'none', borderTop: '1px solid var(--c-gray-300)', margin: '16px 0' }} />
 
                                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                         <button type="submit" className="btn-primary" disabled={isSaving}>
-                                            {isSaving ? 'Сохранение...' : 'Сохранить изменения'}
+                                            {isSaving ? t('billing.saving') : t('billing.save_changes')}
                                         </button>
                                     </div>
                                 </form>

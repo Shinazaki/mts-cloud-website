@@ -66,17 +66,17 @@ export const Header: React.FC = () => {
 
         <button className={styles['btn-secondary']} onClick={() => navigate('/servers/create')}>
           <span className="material-symbols-outlined">add</span>
-          {t('create')}
+          {t('header.create')}
         </button>
 
         {/* ── Icon group ── */}
         <div className={styles['icon-group']}>
-          <button className={styles['icon-btn']} title={t('support')} onClick={() => navigate('/support')}>
+          <button className={styles['icon-btn']} title={t('sidebar.support')} onClick={() => navigate('/support')}>
             <span className="material-symbols-outlined">help</span>
           </button>
 
           <div style={{ position: 'relative' }} ref={notifRef}>
-            <button className={styles['icon-btn']} title={t('notifications')} onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}>
+            <button className={styles['icon-btn']} title={t('header.notifications')} onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}>
               <span className="material-symbols-outlined">feedback</span>
             </button>
             <AnimatePresence initial={false}>
@@ -90,17 +90,17 @@ export const Header: React.FC = () => {
                   style={{ minWidth: '260px', padding: '16px' }}
                 >
                   <h4 style={{ margin: '0 0 10px', fontSize: '15px', color: 'var(--c-dark-blue)' }}>
-                    {t('notifications')}
+                    {t('header.notifications')}
                   </h4>
                   <p style={{ fontSize: '13px', color: 'var(--c-gray-500)', textAlign: 'center', padding: '12px 0' }}>
-                    {t('no_notifications')}
+                    {t('header.no_notifications')}
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          <button className={styles['icon-btn']} title={t('whatsNew')} onClick={() => navigate('/whats-new')}>
+          <button className={styles['icon-btn']} title={t('sidebar.whatsNew')} onClick={() => navigate('/whats-new')}>
             <span className="material-symbols-outlined">article</span>
           </button>
         </div>
@@ -113,7 +113,7 @@ export const Header: React.FC = () => {
           <div className={styles['account-info']} onClick={() => setIsAccountOpen(!isAccountOpen)}>
             <div className={styles['account-text']}>
               <span className={styles['account-name']}>{displayName}</span>
-              <span className={styles['account-balance']}>{t('balance')}: {balance} BYN</span>
+              <span className={styles['account-balance']}>{t('header.balance')}: {balance} BYN</span>
             </div>
             <div className={styles['avatar-wrapper']}>
               <button className={styles['avatar-btn']} tabIndex={-1} aria-hidden="true">
@@ -132,10 +132,10 @@ export const Header: React.FC = () => {
                 className={styles['account-dropdown-menu']}
               >
                 <button className={styles['dropdown-item']} onClick={() => { setIsAccountOpen(false); navigate('/settings'); }}>
-                  <span className="material-symbols-outlined">settings</span> {t('settings')}
+                  <span className="material-symbols-outlined">settings</span> {t('sidebar.settings')}
                 </button>
                 <button className={styles['dropdown-item']} onClick={handleLogout}>
-                  <span className="material-symbols-outlined">logout</span> {t('logout')}
+                  <span className="material-symbols-outlined">logout</span> {t('header.logout')}
                 </button>
               </motion.div>
             )}

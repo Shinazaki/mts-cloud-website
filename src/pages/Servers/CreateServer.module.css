@@ -70,17 +70,20 @@
     color: var(--c-dark-blue);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: border-color 0.2s, background-color 0.2s, color 0.2s, transform 0.18s ease, box-shadow 0.2s;
 }
 
 .option-card:hover {
     border-color: var(--c-gray-400);
+    transform: translateY(-1px);
 }
 
 .option-card.active {
     border-color: var(--c-red);
     background-color: rgba(193, 18, 31, 0.05);
     color: var(--c-red);
+    box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.12);
+    animation: select-pop 0.2s ease-out;
 }
 
 /* Tariff Grid */
@@ -109,6 +112,8 @@
 .tariff-card.active {
     border-color: var(--c-red);
     background-color: rgba(193, 18, 31, 0.05);
+    box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.12);
+    animation: select-pop 0.2s ease-out;
 }
 
 .tariff-name {
@@ -213,6 +218,16 @@
     background: var(--c-red);
     color: white;
     border-color: var(--c-red);
+    animation: select-pop 0.2s ease-out;
+}
+
+@keyframes select-pop {
+    0% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Toggle Switch Checkbox */

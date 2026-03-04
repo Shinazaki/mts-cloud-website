@@ -28,7 +28,7 @@ export const ServerConfig: React.FC = () => {
         setIsSaving(true);
         setTimeout(() => {
             setIsSaving(false);
-            alert(t('settings_saved') || 'Изменения сохранены!');
+            alert(t('servers.settings_saved'));
             navigate('/servers');
         }, 800);
     };
@@ -40,7 +40,7 @@ export const ServerConfig: React.FC = () => {
                     <button className={styles['btn-outline']} onClick={() => navigate(-1)}>
                         <span className="material-symbols-outlined" style={{ fontSize: '28px', color: 'var(--c-dark-blue)' }}>arrow_back</span>
                     </button>
-                    <h1 className={styles['page-title']}>Изменение конфигурации</h1>
+                    <h1 className={styles['page-title']}>{t('server_config.page_title')}</h1>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@ export const ServerConfig: React.FC = () => {
 
                 <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                     <div className="form-group">
-                        <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>Процессор (CPU)</label>
+                        <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>{t('server_config.cpu_label')}</label>
                         <div style={{ position: 'relative' }}>
                             <select
                                 value={server.cpu}
@@ -74,7 +74,7 @@ export const ServerConfig: React.FC = () => {
                     </div>
 
                     <div className="form-group">
-                        <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>Оперативная память (RAM)</label>
+                        <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>{t('server_config.ram_label')}</label>
                         <div style={{ position: 'relative' }}>
                             <select
                                 value={server.ram}
@@ -99,7 +99,7 @@ export const ServerConfig: React.FC = () => {
                     </div>
 
                     <div className="form-group">
-                        <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>Накопитель (Disk)</label>
+                        <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>{t('server_config.disk_label')}</label>
                         <div style={{ position: 'relative' }}>
                             <select
                                 value={server.disk}
@@ -125,10 +125,10 @@ export const ServerConfig: React.FC = () => {
 
                     <div style={{ marginTop: '32px', display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
                         <button type="button" className={styles['btn-outline']} onClick={() => navigate(-1)}>
-                            {t('cancel')}
+                            {t('common.cancel')}
                         </button>
                         <button type="submit" className={styles['btn-primary']} disabled={isSaving} style={{ padding: '12px 32px' }}>
-                            {isSaving ? 'Применяем...' : t('save')}
+                            {isSaving ? t('common.saving') : t('common.save')}
                         </button>
                     </div>
                 </form>

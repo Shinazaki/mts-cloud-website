@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/client';
 import { useAuth } from '../../hooks/useAuth';
+import { useSettings } from '../../hooks/useSettings';
 import styles from '../../layouts/AuthLayout.module.css';
 
 export const Register: React.FC = () => {
@@ -19,6 +20,7 @@ export const Register: React.FC = () => {
 
     const navigate = useNavigate();
     const { login } = useAuth();
+    const { t } = useSettings();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,7 +46,7 @@ export const Register: React.FC = () => {
                 phoneNumber: response.data?.phoneNumber ?? formData.phoneNumber,
             };
             if (!token) {
-                throw new Error('Токен не получен от сервера');
+                throw new Error(t('auth.error_token'));
             }
             
             login(token, user);
@@ -55,7 +57,7 @@ export const Register: React.FC = () => {
             const message = errorData.response?.data?.message;
             const finalMessage = typeof message === 'string'
                 ? message
-                : (Array.isArray(message) ? message.join(', ') : (errorData.message || 'Ошибка регистрации'));
+                : (Array.isArray(message) ? message.join(', ') : (errorData.message || t('auth.error_register')));
             setError(finalMessage);
         } finally {
             setLoading(false);
@@ -64,41 +66,41 @@ export const Register: React.FC = () => {
 
     return (
         <form className={styles['auth-form-container']} onSubmit={handleSubmit}>
-            <h2 className={styles['auth-form-title']}>Регистрация</h2>
+            <h2 className={styles['auth-form-title']}>{t('auth.register_title')}</h2>
 
             {error && <div style={{ color: 'var(--c-bright-red)', marginBottom: '16px', fontSize: '14px' }}>{error}</div>}
 
             <div className={styles['auth-input-wrapper']}>
-                <input type="text" className={styles['auth-input']} name="username" placeholder="Логин" value={formData.username} onChange={handleChange} required disabled={loading} />
+                <input type="text" className={styles['auth-input']} name="username" placeholder={t('auth.login_placeholder')} value={formData.username} onChange={handleChange} required disabled={loading} />
                 <span className={`material-symbols-outlined ${styles['auth-input-icon']}`}>person</span>
             </div>
 
             <div className={styles['auth-input-wrapper']}>
-                <input type="password" className={styles['auth-input']} name="password" placeholder="Пароль" value={formData.password} onChange={handleChange} required minLength={8} disabled={loading} />
+                <input type="password" className={styles['auth-input']} name="password" placeholder={t('auth.password_placeholder')} value={formData.password} onChange={handleChange} required minLength={8} disabled={loading} />
                 <span className={`material-symbols-outlined ${styles['auth-input-icon']}`}>lock</span>
             </div>
 
             <div className={styles['auth-input-wrapper']}>
-                <input type="email" className={styles['auth-input']} name="email" placeholder="Электронная почта" value={formData.email} onChange={handleChange} required disabled={loading} />
+                <input type="email" className={styles['auth-input']} name="email" placeholder={t('auth.email_placeholder')} value={formData.email} onChange={handleChange} required disabled={loading} />
                 <span className={`material-symbols-outlined ${styles['auth-input-icon']}`}>mail</span>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                 <div className={styles['auth-input-wrapper']}>
-                    <input type="text" className={styles['auth-input']} name="lastName" placeholder="Фамилия" value={formData.lastName} onChange={handleChange} required disabled={loading} />
+                    <input type="text" className={styles['auth-input']} name="lastName" placeholder={t('auth.last_name_placeholder')} value={formData.lastName} onChange={handleChange} required disabled={loading} />
                 </div>
                 <div className={styles['auth-input-wrapper']}>
-                    <input type="text" className={styles['auth-input']} name="firstName" placeholder="Имя" value={formData.firstName} onChange={handleChange} required disabled={loading} />
+                    <input type="text" className={styles['auth-input']} name="firstName" placeholder={t('auth.first_name_placeholder')} value={formData.firstName} onChange={handleChange} required disabled={loading} />
                 </div>
             </div>
 
             <div className={styles['auth-input-wrapper']}>
-                <input type="tel" className={styles['auth-input']} name="phoneNumber" placeholder="Номер телефона" value={formData.phoneNumber} onChange={handleChange} required disabled={loading} />
+                <input type="tel" className={styles['auth-input']} name="phoneNumber" placeholder={t('auth.phone_placeholder')} value={formData.phoneNumber} onChange={handleChange} required disabled={loading} />
                 <span className={`material-symbols-outlined ${styles['auth-input-icon']}`}>phone</span>
             </div>
 
             <button type="submit" className={styles['auth-submit-btn']} disabled={loading}>
-                {loading ? 'Регистрация...' : 'Зарегистрироваться'}
+                {loading ? t('auth.register_loading') : t('auth.register_btn')}
             </button>
         </form>
     );

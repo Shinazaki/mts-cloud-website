@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../api/client';
 import { useAuth } from '../../hooks/useAuth';
+import { useSettings } from '../../hooks/useSettings';
 import styles from '../../layouts/AuthLayout.module.css';
 
 export const Login: React.FC = () => {
@@ -12,6 +13,7 @@ export const Login: React.FC = () => {
 
     const { login } = useAuth();
     const navigate = useNavigate();
+    const { t } = useSettings();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,14 +36,14 @@ export const Login: React.FC = () => {
                 phoneNumber: response.data?.phoneNumber,
             };
             if (!token) {
-                throw new Error('Токен не получен от сервера');
+                throw new Error(t('auth.error_token'));
             }
             
             login(token, user);
             navigate('/servers');
         } catch (err: unknown) {
             const errorData = err as { response?: { data?: { message?: string } } };
-            setError(errorData.response?.data?.message || 'Неверные учетные данные');
+            setError(errorData.response?.data?.message || t('auth.error_credentials'));
         } finally {
             setLoading(false);
         }
@@ -49,7 +51,7 @@ export const Login: React.FC = () => {
 
     return (
         <form className={styles['auth-form-container']} onSubmit={handleSubmit}>
-            <h2 className={styles['auth-form-title']}>Вход в аккаунт</h2>
+            <h2 className={styles['auth-form-title']}>{t('auth.login_title')}</h2>
 
             {error && <div style={{ color: 'var(--c-bright-red)', marginBottom: '16px', fontSize: '14px' }}>{error}</div>}
 
@@ -57,7 +59,7 @@ export const Login: React.FC = () => {
                 <input
                     type="text"
                     className={styles['auth-input']}
-                    placeholder="Логин (Username)"
+                    placeholder={t('auth.username_placeholder')}
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
@@ -69,7 +71,7 @@ export const Login: React.FC = () => {
                 <input
                     type="password"
                     className={styles['auth-input']}
-                    placeholder="Пароль"
+                    placeholder={t('auth.password_placeholder')}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -78,7 +80,7 @@ export const Login: React.FC = () => {
             </div>
 
             <button type="submit" className={styles['auth-submit-btn']} disabled={loading}>
-                {loading ? 'Вход...' : 'Войти'}
+                {loading ? t('auth.sign_in_loading') : t('auth.sign_in')}
             </button>
         </form>
     );

@@ -32,6 +32,13 @@ export const Servers: React.FC = () => {
     const navigate = useNavigate();
     const { t } = useSettings();
 
+    const formatText = (template: string, params: Record<string, string>) => {
+        return Object.entries(params).reduce(
+            (acc, [key, value]) => acc.replaceAll(`{${key}}`, value),
+            template
+        );
+    };
+
     // Quick handle outside clicks for dropdowns
     useEffect(() => {
         const handleClick = () => setOpenDropdownId(null);
@@ -49,13 +56,14 @@ export const Servers: React.FC = () => {
     };
 
     const handleDestroy = (id: string, name: string) => {
-        if (window.confirm(`Вы уверены, что хотите уничтожить сервер "${name}"? Это действие необратимо.`)) {
+        const confirmText = formatText(t('servers.destroy_confirm'), { name });
+        if (window.confirm(confirmText)) {
             setLocalServers(servers.filter(s => s.id !== id));
         }
     };
 
     const handleSimulate = (action: string) => {
-        alert(`Интерактивное действие: ${action}\n(Заглушка, пока нет интеграции с бэкендом)`);
+        alert(formatText(t('servers.action_stub'), { action }));
     };
 
     const handleSaveEdit = (e: React.FormEvent) => {
@@ -69,9 +77,9 @@ export const Servers: React.FC = () => {
     return (
         <div className={styles['page-container'] + " " + styles['servers-page']}>
             <div className={styles['page-header']}>
-                <h1 className={styles['page-title']}>{t('servers')}</h1>
+                <h1 className={styles['page-title']}>{t('servers.title')}</h1>
                 <button className={styles['btn-primary']} onClick={() => navigate('/servers/create')}>
-                    {t('create_server')} <span className="material-symbols-outlined">add</span>
+                    {t('servers.create_server')} <span className="material-symbols-outlined">add</span>
                 </button>
             </div>
 
@@ -79,30 +87,30 @@ export const Servers: React.FC = () => {
                 <input
                     type="text"
                     className={styles['search-input']}
-                    placeholder="Найти сервер по названию..."
+                    placeholder={t('servers.search_placeholder')}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
             </div>
 
-            {isLoading && <div style={{ padding: '20px' }}>Загрузка серверов...</div>}
-            {isError && <div style={{ padding: '20px', color: 'red' }}>Ошибка при загрузке серверов.</div>}
+            {isLoading && <div style={{ padding: '20px' }}>{t('servers.loading')}</div>}
+            {isError && <div style={{ padding: '20px', color: 'red' }}>{t('servers.load_error')}</div>}
 
             {!isLoading && !isError && (
                 <div className={styles['table-container']}>
                     <table className={styles['data-table']}>
                         <thead>
                             <tr>
-                                <th>Название</th>
+                                <th>{t('servers.table_name')}</th>
                                 <th>IP Adress</th>
-                                <th>Создан</th>
+                                <th>{t('servers.table_created')}</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <AnimatePresence initial={false}>
                             {filteredServers.length === 0 ? (
-                                <motion.tr initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><td colSpan={4} style={{ textAlign: 'center', padding: '32px' }}>Серверы не найдены</td></motion.tr>
+                                <motion.tr initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><td colSpan={4} style={{ textAlign: 'center', padding: '32px' }}>{t('servers.not_found')}</td></motion.tr>
                             ) : filteredServers.map((server, i) => (
                                 <motion.tr 
                                     key={server.id}
@@ -129,13 +137,13 @@ export const Servers: React.FC = () => {
                                             className={styles['btn-outline']}
                                             onClick={(e) => { e.stopPropagation(); navigate(`/servers/${server.id}/config`); }}
                                         >
-                                            Расширить
+                                            {t('servers.expand')}
                                         </button>
                                         <button
                                             className={styles['btn-ghost']}
                                             onClick={(e) => handleActionClick(e, server.id)}
                                         >
-                                            Ещё <span className="material-symbols-outlined">expand_more</span>
+                                            {t('servers.more')} <span className="material-symbols-outlined">expand_more</span>
                                         </button>
 
                                         <AnimatePresence initial={false}>
@@ -147,9 +155,9 @@ export const Servers: React.FC = () => {
                                                 transition={{ duration: 0.15 }}
                                                 className={styles['row-action-dropdown']}
                                             >
-                                                <button onClick={() => handleSimulate('Доступ к терминалу')}>Доступ к терминалу</button>
-                                                <button onClick={() => handleSimulate('Посмотреть использование')}>Использование ресурсов</button>
-                                                <button className={styles['danger-text']} onClick={() => handleDestroy(server.id, server.name)}>Уничтожить</button>
+                                                <button onClick={() => handleSimulate(t('servers.terminal_access'))}>{t('servers.terminal_access')}</button>
+                                                <button onClick={() => handleSimulate(t('servers.resource_usage'))}>{t('servers.resource_usage')}</button>
+                                                <button className={styles['danger-text']} onClick={() => handleDestroy(server.id, server.name)}>{t('servers.destroy')}</button>
                                             </motion.div>
                                         )}
                                         </AnimatePresence>
@@ -166,14 +174,14 @@ export const Servers: React.FC = () => {
                 <div className={styles['modal-overlay']} onClick={() => setEditingServer(null)}>
                     <div className={styles['modal-content']} onClick={e => e.stopPropagation()}>
                         <div className={styles['modal-header']}>
-                            <h2>{t('edit_server')}</h2>
+                            <h2>{t('servers.edit_server')}</h2>
                             <button className={styles['close-btn']} onClick={() => setEditingServer(null)}>
                                 <span className="material-symbols-outlined">close</span>
                             </button>
                         </div>
                         <form onSubmit={handleSaveEdit} className={styles['edit-server-form']}>
                             <div className={styles['form-group']}>
-                                <label>{t('server_name_label')}</label>
+                                <label>{t('servers.server_name_label')}</label>
                                 <input
                                     type="text"
                                     value={editingServer.name}
@@ -182,7 +190,7 @@ export const Servers: React.FC = () => {
                                 />
                             </div>
                             <div className={styles['form-group']}>
-                                <label>{t('characteristics_label')}</label>
+                                <label>{t('servers.characteristics_label')}</label>
                                 <textarea
                                     value={editingServer.characteristics}
                                     onChange={e => setEditingServer({ ...editingServer, characteristics: e.target.value })}
@@ -191,10 +199,10 @@ export const Servers: React.FC = () => {
                             </div>
                             <div className={styles['modal-actions']}>
                                 <button type="button" className={styles['btn-outline']} onClick={() => setEditingServer(null)}>
-                                    {t('cancel')}
+                                    {t('common.cancel')}
                                 </button>
                                 <button type="submit" className={styles['btn-primary']}>
-                                    {t('save')}
+                                    {t('common.save')}
                                 </button>
                             </div>
                         </form>

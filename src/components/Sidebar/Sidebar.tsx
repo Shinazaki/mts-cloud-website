@@ -30,7 +30,7 @@ export const Sidebar: React.FC = () => {
                         onClick={() => setIsProjectsOpen(!isProjectsOpen)}
                         aria-expanded={isProjectsOpen}
                     >
-                        {t('projects')}
+                        {t('sidebar.projects')}
                         <span className={`material-symbols-outlined ${styles['chevron']} ${isProjectsOpen ? styles['chevron-open'] : ''}`}>
                             expand_more
                         </span>
@@ -62,7 +62,7 @@ export const Sidebar: React.FC = () => {
                         onClick={() => setIsManagementOpen((prev) => !prev)}
                         aria-expanded={isManagementOpen}
                     >
-                        {t('management')}
+                        {t('sidebar.management')}
                         <span className={`material-symbols-outlined ${styles['chevron']} ${isManagementOpen ? styles['chevron-open'] : ''}`}>expand_more</span>
                     </button>
 
@@ -77,22 +77,22 @@ export const Sidebar: React.FC = () => {
                             >
                                 <li>
                                     <NavLink to="/servers" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>dns</span> {t('servers')}
+                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>dns</span> {t('sidebar.servers')}
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/backups" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>cloud_sync</span> {t('backups')}
+                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>cloud_sync</span> {t('sidebar.backups')}
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/monitoring" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>monitoring</span> {t('monitoring')}
+                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>monitoring</span> {t('sidebar.monitoring')}
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/traffic" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>swap_horiz</span> {t('traffic')}
+                                        <span className={`material-symbols-outlined ${styles['nav-icon']}`}>swap_horiz</span> {t('sidebar.traffic')}
                                     </NavLink>
                                 </li>
                             </motion.ul>
@@ -106,32 +106,32 @@ export const Sidebar: React.FC = () => {
                     <ul className={styles['nav-list']}>
                         <li>
                             <NavLink to="/billing" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>payments</span> {t('billing')}
+                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>payments</span> {t('sidebar.billing')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/support" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>support_agent</span> {t('support')}
+                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>support_agent</span> {t('sidebar.support')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/settings" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>settings</span> {t('settings')}
+                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>settings</span> {t('sidebar.settings')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/api" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>api</span> {t('api')}
+                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>api</span> {t('sidebar.api')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/qa" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>help_center</span> {t('qa')}
+                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>help_center</span> {t('sidebar.qa')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/whats-new" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
-                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>new_releases</span> {t('whatsNew')}
+                                <span className={`material-symbols-outlined ${styles['nav-icon']}`}>new_releases</span> {t('sidebar.whatsNew')}
                             </NavLink>
                         </li>
                     </ul>

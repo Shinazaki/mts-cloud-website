@@ -44,6 +44,16 @@
     position: relative;
     z-index: 1;
     /* Keep border over siblings */
+    animation: tab-select-pop 0.2s ease-out;
+}
+
+@keyframes tab-select-pop {
+    0% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Red line below tabs spanning full width */

@@ -64,7 +64,7 @@ export const CreateServer: React.FC = () => {
                     <button className={styles['back-btn']} onClick={() => navigate('/servers')}>
                         <span className="material-symbols-outlined">arrow_back</span>
                     </button>
-                    <h1 className="page-title">{t('create_server')}</h1>
+                    <h1 className="page-title">{t('create_server.title')}</h1>
                 </div>
             </div>
 
@@ -72,20 +72,20 @@ export const CreateServer: React.FC = () => {
 
                 {/* 1. Region */}
                 <div className={`${styles['form-section']} animate-enter-d1`}>
-                    <h2>1. {t('region') || 'Регион'}</h2>
+                    <h2>1. {t('create_server.section_region')}</h2>
                     <div className={styles['options-grid']}>
                         <button type="button" className={`${styles['option-card']} ${region === 'Moscow' ? styles['active'] : ''}`} onClick={() => setRegion('Moscow')}>
-                            {t('region_1') || 'Россия, Москва'}
+                            {t('create_server.region_moscow')}
                         </button>
                         <button type="button" className={`${styles['option-card']} ${region === 'Minsk' ? styles['active'] : ''}`} onClick={() => setRegion('Minsk')}>
-                            {t('region_2') || 'Беларусь, Минск'}
+                            {t('create_server.region_minsk')}
                         </button>
                     </div>
                 </div>
 
                 {/* 2. Operating System */}
                 <div className={`${styles['form-section']} animate-enter-d2`}>
-                    <h2>2. {t('os') || 'Операционная система'}</h2>
+                    <h2>2. {t('create_server.section_os')}</h2>
                     <div className={styles['options-grid']} style={{ marginBottom: '16px' }}>
                         <button type="button" className={`${styles['option-card']} ${osClass === 'Ubuntu' ? styles['active'] : ''}`} onClick={() => { setOsClass('Ubuntu'); setOsVersion('22.04 LTS'); }}>
                             <span className="material-symbols-outlined">terminal</span> Ubuntu
@@ -99,7 +99,7 @@ export const CreateServer: React.FC = () => {
                     </div>
 
                     <div className={styles['version-selector']}>
-                        <label>Версия {osClass}:</label>
+                        <label>{t('create_server.os_version_label')} {osClass}:</label>
                         <select
                             className={styles['select-input']}
                             value={osVersion}
@@ -132,7 +132,7 @@ export const CreateServer: React.FC = () => {
 
                 {/* 3. Tariff Plan (Hardware Presets) */}
                 <div className={`${styles['form-section']} animate-enter-d3`}>
-                    <h2>3. Тарифный план (Пресеты)</h2>
+                    <h2>3. {t('create_server.section_tariff')}</h2>
                     <div className={styles['tariff-grid']}>
                         {TARIFFS.map(tariff => (
                             <div
@@ -144,7 +144,7 @@ export const CreateServer: React.FC = () => {
                                 <div className={styles['tariff-specs']}>
                                     <span>{tariff.cpu} vCPU</span> • <span>{tariff.ram} GB RAM</span> • <span>{tariff.disk} GB NVMe</span>
                                 </div>
-                                <div className={styles['tariff-price']}>{tariff.price} BYN / мес</div>
+                                <div className={styles['tariff-price']}>{tariff.price} {t('create_server.price_per_month')}</div>
                             </div>
                         ))}
                     </div>
@@ -152,7 +152,7 @@ export const CreateServer: React.FC = () => {
 
                 {/* 4. Settings (Backups, Auth Method, Name) */}
                 <div className={`${styles['form-section']} animate-enter-d4`}>
-                    <h2>4. Настройки доступа и сервера</h2>
+                    <h2>4. {t('create_server.section_access')}</h2>
 
                     <div className={styles['settings-group']}>
                         <label className={styles['toggle-label']}>
@@ -163,28 +163,28 @@ export const CreateServer: React.FC = () => {
                                 onChange={(e) => setEnableBackups(e.target.checked)}
                             />
                             <div className={styles['toggle-text']}>
-                                <strong>Включить автоматические бэкапы</strong>
-                                <span>Ежедневное создание копий. Отображаются на вкладке "Бэкапы". (+20% к стоимости)</span>
+                                <strong>{t('create_server.enable_backups')}</strong>
+                                <span>{t('create_server.backups_desc')}</span>
                             </div>
                         </label>
                     </div>
 
                     <div className={styles['settings-group']}>
-                        <label className={styles['input-label']}>Способ авторизации</label>
+                        <label className={styles['input-label']}>{t('create_server.auth_method')}</label>
                         <div className={styles['auth-method-tabs']}>
                             <button
                                 type="button"
                                 className={authMethod === 'password' ? styles['auth-tab-active'] : styles['auth-tab']}
                                 onClick={() => setAuthMethod('password')}
                             >
-                                Пароль
+                                {t('create_server.auth_password')}
                             </button>
                             <button
                                 type="button"
                                 className={authMethod === 'ssh' ? styles['auth-tab-active'] : styles['auth-tab']}
                                 onClick={() => setAuthMethod('ssh')}
                             >
-                                SSH Ключ
+                                {t('create_server.auth_ssh')}
                             </button>
                         </div>
 
@@ -192,7 +192,7 @@ export const CreateServer: React.FC = () => {
                             <input
                                 type="password"
                                 className={styles['text-input']}
-                                placeholder="Задайте пароль для пользователя root"
+                                placeholder={t('create_server.password_placeholder')}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -200,7 +200,7 @@ export const CreateServer: React.FC = () => {
                         ) : (
                             <textarea
                                 className={`${styles['text-input']} ${styles['textarea-input']}`}
-                                placeholder="Вставьте ваш открытый SSH ключ (ssh-rsa ...)"
+                                placeholder={t('create_server.ssh_placeholder')}
                                 value={sshKey}
                                 onChange={(e) => setSshKey(e.target.value)}
                                 required
@@ -209,11 +209,11 @@ export const CreateServer: React.FC = () => {
                     </div>
 
                     <div className={styles['settings-group']}>
-                        <label className={styles['input-label']}>{t('server_name_label') || 'Название сервера'}</label>
+                        <label className={styles['input-label']}>{t('create_server.server_name_label')}</label>
                         <input
                             type="text"
                             className={styles['text-input']}
-                            placeholder="Мой сервер"
+                            placeholder={t('create_server.server_name_placeholder')}
                             value={serverName}
                             onChange={(e) => setServerName(e.target.value)}
                             required
@@ -223,9 +223,9 @@ export const CreateServer: React.FC = () => {
 
                 {/* Actions */}
                 <div className={`${styles['form-actions']} animate-enter-d4`}>
-                    <button type="button" className={styles['btn-cancel']} onClick={() => navigate('/servers')}>{t('cancel')}</button>
+                    <button type="button" className={styles['btn-cancel']} onClick={() => navigate('/servers')}>{t('common.cancel')}</button>
                     <button type="submit" className="btn-primary">
-                        {t('create_server')}
+                        {t('create_server.title')}
                     </button>
                 </div>
             </form>

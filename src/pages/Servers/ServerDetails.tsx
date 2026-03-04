@@ -34,7 +34,7 @@ export const ServerDetails: React.FC = () => {
                         <span className="material-symbols-outlined">restart_alt</span>
                     </button>
                     <button className={styles['btn-primary']}>
-                        {t('configuration')}
+                        {t('servers.configuration')}
                     </button>
                 </div>
             </div>
@@ -42,7 +42,7 @@ export const ServerDetails: React.FC = () => {
             <div className="server-details-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', marginTop: '32px' }}>
                 <div className="details-main">
                     <div className="card animate-enter">
-                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>Общая информация</h3>
+                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>{t('server_details.general_info')}</h3>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                             <div className="info-item">
                                 <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>IP Adress</label>
@@ -53,35 +53,35 @@ export const ServerDetails: React.FC = () => {
                                 <span style={{ fontWeight: 600 }}>{server.os}</span>
                             </div>
                             <div className="info-item">
-                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>Статус</label>
+                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>{t('server_details.status')}</label>
                                 <span style={{ color: '#10B981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
                                     <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981' }}></span>
                                     {server.status}
                                 </span>
                             </div>
                             <div className="info-item">
-                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>Аптайм</label>
+                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>{t('server_details.uptime')}</label>
                                 <span style={{ fontWeight: 600 }}>{server.uptime}</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="card animate-enter-d1">
-                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>Конфигурация</h3>
+                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>{t('server_details.server_configuration')}</h3>
                         <p style={{ fontSize: '15px', lineHeight: '1.6' }}>{server.characteristics}</p>
                     </div>
                 </div>
 
                 <div className="details-sidebar">
                     <div className="card animate-enter-d2">
-                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>История изменений</h3>
+                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>{t('server_details.change_history')}</h3>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                             <div style={{ fontSize: '14px', borderLeft: '2px solid var(--c-red)', paddingLeft: '12px' }}>
-                                <div style={{ fontWeight: 600 }}>Создание сервера</div>
+                                <div style={{ fontWeight: 600 }}>{t('server_details.event_created')}</div>
                                 <div style={{ color: 'var(--c-gray-500)', marginTop: '4px', fontSize: '12px' }}>{server.created}</div>
                             </div>
                             <div style={{ fontSize: '14px', borderLeft: '2px solid var(--c-gray-300)', paddingLeft: '12px' }}>
-                                <div style={{ fontWeight: 600 }}>Обновление конфигурации</div>
+                                <div style={{ fontWeight: 600 }}>{t('server_details.event_config_update')}</div>
                                 <div style={{ color: 'var(--c-gray-500)', marginTop: '4px', fontSize: '12px' }}>15.11.2023</div>
                             </div>
                         </div>

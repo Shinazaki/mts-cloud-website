@@ -1,0 +1,206 @@
+{
+  "_comment": "Русская локализация — MTC Cloud",
+
+  "sidebar": {
+    "projects": "Проекты",
+    "management": "Управление",
+    "servers": "Серверы",
+    "backups": "Бэкапы",
+    "monitoring": "Мониторинг",
+    "traffic": "Трафик",
+    "billing": "Счета и оплата",
+    "support": "Поддержка",
+    "settings": "Настройки",
+    "api": "API",
+    "qa": "Q&A",
+    "whatsNew": "Что нового?"
+  },
+
+  "header": {
+    "create": "Создать",
+    "create_server": "Создать сервер",
+    "account": "Аккаунт",
+    "balance": "На балансе",
+    "logout": "Выйти",
+    "notifications": "Уведомления",
+    "no_notifications": "Нет новых уведомлений"
+  },
+
+  "auth": {
+    "login_title": "Вход в аккаунт",
+    "username_placeholder": "Логин (Username)",
+    "password_placeholder": "Пароль",
+    "sign_in_loading": "Вход...",
+    "sign_in": "Войти",
+    "register_title": "Регистрация",
+    "login_placeholder": "Логин",
+    "email_placeholder": "Электронная почта",
+    "first_name_placeholder": "Имя",
+    "last_name_placeholder": "Фамилия",
+    "phone_placeholder": "Номер телефона",
+    "register_loading": "Регистрация...",
+    "register_btn": "Зарегистрироваться",
+    "error_credentials": "Неверные учетные данные",
+    "error_token": "Токен не получен от сервера",
+    "error_register": "Ошибка регистрации"
+  },
+
+  "settings": {
+    "profile_settings": "Настройки профиля",
+    "tab_profile": "Профиль",
+    "tab_activity": "Активность",
+    "activity_empty": "История активности пока недоступна",
+    "sign_out": "Выйти",
+
+    "profile_data": "Данные профиля",
+    "last_name": "Фамилия",
+    "first_name": "Имя",
+    "middle_name": "Отчество",
+    "email": "Email",
+    "phone_number": "Номер телефона",
+    "save_profile": "Сохранить профиль",
+    "profile_updated": "Профиль успешно обновлён",
+
+    "change_password": "Смена пароля",
+    "new_password": "Новый пароль",
+    "new_password_placeholder": "Минимум 8 символов",
+    "confirm_password": "Повторите новый пароль",
+    "password_session_warning": "После смены пароля все другие активные сессии будут завершены автоматически.",
+    "change_password_btn": "Изменить пароль",
+    "password_changed": "Пароль изменён. Все другие сессии завершены.",
+    "pass_mismatch": "Новые пароли не совпадают",
+    "pass_too_short": "Пароль должен быть не менее 8 символов",
+    "pass_wrong": "Неверный пароль",
+    "pass_duplicate": "Новый пароль совпадает с текущим",
+
+    "interface_lang": "Язык интерфейса",
+    "lang_ru": "Русский",
+    "lang_en": "English",
+
+    "theme": "Тема оформления",
+    "theme_light": "Светлая",
+    "theme_dark": "Тёмная",
+    "theme_system": "Системная",
+
+    "confirm_profile_title": "Подтвердите изменения",
+    "confirm_password_title": "Подтвердите смену пароля",
+    "confirm_profile_desc": "Введите текущий пароль для сохранения изменений профиля",
+    "confirm_pass_desc": "Введите текущий пароль для подтверждения операции",
+    "current_password_placeholder": "Текущий пароль",
+    "enter_current_password": "Введите текущий пароль",
+    "confirm_btn": "Подтвердить",
+    "security_2fa": "Безопасность (2FA)",
+    "two_factor_auth": "Двухфакторная аутентификация",
+    "setup_authenticator": "Настроить Google Authenticator"
+  },
+
+  "servers": {
+    "title": "Серверы",
+    "create_server": "Создать сервер",
+    "search_placeholder": "Найти сервер по названию...",
+    "loading": "Загрузка серверов...",
+    "load_error": "Ошибка при загрузке серверов.",
+    "table_name": "Название",
+    "table_ip": "IP-адрес",
+    "table_created": "Создан",
+    "not_found": "Серверы не найдены",
+    "expand": "Расширить",
+    "more": "Ещё",
+    "terminal_access": "Доступ к терминалу",
+    "resource_usage": "Использование ресурсов",
+    "destroy": "Уничтожить",
+    "destroy_confirm": "Вы уверены, что хотите уничтожить сервер \"{name}\"? Это действие необратимо.",
+    "action_stub": "Интерактивное действие: {action}\n(Заглушка, пока нет интеграции с бэкендом)",
+    "edit_server": "Редактировать сервер",
+    "server_name_label": "Название сервера",
+    "characteristics_label": "Характеристики",
+    "settings_saved": "Изменения успешно сохранены!",
+    "configuration": "Конфигурация"
+  },
+
+  "server_details": {
+    "general_info": "Общая информация",
+    "status": "Статус",
+    "uptime": "Аптайм",
+    "server_configuration": "Конфигурация",
+    "change_history": "История изменений",
+    "event_created": "Создание сервера",
+    "event_config_update": "Обновление конфигурации"
+  },
+
+  "server_config": {
+    "page_title": "Изменение конфигурации",
+    "cpu_label": "Процессор (CPU)",
+    "ram_label": "Оперативная память (RAM)",
+    "disk_label": "Дисковое пространство (GB)"
+  },
+
+  "create_server": {
+    "title": "Создать сервер",
+    "section_region": "Регион",
+    "region_moscow": "Россия, Москва",
+    "region_minsk": "Беларусь, Минск",
+    "section_os": "Операционная система",
+    "os_version_label": "Версия",
+    "section_tariff": "Тарифный план",
+    "price_per_month": "BYN / мес",
+    "section_access": "Настройки доступа и сервера",
+    "enable_backups": "Включить автоматические бэкапы",
+    "backups_desc": "Ежедневное создание копий. Отображаются на вкладке «Бэкапы». (+20% к стоимости)",
+    "auth_method": "Способ авторизации",
+    "auth_password": "Пароль",
+    "auth_ssh": "SSH Ключ",
+    "password_placeholder": "Задайте пароль для пользователя root",
+    "ssh_placeholder": "Вставьте ваш открытый SSH ключ (ssh-rsa ...)",
+    "server_name_label": "Название сервера",
+    "server_name_placeholder": "Мой сервер"
+  },
+
+  "billing": {
+    "title": "Счета и оплата",
+    "make_payment": "Сделать платёж",
+    "tab_general": "Общее",
+    "tab_history": "История",
+    "tab_settings": "Настройки оплаты",
+    "balance_label": "Баланс на текущий месяц",
+    "next_payment": "Следующий платёж:",
+    "already_paid": "Уже внесённые средства:",
+    "total_usage": "Итоговое использование:",
+    "history_title": "История оплат",
+    "history_placeholder": "Здесь будет отображаться история транзакций.",
+    "payment_details": "Платежные данные",
+    "owner_name": "ФИО владельца",
+    "billing_address": "Адрес выставления счёта",
+    "postal_code": "Почтовый индекс",
+    "linked_cards": "Привязанные карты",
+    "delete_card": "Удалить",
+    "no_cards": "Нет привязанных карт.",
+    "add_card": "Добавить карту",
+    "saving": "Сохранение...",
+    "save_changes": "Сохранить изменения",
+    "save_success": "Данные успешно сохранены!",
+    "save_error": "Ошибка при сохранении данных."
+  },
+
+  "support": {
+    "title": "Поддержка",
+    "create_ticket": "Создать тикет",
+    "new_ticket_title": "Новое обращение",
+    "subject_label": "Тема",
+    "subject_placeholder": "Кратко опишите проблему",
+    "description_label": "Описание",
+    "description_placeholder": "Подробное описание проблемы...",
+    "submit": "Отправить",
+    "your_tickets": "Ваши обращения",
+    "no_tickets": "У вас пока нет открытых тикетов. Мы всегда рады помочь!",
+    "status_open": "Открыт"
+  },
+
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "confirm": "Подтвердить",
+    "saving": "Сохранение..."
+  }
+}

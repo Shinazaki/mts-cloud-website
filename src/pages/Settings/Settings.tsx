@@ -77,17 +77,17 @@ export const Settings: React.FC = () => {
     const handlePassSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (passForm.newPassword !== passForm.confirmPassword) {
-            setPassError('Новые пароли не совпадают'); return;
+            setPassError(t('settings.pass_mismatch')); return;
         }
         if (passForm.newPassword.length < 8) {
-            setPassError('Пароль должен быть не менее 8 символов'); return;
+            setPassError(t('settings.pass_too_short')); return;
         }
         setModal({ open: true, type: 'password', currentPassword: '', loading: false, error: '' });
     };
 
     const handleModalConfirm = async () => {
         if (!modal.currentPassword) {
-            setModal(m => ({ ...m, error: 'Введите текущий пароль' })); return;
+            setModal(m => ({ ...m, error: t('settings.enter_current_password') })); return;
         }
         setModal(m => ({ ...m, loading: true, error: '' }));
         try {
@@ -100,23 +100,23 @@ export const Settings: React.FC = () => {
                 if (profileForm.phoneNumber) payload.phoneNumber = profileForm.phoneNumber;
                 const response = await api.users.updateProfile(payload);
                 updateUser(response.data);
-                setProfileSuccess('Профиль успешно обновлён');
+                setProfileSuccess(t('settings.profile_updated'));
             } else {
                 await api.auth.changePassword({
                     oldPassword: modal.currentPassword,
                     newPassword: passForm.newPassword,
                 });
-                setPassSuccess('Пароль изменён. Все другие сессии завершены.');
+                setPassSuccess(t('settings.password_changed'));
                 setPassForm({ newPassword: '', confirmPassword: '' });
             }
             setModal(m => ({ ...m, open: false }));
         } catch (err: unknown) {
             const e2 = err as { response?: { data?: { message?: string | string[] } } };
             const msg = e2.response?.data?.message;
-            let errorText = 'Неверный пароль';
+            let errorText = t('settings.pass_wrong');
             if (typeof msg === 'string') {
-                if (msg.includes('PASSWORDS_IS_DUPLICATE')) errorText = 'Новый пароль совпадает с текущим';
-                else if (msg.includes('PASSWORD_IS_INCORRECT')) errorText = 'Неверный пароль';
+                if (msg.includes('PASSWORDS_IS_DUPLICATE')) errorText = t('settings.pass_duplicate');
+                else if (msg.includes('PASSWORD_IS_INCORRECT')) errorText = t('settings.pass_wrong');
                 else errorText = msg;
             } else if (Array.isArray(msg)) {
                 errorText = msg.join(', ');
@@ -142,7 +142,7 @@ export const Settings: React.FC = () => {
                 </div>
                 <button className={`btn-outline ${styles['signout-btn']}`} onClick={logout}>
                     <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>logout</span>
-                    {t('sign_out')}
+                    {t('settings.sign_out')}
                 </button>
             </div>
 
@@ -151,11 +151,11 @@ export const Settings: React.FC = () => {
                 <button
                     className={`${styles['tab-btn']} ${activeTab === 'profile' ? styles['tab-active'] : ''}`}
                     onClick={() => setActiveTab('profile')}
-                >{t('tab_profile')}</button>
+                >{t('settings.tab_profile')}</button>
                 <button
                     className={`${styles['tab-btn']} ${activeTab === 'activity' ? styles['tab-active'] : ''}`}
                     onClick={() => setActiveTab('activity')}
-                >{t('tab_activity')}</button>
+                >{t('settings.tab_activity')}</button>
             </div>
 
             {/* ── Profile tab ── */}
@@ -165,19 +165,19 @@ export const Settings: React.FC = () => {
 
                         {/* Profile data */}
                         <div className={styles['settings-section']}>
-                            <h2 className={styles['settings-subtitle']}>Данные профиля</h2>
+                            <h2 className={styles['settings-subtitle']}>{t('settings.profile_data')}</h2>
                             <form onSubmit={handleProfileSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
                                     <div>
-                                        <label style={labelStyle}>Фамилия</label>
+                                        <label style={labelStyle}>{t('settings.last_name')}</label>
                                         <input name="lastName" type="text" value={profileForm.lastName} onChange={handleProfileChange} placeholder="Иванов" style={inputStyle} />
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Имя</label>
+                                        <label style={labelStyle}>{t('settings.first_name')}</label>
                                         <input name="firstName" type="text" value={profileForm.firstName} onChange={handleProfileChange} placeholder="Иван" style={inputStyle} />
                                     </div>
                                     <div>
-                                        <label style={labelStyle}>Отчество</label>
+                                        <label style={labelStyle}>{t('settings.middle_name')}</label>
                                         <input name="surName" type="text" value={profileForm.surName} onChange={handleProfileChange} placeholder="Иванович" style={inputStyle} />
                                     </div>
                                 </div>
@@ -186,60 +186,60 @@ export const Settings: React.FC = () => {
                                     <input name="email" type="email" value={profileForm.email} onChange={handleProfileChange} placeholder="ivan@example.com" style={inputStyle} />
                                 </div>
                                 <div>
-                                    <label style={labelStyle}>Номер телефона</label>
+                                    <label style={labelStyle}>{t('settings.phone_number')}</label>
                                     <input name="phoneNumber" type="tel" value={profileForm.phoneNumber} onChange={handleProfileChange} placeholder="+375291234567" style={inputStyle} />
                                 </div>
                                 {profileSuccess && <p style={{ color: '#10B981', fontSize: '14px', margin: 0 }}>{profileSuccess}</p>}
                                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    <button type="submit" className="btn-primary">Сохранить профиль</button>
+                                    <button type="submit" className="btn-primary">{t('settings.save_profile')}</button>
                                 </div>
                             </form>
                         </div>
 
                         {/* Password change */}
                         <div className={styles['settings-section']}>
-                            <h2 className={styles['settings-subtitle']}>Смена пароля</h2>
+                            <h2 className={styles['settings-subtitle']}>{t('settings.change_password')}</h2>
                             <form onSubmit={handlePassSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
                                 <div>
-                                    <label style={labelStyle}>Новый пароль</label>
-                                    <input name="newPassword" type="password" value={passForm.newPassword} onChange={handlePassChange} placeholder="Минимум 8 символов" required minLength={8} style={inputStyle} />
+                                    <label style={labelStyle}>{t('settings.new_password')}</label>
+                                    <input name="newPassword" type="password" value={passForm.newPassword} onChange={handlePassChange} placeholder={t('settings.new_password_placeholder')} required minLength={8} style={inputStyle} />
                                 </div>
                                 <div>
-                                    <label style={labelStyle}>Повторите новый пароль</label>
+                                    <label style={labelStyle}>{t('settings.confirm_password')}</label>
                                     <input name="confirmPassword" type="password" value={passForm.confirmPassword} onChange={handlePassChange} placeholder="••••••••" required style={inputStyle} />
                                 </div>
                                 {passError   && <p style={{ color: 'var(--c-bright-red)', fontSize: '14px', margin: 0 }}>{passError}</p>}
                                 {passSuccess && <p style={{ color: '#10B981', fontSize: '14px', margin: 0 }}>{passSuccess}</p>}
                                 <p style={{ fontSize: '13px', color: 'var(--c-gray-500)', margin: 0 }}>
-                                    После смены пароля все другие активные сессии будут завершены автоматически.
+                                    {t('settings.password_session_warning')}
                                 </p>
                                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                    <button type="submit" className="btn-primary">Изменить пароль</button>
+                                    <button type="submit" className="btn-primary">{t('settings.change_password_btn')}</button>
                                 </div>
                             </form>
                         </div>
 
                         {/* Language */}
                         <div className={styles['settings-section']}>
-                            <h2 className={styles['settings-subtitle']}>{t('interface_lang')}</h2>
+                            <h2 className={styles['settings-subtitle']}>{t('settings.interface_lang')}</h2>
                             <div className={styles['language-toggle']}>
-                                <button className={`${styles['lang-btn']} ${language === 'ru' ? styles['active'] : ''}`} onClick={() => setLanguage('ru')}>Русский</button>
-                                <button className={`${styles['lang-btn']} ${language === 'en' ? styles['active'] : ''}`} onClick={() => setLanguage('en')}>English</button>
+                                <button className={`${styles['lang-btn']} ${language === 'ru' ? styles['active'] : ''}`} onClick={() => setLanguage('ru')}>{t('settings.lang_ru')}</button>
+                                <button className={`${styles['lang-btn']} ${language === 'en' ? styles['active'] : ''}`} onClick={() => setLanguage('en')}>{t('settings.lang_en')}</button>
                             </div>
                         </div>
 
                         {/* Theme */}
                         <div className={styles['settings-section']}>
-                            <h2 className={styles['settings-subtitle']}>{t('theme')}</h2>
+                            <h2 className={styles['settings-subtitle']}>{t('settings.theme')}</h2>
                             <div className={styles['language-toggle']}>
                                 <button className={`${styles['lang-btn']} ${theme === 'light' ? styles['active'] : ''}`} onClick={() => setTheme('light')}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>light_mode</span> {t('theme_light')}
+                                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>light_mode</span> {t('settings.theme_light')}
                                 </button>
                                 <button className={`${styles['lang-btn']} ${theme === 'dark' ? styles['active'] : ''}`} onClick={() => setTheme('dark')}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>dark_mode</span> {t('theme_dark')}
+                                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>dark_mode</span> {t('settings.theme_dark')}
                                 </button>
                                 <button className={`${styles['lang-btn']} ${theme === 'system' ? styles['active'] : ''}`} onClick={() => setTheme('system')}>
-                                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>desktop_windows</span> {t('theme_system')}
+                                    <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>desktop_windows</span> {t('settings.theme_system')}
                                 </button>
                             </div>
                         </div>
@@ -254,7 +254,7 @@ export const Settings: React.FC = () => {
                     <div className="card">
                         <div style={{ textAlign: 'center', padding: '56px 24px', color: 'var(--c-gray-400)' }}>
                             <span className="material-symbols-outlined" style={{ fontSize: '52px', display: 'block', marginBottom: '16px', opacity: 0.5 }}>history</span>
-                            <p style={{ margin: 0, fontSize: '15px', fontWeight: 500 }}>{t('activity_empty')}</p>
+                            <p style={{ margin: 0, fontSize: '15px', fontWeight: 500 }}>{t('settings.activity_empty')}</p>
                         </div>
                     </div>
                 </div>
@@ -265,17 +265,17 @@ export const Settings: React.FC = () => {
                 <div className={styles['modal-overlay']} onClick={closeModal}>
                     <div className={styles['modal-card']} onClick={e => e.stopPropagation()}>
                         <h3 className={styles['modal-title']}>
-                            {modal.type === 'profile' ? 'Подтвердите изменения' : 'Подтвердите смену пароля'}
+                            {modal.type === 'profile' ? t('settings.confirm_profile_title') : t('settings.confirm_password_title')}
                         </h3>
                         <p className={styles['modal-desc']}>
                             {modal.type === 'profile'
-                                ? 'Введите текущий пароль для сохранения изменений профиля'
-                                : 'Введите текущий пароль для подтверждения операции'}
+                                ? t('settings.confirm_profile_desc')
+                                : t('settings.confirm_pass_desc')}
                         </p>
                         <input
                             type="password"
                             autoFocus
-                            placeholder="Текущий пароль"
+                            placeholder={t('settings.current_password_placeholder')}
                             value={modal.currentPassword}
                             onChange={e => setModal(m => ({ ...m, currentPassword: e.target.value, error: '' }))}
                             onKeyDown={e => { if (e.key === 'Enter' && !modal.loading) handleModalConfirm(); }}
@@ -290,9 +290,9 @@ export const Settings: React.FC = () => {
                             <p style={{ color: 'var(--c-bright-red)', fontSize: '13px', margin: '8px 0 0' }}>{modal.error}</p>
                         )}
                         <div className={styles['modal-actions']}>
-                            <button className="btn-outline" onClick={closeModal} disabled={modal.loading}>Отмена</button>
+                            <button className="btn-outline" onClick={closeModal} disabled={modal.loading}>{t('common.cancel')}</button>
                             <button className="btn-primary" onClick={handleModalConfirm} disabled={modal.loading}>
-                                {modal.loading ? 'Сохранение...' : 'Подтвердить'}
+                                {modal.loading ? t('common.saving') : t('common.confirm')}
                             </button>
                         </div>
                     </div>
