@@ -9,6 +9,7 @@ import styles from './Header.module.css';
 export const Header: React.FC = () => {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [balance, setBalance] = useState<string>('0.00');
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -31,6 +32,20 @@ export const Header: React.FC = () => {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
+
+    // Fetch balance on mount
+    const fetchBalance = async () => {
+      try {
+        const res = await api.billing.getBalance();
+        if (res.data && res.data.balance !== undefined) {
+          setBalance(Number(res.data.balance).toFixed(2));
+        }
+      } catch {
+        // Fallback or ignore
+      }
+    };
+    fetchBalance();
+
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
@@ -65,23 +80,23 @@ export const Header: React.FC = () => {
               <span className="material-symbols-outlined">feedback</span>
             </button>
             <AnimatePresence initial={false}>
-            {isNotificationsOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                className={styles['account-dropdown-menu']}
-                style={{ minWidth: '260px', padding: '16px' }}
-              >
-                <h4 style={{ margin: '0 0 10px', fontSize: '15px', color: 'var(--c-dark-blue)' }}>
-                  {t('notifications')}
-                </h4>
-                <p style={{ fontSize: '13px', color: 'var(--c-gray-500)', textAlign: 'center', padding: '12px 0' }}>
-                  {t('no_notifications')}
-                </p>
-              </motion.div>
-            )}
+              {isNotificationsOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className={styles['account-dropdown-menu']}
+                  style={{ minWidth: '260px', padding: '16px' }}
+                >
+                  <h4 style={{ margin: '0 0 10px', fontSize: '15px', color: 'var(--c-dark-blue)' }}>
+                    {t('notifications')}
+                  </h4>
+                  <p style={{ fontSize: '13px', color: 'var(--c-gray-500)', textAlign: 'center', padding: '12px 0' }}>
+                    {t('no_notifications')}
+                  </p>
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
 
@@ -98,26 +113,32 @@ export const Header: React.FC = () => {
           <div className={styles['account-info']} onClick={() => setIsAccountOpen(!isAccountOpen)}>
             <div className={styles['account-text']}>
               <span className={styles['account-name']}>{displayName}</span>
-              <span className={styles['account-balance']}>{t('balance')}: 0 BYN</span>
+              <span className={styles['account-balance']}>{t('balance')}: {balance} BYN</span>
+            </div>
+            <div className={styles['avatar-wrapper']}>
+              <button className={styles['avatar-btn']} tabIndex={-1} aria-hidden="true">
+                <span className="material-symbols-outlined">person</span>
+              </button>
+              <span className={`material-symbols-outlined ${styles['dropdown-icon']}`}>expand_more</span>
             </div>
           </div>
           <AnimatePresence initial={false}>
-          {isAccountOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className={styles['account-dropdown-menu']}
-            >
-              <button className={styles['dropdown-item']} onClick={() => { setIsAccountOpen(false); navigate('/settings'); }}>
-                <span className="material-symbols-outlined">settings</span> {t('settings')}
-              </button>
-              <button className={styles['dropdown-item']} onClick={handleLogout}>
-                <span className="material-symbols-outlined">logout</span> {t('logout')}
-              </button>
-            </motion.div>
-          )}
+            {isAccountOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className={styles['account-dropdown-menu']}
+              >
+                <button className={styles['dropdown-item']} onClick={() => { setIsAccountOpen(false); navigate('/settings'); }}>
+                  <span className="material-symbols-outlined">settings</span> {t('settings')}
+                </button>
+                <button className={styles['dropdown-item']} onClick={handleLogout}>
+                  <span className="material-symbols-outlined">logout</span> {t('logout')}
+                </button>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 

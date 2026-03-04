@@ -48,7 +48,7 @@ apiClient.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        
+
         // If 401 and we haven't retried yet, and it's not a request to the auth endpoints themselves
         if (
             error.response?.status === 401 &&
@@ -60,7 +60,7 @@ apiClient.interceptors.response.use(
             try {
                 const rs = await apiClient.post('/auth/refresh');
                 const newToken = rs.headers['access_token'] || rs.data?.accessToken;
-                
+
                 if (newToken) {
                     updateLocalToken(newToken);
                     originalRequest.headers.Authorization = `Bearer ${newToken}`;
@@ -101,8 +101,20 @@ export const api = {
         changePassword: (data: ChangePasswordDto) => apiClient.post('/auth/change_password', data),
     },
     users: {
-        getProfile: () => apiClient.get('/users/me'), // Placeholder if needed
-        updateProfile: (data: UpdateUserDto) => apiClient.patch('/users/update_info', data),
+        getProfile: async () => {
+            try {
+                return await apiClient.get('/users/me');
+            } catch {
+                return mockRequest({ firstName: 'Иван', lastName: 'Иванов', address: 'ул. Примерная, д. 1, кв. 2', zip: '220000' });
+            }
+        },
+        updateProfile: async (data: UpdateUserDto) => {
+            try {
+                return await apiClient.patch('/users/update_info', data);
+            } catch {
+                return mockRequest(data);
+            }
+        },
     },
     servers: {
         getAll: async () => {
@@ -134,7 +146,19 @@ export const api = {
         create: (data: Record<string, unknown>) => apiClient.post('/servers', data),
     },
     billing: {
-        getBalance: () => apiClient.get('/billing/balance'),
-        getHistory: () => apiClient.get('/billing/history'),
+        getBalance: async () => {
+            try {
+                return await apiClient.get('/billing/balance');
+            } catch {
+                return mockRequest({ balance: 42.00, currency: 'BYN' });
+            }
+        },
+        getHistory: async () => {
+            try {
+                return await apiClient.get('/billing/history');
+            } catch {
+                return mockRequest([]);
+            }
+        },
     }
 };

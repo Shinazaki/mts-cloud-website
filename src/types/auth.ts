@@ -9,6 +9,8 @@ export interface User {
     surName?: string;
     phoneNumber?: string;
     name?: string; // For display compatibility
+    address?: string;
+    zip?: string;
 }
 
 export interface AuthResponse {
@@ -43,5 +45,7 @@ export interface UpdateUserDto {
     lastName?: string;
     surName?: string;
     phoneNumber?: string;
+    address?: string;
+    zip?: string;
     password?: string; // required to confirm identity when updating info based on architecture.md
 }

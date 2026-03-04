@@ -45,4 +45,22 @@ export const en = {
     server_name_label: 'Server Name',
     characteristics_label: 'Characteristics',
     settings_saved: 'Settings saved successfully!',
+
+    // Create Server
+    region: 'Region',
+    region_1: 'Russia, Moscow',
+    region_2: 'Belarus, Minsk',
+    os: 'Operating System',
+    os_version: 'Version',
+    tariff_plan: 'Tariff Plan',
+    access_settings: 'Access & Server Settings',
+    enable_backups: 'Enable automatic backups',
+    backups_desc: 'Daily backups. Shows in "Backups" tab. (+20% to cost)',
+    auth_method: 'Authorization Method',
+    password: 'Password',
+    ssh_key: 'SSH Key',
+    password_placeholder: 'Set password for root user',
+    ssh_key_placeholder: 'Paste your public SSH key (ssh-rsa ...)',
+    server_name_placeholder: 'My Server',
+    price_per_month: 'BYN / month',
 };

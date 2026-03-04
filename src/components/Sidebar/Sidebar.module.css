@@ -2,7 +2,7 @@
     width: 250px;
     height: 100vh;
     background-color: var(--c-dark-red);
-    color: var(--c-white);
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -11,6 +11,13 @@
     overflow-y: auto;
     flex-shrink: 0;
     z-index: 1000;
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
 }
 
 .sidebar-logo {
@@ -50,7 +57,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 24px;
-    color: var(--c-white);
+    color: #ffffff;
     font-size: 14px;
     font-weight: 600;
     background: transparent;
@@ -85,7 +92,7 @@
 
 .nav-item:hover,
 .nav-item.active {
-    color: var(--c-white);
+    color: #ffffff;
     background-color: rgba(255, 255, 255, 0.05);
 }
 
@@ -113,4 +120,28 @@
 .bottom-section {
     margin-top: auto;
     padding-bottom: 24px;
+}
+
+/* Projects Dropdown */
+.projects-dropdown {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.project-item {
+    padding: 10px 24px 10px 48px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.project-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
 }

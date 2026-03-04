@@ -94,26 +94,26 @@ export const WhatsNew: React.FC = () => {
                     <li style={{ marginBottom: '32px', borderBottom: '1px solid var(--c-gray-100)', paddingBottom: '24px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span className="material-symbols-outlined" style={{ color: 'var(--c-red)' }}>new_releases</span>
-                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>Обновление портала MTC Cloud - Фаза 2</strong>
+                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>Обновление портала MTC Cloud - Фаза 5</strong>
                             <span style={{ fontSize: '12px', color: 'var(--c-gray-500)', marginLeft: 'auto' }}>Сегодня</span>
                         </div>
                         <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.6' }}>
-                            В этом обновлении мы добавили множество новых функций:
-                            <br />- Интеграция JWT авторизации для безопасного входа
-                            <br />- Новая страница создания сервера с выбором региона и ОС
-                            <br />- Динамическое выпадающее меню со списком ваших серверов в боковой панели
-                            <br />- Интерактивный поиск серверов и новые действия (Терминал, Использование ресурсов, Уничтожение)
-                            <br />- Улучшенный интерфейс приложения в стилистике MTC
+                            В этом обновлении мы добавили множество новых функций и исправлений:
+                            <br />- <strong>Глобальные улучшения:</strong> Устранены проблемы с отображением текста в темной теме, убрана полоса прокрутки в боковом меню
+                            <br />- <strong>Создание сервера:</strong> Полностью переработана страница создания сервера. Теперь можно выбирать регион, ОС с версиями, пресеты ресурсов, опциональные бэкапы и способы доступа (SSH/Пароль)
+                            <br />- <strong>Биллинг:</strong> Улучшена структура страницы платежей, сохранение настроек профиля и привязка баланса
+                            <br />- <strong>Локализация:</strong> Расширена поддержка английского языка на все страницы портала
+                            <br />- <strong>Интерфейс:</strong> Восстановлен аватар пользователя в верхней панели, добавлены стили для выпадающих списков
                         </p>
                     </li>
-                    <li>
+                    <li style={{ marginBottom: '32px', borderBottom: '1px solid var(--c-gray-100)', paddingBottom: '24px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span className="material-symbols-outlined" style={{ color: 'var(--c-gray-500)' }}>history</span>
-                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>Запуск Beta версии</strong>
+                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>Обновление портала MTC Cloud - Фаза 2</strong>
                             <span style={{ fontSize: '12px', color: 'var(--c-gray-500)', marginLeft: 'auto' }}>Ранее</span>
                         </div>
                         <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.6' }}>
-                            Базовый запуск панелей управления сервером и биллингом.
+                            Предыдущее обновление с интеграцией JWT авторизации, новой панелью управления серверами и интерактивным поиском.
                         </p>
                     </li>
                 </ul>

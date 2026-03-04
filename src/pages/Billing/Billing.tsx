@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { api } from '../../api/client';
 import styles from './Billing.module.css';
 import headerStyles from '../../Styles/PageHeaders.module.css'
 
@@ -9,11 +10,42 @@ export const Billing: React.FC = () => {
         { id: '1', number: 'Mastercard ending in 1234', expires: '12/25' }
     ]);
     const [paymentDetails, setPaymentDetails] = useState({
-        name: 'Иван Иванов',
-        address: 'ул. Примерная, д. 1, кв. 2',
-        zip: '220000'
+        name: '',
+        address: '',
+        zip: ''
     });
+    const [balance, setBalance] = useState<string>('0.00');
     const [isSaving, setIsSaving] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchBillingData = async () => {
+            setIsLoading(true);
+            try {
+                const [balRes, profRes] = await Promise.all([
+                    api.billing.getBalance(),
+                    api.users.getProfile()
+                ]);
+
+                if (balRes.data && balRes.data.balance !== undefined) {
+                    setBalance(Number(balRes.data.balance).toFixed(2));
+                }
+
+                if (profRes.data) {
+                    setPaymentDetails({
+                        name: profRes.data.firstName || profRes.data.name || '',
+                        address: profRes.data.address || '',
+                        zip: profRes.data.zip || ''
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load billing details", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchBillingData();
+    }, []);
 
     const handleAddCard = () => {
         const newCard = {
@@ -28,13 +60,21 @@ export const Billing: React.FC = () => {
         setCards(cards.filter(c => c.id !== id));
     };
 
-    const handleSaveSettings = (e: React.FormEvent) => {
+    const handleSaveSettings = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSaving(true);
-        setTimeout(() => {
-            setIsSaving(false);
+        try {
+            await api.users.updateProfile({
+                firstName: paymentDetails.name,
+                address: paymentDetails.address,
+                zip: paymentDetails.zip
+            });
             alert('Данные успешно сохранены!');
-        }, 800);
+        } catch (err) {
+            alert('Ошибка при сохранении данных.');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     return (
@@ -82,7 +122,7 @@ export const Billing: React.FC = () => {
                             >
                                 <div className={styles['billing-main-info']}>
                                     <div className={styles['balance-label']}>Баланс на текущий месяц</div>
-                                    <div className={styles['balance-amount']}>42.00 BYN</div>
+                                    <div className={styles['balance-amount']}>{isLoading ? '...' : balance} BYN</div>
                                 </div>
 
                                 <div className={styles['billing-details']}>

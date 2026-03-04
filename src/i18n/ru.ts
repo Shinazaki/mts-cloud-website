@@ -45,4 +45,22 @@ export const ru = {
     server_name_label: 'Название сервера',
     characteristics_label: 'Характеристики',
     settings_saved: 'Настройки успешно сохранены!',
+
+    // Create Server
+    region: 'Регион',
+    region_1: 'Россия, Москва',
+    region_2: 'Беларусь, Минск',
+    os: 'Операционная система',
+    os_version: 'Версия',
+    tariff_plan: 'Тарифный план',
+    access_settings: 'Настройки доступа и сервера',
+    enable_backups: 'Включить автоматические бэкапы',
+    backups_desc: 'Ежедневное создание копий. Отображаются на вкладке "Бэкапы". (+20% к стоимости)',
+    auth_method: 'Способ авторизации',
+    password: 'Пароль',
+    ssh_key: 'SSH Ключ',
+    password_placeholder: 'Задайте пароль для пользователя root',
+    ssh_key_placeholder: 'Вставьте ваш открытый SSH ключ (ssh-rsa ...)',
+    server_name_placeholder: 'Мой сервер',
+    price_per_month: 'BYN / мес',
 };
