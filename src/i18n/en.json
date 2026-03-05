@@ -13,7 +13,11 @@
     "settings": "Settings",
     "api": "API",
     "qa": "Q&A",
-    "whatsNew": "What's New?"
+    "whatsNew": "What's New?",
+    "admin_panel": "Administration",
+    "corporate_panel": "Corporate Panel",
+    "corporate_admin": "Corp. Dashboard",
+    "super_admin": "Admin Dashboard"
   },
 
   "header": {
@@ -196,11 +200,97 @@
     "status_open": "Open"
   },
 
+  "corporate_admin": {
+    "title": "Corporate Dashboard",
+    "role_badge": "Corporate Admin",
+    "subtitle": "Manage your corporation's employees and servers.",
+    "stat_employees": "Employees",
+    "stat_servers": "Corp. Servers",
+    "stat_total_servers": "Total Servers",
+    "tab_employees": "Employees",
+    "tab_servers": "Servers",
+    "employees_title": "Employee List",
+    "add_employee": "Add Employee",
+    "no_employees": "No employees in this corporation yet.",
+    "col_employee": "Employee",
+    "col_username": "Username",
+    "col_servers": "Servers",
+    "col_owner": "Owner",
+    "col_characteristics": "Specs",
+    "remove": "Remove",
+    "remove_confirm": "Are you sure you want to remove this employee from the corporation?",
+    "corp_servers_title": "Corporation Servers",
+    "modal_add_title": "Add New Employee",
+    "add_validation_error": "Please fill in username and email.",
+    "add_error": "Failed to add employee. Try again."
+  },
+
+  "super_admin": {
+    "title": "Admin Dashboard",
+    "role_badge": "Super Admin",
+    "subtitle": "Full control over all users, roles, and servers on the platform.",
+    "stat_users": "Total Users",
+    "stat_corp_admins": "Corp. Admins",
+    "stat_admins": "Admins",
+    "stat_servers": "Total Servers",
+    "tab_users": "Users",
+    "tab_servers": "All Servers",
+    "users_title": "All Users",
+    "search_users": "Search users...",
+    "all_servers_title": "All Servers",
+    "col_user": "User",
+    "col_username": "Username",
+    "col_role": "Role",
+    "col_actions": "Actions",
+    "view_servers": "Servers",
+    "change_role": "Change Role",
+    "delete_user_confirm": "Are you sure you want to permanently delete this user?",
+    "modal_role_title": "Change User Role",
+    "modal_role_subtitle": "Editing role for",
+    "modal_servers_title": "User's Servers"
+  },
+
   "common": {
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
     "confirm": "Confirm",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "actions": "Actions"
+  },
+
+  "pages": {
+    "backups_title": "Backups",
+    "backups_subtitle": "Backup Copies",
+    "backups_desc": "Configure automatic backup creation for your servers.",
+    "monitoring_title": "Monitoring",
+    "monitoring_subtitle": "Charts and Metrics",
+    "monitoring_desc": "Metrics for resource usage (CPU, RAM, Disk).",
+    "traffic_title": "Traffic",
+    "traffic_subtitle": "Network Usage",
+    "traffic_desc": "Statistics on network traffic consumption.",
+    "api_title": "API",
+    "api_subtitle": "API Key Management",
+    "api_desc": "Use the API for programmatic resource management.",
+    "api_generate_token": "Generate Token",
+    "qa_title": "Q&A (Frequently Asked Questions)",
+    "qa_q1_title": "How do I change the server configuration (Upgrade)?",
+    "qa_q1_desc": "You can go to the <strong>Servers</strong> tab, find the desired server and click the \"Upgrade\" button. You can also create a new server with a new configuration.",
+    "qa_q2_title": "How does billing work?",
+    "qa_q2_desc": "Charges are made monthly based on consumed resources (Pay-as-you-go). You can top up your balance in the <strong>Billing</strong> section.",
+    "qa_q3_title": "What should I do if I forgot my server password?",
+    "qa_q3_desc": "Open the \"More\" menu next to the server and select \"Terminal Access\", or go to the server management panel to reset the root password.",
+    "whats_new_title": "What's New?",
+    "whats_new_v5_title": "MTC Cloud Portal Update - Phase 5",
+    "whats_new_v5_desc": "In this update we added many new features and fixes:",
+    "whats_new_v5_global": "<strong>Global improvements:</strong> Fixed text display issues in dark theme, removed scrollbar in sidebar",
+    "whats_new_v5_server": "<strong>Server Creation:</strong> Completely redesigned server creation page. Now you can select region, OS with versions, resource presets, optional backups and access methods (SSH/Password)",
+    "whats_new_v5_billing": "<strong>Billing:</strong> Improved payment page structure, profile settings saving and balance binding",
+    "whats_new_v5_localization": "<strong>Localization:</strong> Extended English language support to all portal pages",
+    "whats_new_v5_interface": "<strong>Interface:</strong> Restored user avatar in top panel, added styles for dropdown lists",
+    "whats_new_v2_title": "MTC Cloud Portal Update - Phase 2",
+    "whats_new_v2_desc": "Previous update with JWT authorization integration, new server management panel and interactive search.",
+    "whats_new_today": "Today",
+    "whats_new_earlier": "Earlier"
   }
 }

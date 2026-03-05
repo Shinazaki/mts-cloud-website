@@ -1,5 +1,7 @@
 // src/types/auth.ts
 
+export type UserRole = 'user' | 'admin-corporate' | 'admin';
+
 export interface User {
     id?: string;
     username: string;
@@ -11,6 +13,8 @@ export interface User {
     name?: string; // For display compatibility
     address?: string;
     zip?: string;
+    role?: UserRole;
+    corporationId?: string;
 }
 
 export interface AuthResponse {

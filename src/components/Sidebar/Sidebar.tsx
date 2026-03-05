@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSettings } from '../../hooks/useSettings';
+import { useAuth } from '../../hooks/useAuth';
 import styles from './Sidebar.module.css';
 
 export const Sidebar: React.FC = () => {
     const [isProjectsOpen, setIsProjectsOpen] = useState(false);
     const [isManagementOpen, setIsManagementOpen] = useState(true);
+    const [isAdminOpen, setIsAdminOpen] = useState(true);
     const navigate = useNavigate();
     const { t } = useSettings();
+    const { user } = useAuth();
+
+    const role = user?.role ?? 'user';
+    const isCorporateAdmin = role === 'admin-corporate' || role === 'admin';
+    const isSuperAdmin = role === 'admin';
 
     // Mock list of servers to display in projects dropdown
     const mockServers = [
@@ -136,6 +143,51 @@ export const Sidebar: React.FC = () => {
                         </li>
                     </ul>
                 </div>
+
+                {/* ── Admin panels ── */}
+                {(isCorporateAdmin || isSuperAdmin) && (
+                    <>
+                        <div className={styles['nav-divider']}></div>
+                        <div className={styles['nav-section']}>
+                            <button
+                                className={styles['nav-section-title']}
+                                onClick={() => setIsAdminOpen(prev => !prev)}
+                                aria-expanded={isAdminOpen}
+                                style={{ color: isSuperAdmin ? '#7c3aed' : 'var(--c-accent)' }}
+                            >
+                                {isSuperAdmin ? t('sidebar.admin_panel') : t('sidebar.corporate_panel')}
+                                <span className={`material-symbols-outlined ${styles['chevron']} ${isAdminOpen ? styles['chevron-open'] : ''}`}>expand_more</span>
+                            </button>
+
+                            <AnimatePresence initial={false}>
+                                {isAdminOpen && (
+                                    <motion.ul
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                        className={styles['nav-list']}
+                                    >
+                                        {isCorporateAdmin && (
+                                            <li>
+                                                <NavLink to="/corporate-admin" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
+                                                    <span className={`material-symbols-outlined ${styles['nav-icon']}`}>corporate_fare</span> {t('sidebar.corporate_admin')}
+                                                </NavLink>
+                                            </li>
+                                        )}
+                                        {isSuperAdmin && (
+                                            <li>
+                                                <NavLink to="/admin" className={({ isActive }) => isActive ? `${styles['nav-item']} ${styles['active']}` : styles['nav-item']}>
+                                                    <span className={`material-symbols-outlined ${styles['nav-icon']}`}>admin_panel_settings</span> {t('sidebar.super_admin')}
+                                                </NavLink>
+                                            </li>
+                                        )}
+                                    </motion.ul>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </>
+                )}
             </nav>
         </aside>
     );

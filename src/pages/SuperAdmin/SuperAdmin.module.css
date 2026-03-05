@@ -1,0 +1,441 @@
+.page {
+    padding: 32px;
+    max-width: 1200px;
+}
+
+.pageHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.pageTitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--c-dark-blue);
+    margin: 0;
+}
+
+.badgeAdmin {
+    background: #7c3aed;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: var(--c-gray-500);
+    font-size: 14px;
+    margin: 0 0 28px;
+}
+
+.statsRow {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.statCard {
+    flex: 1;
+    min-width: 140px;
+    background: var(--c-white);
+    border: 1px solid var(--c-gray-200);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.statValue {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--c-dark-blue);
+    line-height: 1;
+}
+
+.statLabel {
+    font-size: 13px;
+    color: var(--c-gray-500);
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--c-gray-200);
+}
+
+.tabBtn {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--c-gray-500);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tabBtn:hover {
+    color: var(--c-dark-blue);
+}
+
+.tabActive {
+    color: #7c3aed !important;
+    border-bottom-color: #7c3aed !important;
+}
+
+.section {
+    background: var(--c-white);
+    border: 1px solid var(--c-gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--c-gray-200);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.sectionTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--c-dark-blue);
+    margin: 0;
+}
+
+.searchInput {
+    padding: 8px 14px;
+    border: 1px solid var(--c-gray-200);
+    border-radius: 8px;
+    font-size: 14px;
+    width: 220px;
+    outline: none;
+    background: var(--c-white);
+    color: var(--c-dark-blue);
+    transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+    border-color: #7c3aed;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    text-align: left;
+    padding: 12px 24px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--c-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--c-gray-50, #f8f9fa);
+    border-bottom: 1px solid var(--c-gray-200);
+}
+
+.table td {
+    padding: 14px 24px;
+    font-size: 14px;
+    color: var(--c-dark-blue);
+    border-bottom: 1px solid var(--c-gray-100, #f0f0f0);
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover td {
+    background: var(--c-gray-50, #f8f9fa);
+}
+
+.userCell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatarUser {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--c-accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.avatarCorp {
+    background: var(--c-accent);
+}
+
+.avatarAdmin {
+    background: #7c3aed;
+}
+
+.userName {
+    font-weight: 500;
+}
+
+.userEmail {
+    font-size: 12px;
+    color: var(--c-gray-500);
+}
+
+.roleBadge {
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.roleUser {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.roleCorp {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.roleAdmin {
+    background: #ede7f6;
+    color: #6a1b9a;
+}
+
+.actionsCell {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btnDanger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: transparent;
+    color: var(--c-bright-red, #e53935);
+    border: 1px solid var(--c-bright-red, #e53935);
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btnDanger:hover {
+    background: var(--c-bright-red, #e53935);
+    color: #fff;
+}
+
+.btnSecondary {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: transparent;
+    color: var(--c-accent);
+    border: 1px solid var(--c-accent);
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btnSecondary:hover {
+    background: var(--c-accent);
+    color: #fff;
+}
+
+.btnPurple {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 10px;
+    background: transparent;
+    color: #7c3aed;
+    border: 1px solid #7c3aed;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btnPurple:hover {
+    background: #7c3aed;
+    color: #fff;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--c-gray-500);
+    font-size: 14px;
+}
+
+.loading {
+    text-align: center;
+    padding: 48px;
+    color: var(--c-gray-500);
+}
+
+/* Modal */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal {
+    background: var(--c-white);
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modalTitle {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--c-dark-blue);
+    margin: 0 0 4px;
+}
+
+.modalSubtitle {
+    font-size: 13px;
+    color: var(--c-gray-500);
+    margin: 0 0 24px;
+}
+
+.formGroup {
+    margin-bottom: 12px;
+}
+
+.formLabel {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--c-dark-blue);
+    margin-bottom: 6px;
+}
+
+.formSelect {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--c-gray-200);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--c-dark-blue);
+    background: var(--c-white);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: auto;
+}
+
+.formSelect:focus {
+    border-color: #7c3aed;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.btnCancel {
+    padding: 8px 16px;
+    border: 1px solid var(--c-gray-200);
+    background: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--c-dark-blue);
+    transition: background 0.15s;
+}
+
+.btnCancel:hover {
+    background: var(--c-gray-50, #f8f9fa);
+}
+
+.btnPrimary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: #7c3aed;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btnPrimary:hover {
+    opacity: 0.88;
+}
+
+.serverTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+.serverTable th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--c-gray-500);
+    border-bottom: 1px solid var(--c-gray-200);
+}
+
+.serverTable td {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--c-gray-100, #f0f0f0);
+}
+
+.serverTable tr:last-child td {
+    border-bottom: none;
+}

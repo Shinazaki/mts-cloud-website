@@ -1,82 +1,89 @@
 import React from 'react';
+import { useSettings } from '../../hooks/useSettings';
 import styles from '../../Styles/PageHeaders.module.css'
+
 export const Backups: React.FC = () => {
+    const { t } = useSettings();
     return (
         <div className="page-container">
             <div className={styles.pageHeader}>
-                <h1 className={styles.pageTitle}>Бэкапы</h1>
+                <h1 className={styles.pageTitle}>{t('pages.backups_title')}</h1>
             </div>
             <div className="card animate-enter">
-                <h3>Резервные копии</h3>
-                <p>Настройте автоматическое создание резервных копий ваших серверов.</p>
+                <h3>{t('pages.backups_subtitle')}</h3>
+                <p>{t('pages.backups_desc')}</p>
             </div>
         </div>
     );
 };
 
 export const Monitoring: React.FC = () => {
+    const { t } = useSettings();
     return (
         <div className="page-container">
             <div className={styles.pageHeader}>
-                <h1 className={styles.pageTitle}>Мониторинг</h1>
+                <h1 className={styles.pageTitle}>{t('pages.monitoring_title')}</h1>
             </div>
             <div className="card animate-enter">
-                <h3>Графики и метрики</h3>
-                <p>Метрики использования ресурсов (CPU, RAM, Disk).</p>
+                <h3>{t('pages.monitoring_subtitle')}</h3>
+                <p>{t('pages.monitoring_desc')}</p>
             </div>
         </div>
     );
 };
 
 export const Traffic: React.FC = () => {
+    const { t } = useSettings();
     return (
         <div className="page-container">
             <div className={styles.pageHeader}>
-                <h1 className={styles.pageTitle}>Трафик</h1>
+                <h1 className={styles.pageTitle}>{t('pages.traffic_title')}</h1>
             </div>
             <div className="card animate-enter">
-                <h3>Использование сети</h3>
-                <p>Статистика потребления сетевого трафика.</p>
+                <h3>{t('pages.traffic_subtitle')}</h3>
+                <p>{t('pages.traffic_desc')}</p>
             </div>
         </div>
     );
 };
 
 export const APIPage: React.FC = () => {
+    const { t } = useSettings();
     return (
         <div className="page-container">
             <div className={styles.pageHeader}>
-                <h1 className={styles.pageTitle}>API</h1>
+                <h1 className={styles.pageTitle}>{t('pages.api_title')}</h1>
                 <button className="btn-primary">
-                    Сгенерировать токен <span className="material-symbols-outlined">key</span>
+                    {t('pages.api_generate_token')} <span className="material-symbols-outlined">key</span>
                 </button>
             </div>
             <div className="card animate-enter">
-                <h3>Управление ключами API</h3>
-                <p>Используйте API для программного управления ресурсами.</p>
+                <h3>{t('pages.api_subtitle')}</h3>
+                <p>{t('pages.api_desc')}</p>
             </div>
         </div>
     );
 };
 
 export const QA: React.FC = () => {
+    const { t } = useSettings();
     return (
         <div className="page-container">
             <div className={styles.pageHeader}>
-                <h1 className={styles.pageTitle}>Q&A (Часто задаваемые вопросы)</h1>
+                <h1 className={styles.pageTitle}>{t('pages.qa_title')}</h1>
             </div>
             <div className="card animate-enter" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 <div>
-                    <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>Как изменить конфигурацию сервера (Расширить)?</h3>
-                    <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }}>Вы можете перейти на вкладку <strong>Сервера</strong>, найти нужный сервер и нажать кнопку "Расширить". Вы также можете создать новый сервер с новой конфигурацией.</p>
+                    <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>{t('pages.qa_q1_title')}</h3>
+                    <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }} dangerouslySetInnerHTML={{ __html: t('pages.qa_q1_desc') }}></p>
                 </div>
                 <div>
-                    <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>Как работает биллинг?</h3>
-                    <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }}>Списание средств происходит ежемесячно в зависимости от потребленных ресурсов (Pay-as-you-go). Пополнить баланс можно в разделе <strong>Счета и оплата</strong>.</p>
+                    <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>{t('pages.qa_q2_title')}</h3>
+                    <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }} dangerouslySetInnerHTML={{ __html: t('pages.qa_q2_desc') }}></p>
                 </div>
                 <div>
-                    <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>Что делать, если я забыл пароль от сервера?</h3>
-                    <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }}>Откройте меню "Ещё" рядом с сервером и выберите пункт "Доступ к терминалу", либо перейдите в панель управления сервером для сброса пароля root.</p>
+                    <h3 style={{ color: 'var(--c-dark-blue)', marginBottom: '8px' }}>{t('pages.qa_q3_title')}</h3>
+                    <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.5' }} dangerouslySetInnerHTML={{ __html: t('pages.qa_q3_desc') }}></p>
                 </div>
             </div>
         </div>
@@ -84,36 +91,37 @@ export const QA: React.FC = () => {
 };
 
 export const WhatsNew: React.FC = () => {
+    const { t } = useSettings();
     return (
         <div className="page-container">
             <div className={styles.pageHeader}>
-                <h1 className={styles.pageTitle}>Что нового?</h1>
+                <h1 className={styles.pageTitle}>{t('pages.whats_new_title')}</h1>
             </div>
             <div className="card animate-enter">
                 <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
                     <li style={{ marginBottom: '32px', borderBottom: '1px solid var(--c-gray-100)', paddingBottom: '24px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span className="material-symbols-outlined" style={{ color: 'var(--c-red)' }}>new_releases</span>
-                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>Обновление портала MTC Cloud - Фаза 5</strong>
-                            <span style={{ fontSize: '12px', color: 'var(--c-gray-500)', marginLeft: 'auto' }}>Сегодня</span>
+                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>{t('pages.whats_new_v5_title')}</strong>
+                            <span style={{ fontSize: '12px', color: 'var(--c-gray-500)', marginLeft: 'auto' }}>{t('pages.whats_new_today')}</span>
                         </div>
                         <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.6' }}>
-                            В этом обновлении мы добавили множество новых функций и исправлений:
-                            <br />- <strong>Глобальные улучшения:</strong> Устранены проблемы с отображением текста в темной теме, убрана полоса прокрутки в боковом меню
-                            <br />- <strong>Создание сервера:</strong> Полностью переработана страница создания сервера. Теперь можно выбирать регион, ОС с версиями, пресеты ресурсов, опциональные бэкапы и способы доступа (SSH/Пароль)
-                            <br />- <strong>Биллинг:</strong> Улучшена структура страницы платежей, сохранение настроек профиля и привязка баланса
-                            <br />- <strong>Локализация:</strong> Расширена поддержка английского языка на все страницы портала
-                            <br />- <strong>Интерфейс:</strong> Восстановлен аватар пользователя в верхней панели, добавлены стили для выпадающих списков
+                            {t('pages.whats_new_v5_desc')}
+                            <br />- {t('pages.whats_new_v5_global')}
+                            <br />- {t('pages.whats_new_v5_server')}
+                            <br />- {t('pages.whats_new_v5_billing')}
+                            <br />- {t('pages.whats_new_v5_localization')}
+                            <br />- {t('pages.whats_new_v5_interface')}
                         </p>
                     </li>
                     <li style={{ marginBottom: '32px', borderBottom: '1px solid var(--c-gray-100)', paddingBottom: '24px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                             <span className="material-symbols-outlined" style={{ color: 'var(--c-gray-500)' }}>history</span>
-                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>Обновление портала MTC Cloud - Фаза 2</strong>
-                            <span style={{ fontSize: '12px', color: 'var(--c-gray-500)', marginLeft: 'auto' }}>Ранее</span>
+                            <strong style={{ fontSize: '18px', color: 'var(--c-dark-blue)' }}>{t('pages.whats_new_v2_title')}</strong>
+                            <span style={{ fontSize: '12px', color: 'var(--c-gray-500)', marginLeft: 'auto' }}>{t('pages.whats_new_earlier')}</span>
                         </div>
                         <p style={{ color: 'var(--c-gray-600)', lineHeight: '1.6' }}>
-                            Предыдущее обновление с интеграцией JWT авторизации, новой панелью управления серверами и интерактивным поиском.
+                            {t('pages.whats_new_v2_desc')}
                         </p>
                     </li>
                 </ul>

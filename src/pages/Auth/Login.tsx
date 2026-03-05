@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../../api/client';
+import { api, getRoleFromToken } from '../../api/client';
 import { useAuth } from '../../hooks/useAuth';
 import { useSettings } from '../../hooks/useSettings';
 import styles from '../../layouts/AuthLayout.module.css';
@@ -25,6 +25,8 @@ export const Login: React.FC = () => {
             
             // Backend: access_token in response header, user object in body
             const token = response.headers['access_token'] || response.data?.access_token;
+            // Extract role from JWT payload or response body
+            const role = getRoleFromToken(token) ?? response.data?.role ?? 'user';
             // Body is the User object directly
             const user = {
                 id:          response.data?.id,
@@ -34,13 +36,18 @@ export const Login: React.FC = () => {
                 lastName:    response.data?.lastName,
                 surName:     response.data?.surName,
                 phoneNumber: response.data?.phoneNumber,
+                role,
+                corporationId: response.data?.corporationId,
             };
             if (!token) {
                 throw new Error(t('auth.error_token'));
             }
             
             login(token, user);
-            navigate('/servers');
+            // Redirect based on role
+            if (role === 'admin') navigate('/admin');
+            else if (role === 'admin-corporate') navigate('/corporate-admin');
+            else navigate('/servers');
         } catch (err: unknown) {
             const errorData = err as { response?: { data?: { message?: string } } };
             setError(errorData.response?.data?.message || t('auth.error_credentials'));

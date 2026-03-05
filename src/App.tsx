@@ -12,11 +12,14 @@ import { Register } from './pages/Auth/Register';
 import { Settings } from './pages/Settings/Settings';
 import { Support } from './pages/Support/Support';
 import { Backups, Monitoring, Traffic, APIPage, QA, WhatsNew } from './pages/SecondaryPages/SecondaryPages';
+import { CorporateAdmin } from './pages/CorporateAdmin/CorporateAdmin';
+import { SuperAdmin } from './pages/SuperAdmin/SuperAdmin';
 
 import { useAuth } from './hooks/useAuth';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useSettingsStore } from './store/settingsStore';
+import type { UserRole } from './types/auth';
 
 const queryClient = new QueryClient();
 
@@ -24,6 +27,18 @@ const queryClient = new QueryClient();
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+};
+
+// Route accessible only to specific roles
+const RoleRoute = ({ children, roles }: { children: React.ReactNode; roles: UserRole[] }) => {
+  const { isAuthenticated, user } = useAuth();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  const userRole = (user?.role ?? 'user') as UserRole;
+  // admin can access everything
+  if (userRole !== 'admin' && !roles.includes(userRole)) {
+    return <Navigate to="/servers" replace />;
+  }
   return <>{children}</>;
 };
 
@@ -83,6 +98,20 @@ function App() {
               <Route path="api" element={<APIPage />} />
               <Route path="qa" element={<QA />} />
               <Route path="whats-new" element={<WhatsNew />} />
+
+              {/* Corporate admin panel */}
+              <Route path="corporate-admin" element={
+                <RoleRoute roles={['admin-corporate']}>
+                  <CorporateAdmin />
+                </RoleRoute>
+              } />
+
+              {/* Super admin panel */}
+              <Route path="admin" element={
+                <RoleRoute roles={['admin']}>
+                  <SuperAdmin />
+                </RoleRoute>
+              } />
             </Route>
           </Routes>
         </BrowserRouter>

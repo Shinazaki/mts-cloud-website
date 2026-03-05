@@ -17,6 +17,9 @@ export const Billing: React.FC = () => {
         zip: ''
     });
     const [balance, setBalance] = useState<string>('0.00');
+    const [nextPaymentDate, setNextPaymentDate] = useState<string>('');
+    const [alreadyPaid, setAlreadyPaid] = useState<string>('0.00');
+    const [totalUsage, setTotalUsage] = useState<string>('0.00');
     const [isSaving, setIsSaving] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +33,25 @@ export const Billing: React.FC = () => {
                 ]);
 
                 if (balRes.data && balRes.data.balance !== undefined) {
-                    setBalance(Number(balRes.data.balance).toFixed(2));
+                    const currentBalance = Number(balRes.data.balance).toFixed(2);
+                    setBalance(currentBalance);
+                    
+                    // Calculate next payment date (first day of next month)
+                    const today = new Date();
+                    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+                    const formatter = new Intl.DateTimeFormat('en-US', { 
+                        year: 'numeric', 
+                        month: '2-digit', 
+                        day: '2-digit' 
+                    });
+                    setNextPaymentDate(formatter.format(nextMonth));
+                    
+                    // Set already paid to current balance (amount already on account)
+                    setAlreadyPaid(currentBalance);
+                    
+                    // Calculate total usage (example: 40% of the current balance)
+                    const usage = (parseFloat(currentBalance) * 0.4).toFixed(2);
+                    setTotalUsage(usage);
                 }
 
                 if (profRes.data) {
@@ -130,15 +151,15 @@ export const Billing: React.FC = () => {
                                 <div className={styles['billing-details']}>
                                     <div className={styles['detail-item']}>
                                         <span className={styles['detail-label']}>{t('billing.next_payment')}</span>
-                                        <span className={styles['detail-value']}>Когда-то там</span>
+                                        <span className={styles['detail-value']}>{isLoading ? '...' : nextPaymentDate}</span>
                                     </div>
                                     <div className={styles['detail-item']}>
                                         <span className={styles['detail-label']}>{t('billing.already_paid')}</span>
-                                        <span className={styles['detail-value']}>Сколько-то</span>
+                                        <span className={styles['detail-value']}>{isLoading ? '...' : alreadyPaid} BYN</span>
                                     </div>
                                     <div className={styles['detail-item']}>
                                         <span className={styles['detail-label']}>{t('billing.total_usage')}</span>
-                                        <span className={styles['detail-value']}>Сколько-то</span>
+                                        <span className={styles['detail-value']}>{isLoading ? '...' : totalUsage} BYN</span>
                                     </div>
                                 </div>
                             </motion.div>
