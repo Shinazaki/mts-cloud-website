@@ -210,4 +210,11 @@ export const api = {
         getSubnets: (vnet: string) => apiClient.get(`/sdn/vnets/${vnet}/subnets`),
         apply:      () => apiClient.post('/sdn/apply'),
     },
+
+    // ── Billing ─────────────────────────────────────────────
+    billing: {
+        getBalance:      () => apiClient.get('/billing/balance'),
+        getTransactions: () => apiClient.get('/billing/transactions'),
+        topUp:           (data: { amount: number }) => apiClient.post('/billing/topup', data),
+    },
 };

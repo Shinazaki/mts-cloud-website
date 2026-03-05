@@ -71,6 +71,9 @@ export interface VmConfiguration {
     cpu?: number;
     ram?: number;
     ssd?: number;
+    os_template?: string;
+    storage?: string;
+    pool?: string;
 }
 
 export interface Vm {

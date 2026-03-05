@@ -268,7 +268,7 @@ export const CorporateAdmin: React.FC = () => {
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <button className={styles.btnDanger} onClick={() => handleRemoveMember(member.id ?? '')}>
+                                                    <button className={styles.btnDanger} onClick={() => handleRemoveMember(String(member.id ?? ''))}>  
                                                         <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>person_remove</span>
                                                         {t('corporate_admin.remove')}
                                                     </button>
