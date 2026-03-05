@@ -24,7 +24,11 @@ export const Login: React.FC = () => {
             const response = await api.auth.login({ username, password });
             
             // Backend: access_token in response header, user object in body
-            const token = response.headers['access_token'] || response.data?.access_token;
+            const token = response.headers['access_token']
+                || response.headers['access-token']
+                || response.headers['authorization']?.replace(/^Bearer\s+/i, '')
+                || response.data?.access_token
+                || response.data?.token;
             // Extract role from JWT payload or response body
             const role = getRoleFromToken(token) ?? response.data?.role ?? 'user';
             // Body is the User object directly
@@ -46,7 +50,7 @@ export const Login: React.FC = () => {
             login(token, user);
             // Redirect based on role
             if (role === 'admin') navigate('/admin');
-            else if (role === 'admin-corporate') navigate('/corporate-admin');
+            else if (role === 'admin-corporation') navigate('/corporate-admin');
             else navigate('/servers');
         } catch (err: unknown) {
             const errorData = err as { response?: { data?: { message?: string } } };

@@ -1,90 +1,164 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '../../api/client';
 import { useSettings } from '../../hooks/useSettings';
+import type { Vm } from '../../types/auth';
 import styles from './Servers.module.css';
+import detailStyles from './ServerDetails.module.css';
+
+const statusColor = (status?: string) => {
+    if (!status) return '#aaa';
+    const s = status.toLowerCase();
+    if (s === 'running') return '#10B981';
+    if (s === 'stopped') return '#EF4444';
+    return '#F59E0B';
+};
 
 export const ServerDetails: React.FC = () => {
     const { id } = useParams();
+    const proxmoxId = Number(id);
     const navigate = useNavigate();
     const { t } = useSettings();
+    const queryClient = useQueryClient();
+    const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-    // In a real app, we would fetch server by ID
-    const server = {
-        id: id || '1',
-        name: 'WebProd-Node-01',
-        characteristics: '2 CPU, 4 GB RAM, 60 GB NVMe',
-        ip: '192.168.0.100',
-        created: '12.10.2023',
-        status: 'Running',
-        uptime: '45 days, 12 hours',
-        os: 'Ubuntu 22.04 LTS'
+    const { data: vmsResponse, isLoading } = useQuery({
+        queryKey: ['vps'],
+        queryFn: api.vps.getAll,
+    });
+
+    const vms: Vm[] = (vmsResponse?.data as Vm[] | undefined) ?? [];
+    const vm = vms.find(v => v.proxmox_id === proxmoxId);
+
+    const runAction = async (action: 'start' | 'stop' | 'restart' | 'shutdown') => {
+        setActionLoading(action);
+        try {
+            await api.vps[action]({ proxmox_id: proxmoxId });
+            await queryClient.invalidateQueries({ queryKey: ['vps'] });
+        } finally {
+            setActionLoading(null);
+        }
     };
+
+    if (isLoading) return <div style={{ padding: 32 }}>{t('servers.loading')}</div>;
+    if (!vm) return <div style={{ padding: 32 }}>{t('servers.not_found')}</div>;
+
+    const isRunning = vm.status?.toLowerCase() === 'running';
+    const isStopped = vm.status?.toLowerCase() === 'stopped';
 
     return (
         <div className={styles['page-container']}>
             <div className={styles['page-header']}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <button className={styles['btn-outline']} onClick={() => navigate(-1)}>
+                    <button className={styles['btn-outline']} onClick={() => navigate('/servers')}>
                         <span className="material-symbols-outlined">arrow_back</span>
                     </button>
-                    <h1 className={styles['page-title']}>{server.name}</h1>
-                </div>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                    <button className={styles['btn-outline']} onClick={() => alert('Restarting...')}>
-                        <span className="material-symbols-outlined">restart_alt</span>
-                    </button>
-                    <button className={styles['btn-primary']}>
-                        {t('servers.configuration')}
-                    </button>
+                    <div>
+                        <h1 className={styles['page-title']}>{vm.name ?? `VM-${vm.proxmox_id}`}</h1>
+                        <span className={detailStyles['status-badge']} style={{ color: statusColor(vm.status) }}>
+                            <span className={detailStyles['status-dot']} style={{ backgroundColor: statusColor(vm.status) }} />
+                            {vm.status ?? '—'}
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <div className="server-details-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', marginTop: '32px' }}>
-                <div className="details-main">
-                    <div className="card animate-enter">
-                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>{t('server_details.general_info')}</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                            <div className="info-item">
-                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>IP Adress</label>
-                                <span style={{ fontWeight: 600 }}>{server.ip}</span>
-                            </div>
-                            <div className="info-item">
-                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>OC</label>
-                                <span style={{ fontWeight: 600 }}>{server.os}</span>
-                            </div>
-                            <div className="info-item">
-                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>{t('server_details.status')}</label>
-                                <span style={{ color: '#10B981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981' }}></span>
-                                    {server.status}
-                                </span>
-                            </div>
-                            <div className="info-item">
-                                <label style={{ display: 'block', fontSize: '13px', color: 'var(--c-gray-500)', marginBottom: '4px' }}>{t('server_details.uptime')}</label>
-                                <span style={{ fontWeight: 600 }}>{server.uptime}</span>
+            {/* Power Control Buttons */}
+            <div className={`${detailStyles['power-controls']} animate-enter`}>
+                <button
+                    className={`${detailStyles['power-btn']} ${detailStyles['power-btn-start']}`}
+                    onClick={() => runAction('start')}
+                    disabled={actionLoading !== null || isRunning}
+                >
+                    <span className="material-symbols-outlined">play_arrow</span>
+                    {actionLoading === 'start' ? '...' : t('servers.action_start')}
+                </button>
+                <button
+                    className={`${detailStyles['power-btn']} ${detailStyles['power-btn-stop']}`}
+                    onClick={() => runAction('stop')}
+                    disabled={actionLoading !== null || isStopped}
+                >
+                    <span className="material-symbols-outlined">stop</span>
+                    {actionLoading === 'stop' ? '...' : t('servers.action_stop')}
+                </button>
+                <button
+                    className={`${detailStyles['power-btn']} ${detailStyles['power-btn-restart']}`}
+                    onClick={() => runAction('restart')}
+                    disabled={actionLoading !== null || isStopped}
+                >
+                    <span className="material-symbols-outlined">restart_alt</span>
+                    {actionLoading === 'restart' ? '...' : t('servers.action_restart')}
+                </button>
+            </div>
+
+            <div className={detailStyles['details-grid']}>
+                {/* General Info */}
+                <div className={`card animate-enter-d1 ${detailStyles['info-card']}`}>
+                    <h3>{t('server_details.general_info')}</h3>
+                    <div className={detailStyles['info-grid']}>
+                        <div className={detailStyles['info-item']}>
+                            <span className="material-symbols-outlined">language</span>
+                            <div>
+                                <label>IP</label>
+                                <span>{vm.ip_address ?? '—'}</span>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="card animate-enter-d1">
-                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>{t('server_details.server_configuration')}</h3>
-                        <p style={{ fontSize: '15px', lineHeight: '1.6' }}>{server.characteristics}</p>
+                        <div className={detailStyles['info-item']}>
+                            <span className="material-symbols-outlined">tag</span>
+                            <div>
+                                <label>Proxmox ID</label>
+                                <span>{vm.proxmox_id}</span>
+                            </div>
+                        </div>
+                        <div className={detailStyles['info-item']}>
+                            <span className="material-symbols-outlined">dns</span>
+                            <div>
+                                <label>Node</label>
+                                <span>{vm.node ?? '—'}</span>
+                            </div>
+                        </div>
+                        <div className={detailStyles['info-item']}>
+                            <span className="material-symbols-outlined">info</span>
+                            <div>
+                                <label>{t('server_details.status')}</label>
+                                <span style={{ color: statusColor(vm.status) }}>{vm.status ?? '—'}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="details-sidebar">
-                    <div className="card animate-enter-d2">
-                        <h3 style={{ marginBottom: '20px', color: 'var(--c-dark-blue)' }}>{t('server_details.change_history')}</h3>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                            <div style={{ fontSize: '14px', borderLeft: '2px solid var(--c-red)', paddingLeft: '12px' }}>
-                                <div style={{ fontWeight: 600 }}>{t('server_details.event_created')}</div>
-                                <div style={{ color: 'var(--c-gray-500)', marginTop: '4px', fontSize: '12px' }}>{server.created}</div>
+                {/* Configuration */}
+                {vm.configuration && (
+                    <div className={`card animate-enter-d2 ${detailStyles['info-card']}`}>
+                        <h3>{t('server_details.server_configuration')}</h3>
+                        <div className={detailStyles['config-stats']}>
+                            <div className={detailStyles['config-stat']}>
+                                <span className="material-symbols-outlined">memory</span>
+                                <div className={detailStyles['config-stat-value']}>{vm.configuration.cores}</div>
+                                <div className={detailStyles['config-stat-label']}>vCPU</div>
                             </div>
-                            <div style={{ fontSize: '14px', borderLeft: '2px solid var(--c-gray-300)', paddingLeft: '12px' }}>
-                                <div style={{ fontWeight: 600 }}>{t('server_details.event_config_update')}</div>
-                                <div style={{ color: 'var(--c-gray-500)', marginTop: '4px', fontSize: '12px' }}>15.11.2023</div>
+                            <div className={detailStyles['config-stat']}>
+                                <span className="material-symbols-outlined">dynamic_form</span>
+                                <div className={detailStyles['config-stat-value']}>{vm.configuration.memory} MB</div>
+                                <div className={detailStyles['config-stat-label']}>RAM</div>
+                            </div>
+                            <div className={detailStyles['config-stat']}>
+                                <span className="material-symbols-outlined">hard_drive</span>
+                                <div className={detailStyles['config-stat-value']}>{vm.configuration.disk} GB</div>
+                                <div className={detailStyles['config-stat-label']}>NVMe</div>
                             </div>
                         </div>
+                    </div>
+                )}
+
+                {/* VM Info */}
+                <div className={`card animate-enter-d3 ${detailStyles['info-card']}`}>
+                    <h3>{t('server_details.vm_info')}</h3>
+                    <div className={detailStyles['vm-info-list']}>
+                        <div><strong>OS Template:</strong> {vm.configuration?.os_template ?? '—'}</div>
+                        <div><strong>Storage:</strong> {vm.configuration?.storage ?? '—'}</div>
+                        <div><strong>Pool:</strong> {vm.configuration?.pool ?? '—'}</div>
                     </div>
                 </div>
             </div>

@@ -133,6 +133,18 @@
     white-space: nowrap;
 }
 
+.account-role {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    padding: 1px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    align-self: flex-end;
+}
+
 .avatar-wrapper {
     display: flex;
     align-items: center;

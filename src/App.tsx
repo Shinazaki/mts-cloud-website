@@ -101,7 +101,7 @@ function App() {
 
               {/* Corporate admin panel */}
               <Route path="corporate-admin" element={
-                <RoleRoute roles={['admin-corporate']}>
+                <RoleRoute roles={['admin-corporation']}>
                   <CorporateAdmin />
                 </RoleRoute>
               } />

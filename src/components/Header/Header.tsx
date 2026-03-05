@@ -22,6 +22,19 @@ export const Header: React.FC = () => {
     ? [user.lastName, user.firstName].filter(Boolean).join(' ')
     : (user?.username ?? t('account'));
 
+  const roleLabel: Record<string, string> = {
+    admin: 'Admin',
+    'admin-corporation': 'Corp Admin',
+    user: 'User',
+  };
+  const roleBadgeColor: Record<string, string> = {
+    admin: '#7c3aed',
+    'admin-corporation': 'var(--c-accent)',
+    user: 'var(--c-gray-500)',
+  };
+  const role = user?.role ?? 'user';
+  const roleName = roleLabel[role] ?? role;
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -113,6 +126,7 @@ export const Header: React.FC = () => {
           <div className={styles['account-info']} onClick={() => setIsAccountOpen(!isAccountOpen)}>
             <div className={styles['account-text']}>
               <span className={styles['account-name']}>{displayName}</span>
+              <span className={styles['account-role']} style={{ backgroundColor: roleBadgeColor[role] ?? 'var(--c-gray-500)' }}>{roleName}</span>
               <span className={styles['account-balance']}>{t('header.balance')}: {balance} BYN</span>
             </div>
             <div className={styles['avatar-wrapper']}>

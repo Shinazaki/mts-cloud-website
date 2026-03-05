@@ -1,37 +1,65 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '../../api/client';
 import { useSettings } from '../../hooks/useSettings';
+import type { Vm } from '../../types/auth';
 import styles from './Servers.module.css';
 
 export const ServerConfig: React.FC = () => {
     const { id } = useParams();
+    const proxmoxId = Number(id);
     const navigate = useNavigate();
     const { t } = useSettings();
+    const queryClient = useQueryClient();
 
-    // Mock server data
-    const [server, setServer] = useState({
-        id: id || '1',
-        name: 'WebProd-Node-01',
-        cpu: '2',
-        ram: '4',
-        disk: '60'
+    const { data: vmsResponse, isLoading: loadingVms } = useQuery({
+        queryKey: ['vps'],
+        queryFn: api.vps.getAll,
     });
 
+    const vms: Vm[] = (vmsResponse?.data as Vm[] | undefined) ?? [];
+    const vm = vms.find(v => v.proxmox_id === proxmoxId);
+
+    const [cores, setCores] = useState('');
+    const [memory, setMemory] = useState('');
+    const [disk, setDisk] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+    const [initialised, setInitialised] = useState(false);
+
+    // Initialise form from fetched VM once
+    if (vm && !initialised) {
+        setCores(String(vm.configuration?.cores ?? ''));
+        setMemory(String(vm.configuration?.memory ?? ''));
+        setDisk(String(vm.configuration?.disk ?? ''));
+        setInitialised(true);
+    }
 
     const cpuOptions = ['1', '2', '4', '8', '16', '32'];
-    const ramOptions = ['1', '2', '4', '8', '16', '32', '64'];
+    const ramOptions = ['512', '1024', '2048', '4096', '8192', '16384', '32768', '65536'];
     const diskOptions = ['20', '40', '60', '100', '200', '500', '1000'];
 
-    const handleSave = (e: React.FormEvent) => {
+    const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSaving(true);
-        setTimeout(() => {
-            setIsSaving(false);
-            alert(t('servers.settings_saved'));
+        try {
+            await api.vps.update({
+                proxmox_id: proxmoxId,
+                cores: Number(cores) || undefined,
+                memory: Number(memory) || undefined,
+                disk: Number(disk) || undefined,
+            });
+            await queryClient.invalidateQueries({ queryKey: ['vps'] });
             navigate('/servers');
-        }, 800);
+        } catch (err) {
+            console.error('Failed to update VM config', err);
+        } finally {
+            setIsSaving(false);
+        }
     };
+
+    if (loadingVms) return <div style={{ padding: 32 }}>{t('servers.loading')}</div>;
+    if (!vm) return <div style={{ padding: 32 }}>{t('servers.not_found')}</div>;
 
     return (
         <div className={styles['page-container']}>
@@ -45,15 +73,15 @@ export const ServerConfig: React.FC = () => {
             </div>
 
             <div className="card" style={{ maxWidth: '800px', padding: '40px', marginTop: '24px' }}>
-                <h2 style={{ marginBottom: '32px', color: 'var(--c-dark-blue)' }}>{server.name}</h2>
+                <h2 style={{ marginBottom: '32px', color: 'var(--c-dark-blue)' }}>{vm.name ?? `VM-${vm.proxmox_id}`}</h2>
 
                 <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                     <div className="form-group">
                         <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>{t('server_config.cpu_label')}</label>
                         <div style={{ position: 'relative' }}>
                             <select
-                                value={server.cpu}
-                                onChange={e => setServer({ ...server, cpu: e.target.value })}
+                                value={cores}
+                                onChange={e => setCores(e.target.value)}
                                 style={{
                                     width: '100%',
                                     padding: '14px 20px',
@@ -77,8 +105,8 @@ export const ServerConfig: React.FC = () => {
                         <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>{t('server_config.ram_label')}</label>
                         <div style={{ position: 'relative' }}>
                             <select
-                                value={server.ram}
-                                onChange={e => setServer({ ...server, ram: e.target.value })}
+                                value={memory}
+                                onChange={e => setMemory(e.target.value)}
                                 style={{
                                     width: '100%',
                                     padding: '14px 20px',
@@ -91,7 +119,7 @@ export const ServerConfig: React.FC = () => {
                                 }}
                             >
                                 {ramOptions.map(opt => (
-                                    <option key={opt} value={opt}>{opt} GB</option>
+                                    <option key={opt} value={opt}>{Number(opt) >= 1024 ? `${Number(opt)/1024} GB` : `${opt} MB`}</option>
                                 ))}
                             </select>
                             <span className="material-symbols-outlined" style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'var(--c-gray-400)' }}>expand_more</span>
@@ -102,8 +130,8 @@ export const ServerConfig: React.FC = () => {
                         <label style={{ fontWeight: 700, marginBottom: '8px', color: 'var(--c-gray-600)' }}>{t('server_config.disk_label')}</label>
                         <div style={{ position: 'relative' }}>
                             <select
-                                value={server.disk}
-                                onChange={e => setServer({ ...server, disk: e.target.value })}
+                                value={disk}
+                                onChange={e => setDisk(e.target.value)}
                                 style={{
                                     width: '100%',
                                     padding: '14px 20px',
