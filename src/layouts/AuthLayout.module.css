@@ -1,0 +1,205 @@
+.auth-layout {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--c-gray-100);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Subtle brand accent shapes */
+.auth-bg-shape {
+    position: absolute;
+    background: radial-gradient(circle at 30% 30%, rgba(193, 18, 31, 0.10), rgba(193, 18, 31, 0.03) 55%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(4px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.shape-left {
+    width: 700px;
+    height: 900px;
+    top: -100px;
+    left: -250px;
+    transform: rotate(15deg);
+}
+
+.shape-right {
+    width: 500px;
+    height: 700px;
+    bottom: -250px;
+    right: -150px;
+    transform: rotate(-25deg);
+}
+
+/* Auth Header */
+.auth-header {
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 32px;
+    background-color: var(--c-white);
+    border-bottom: 1px solid var(--c-gray-200);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo-pill {
+    background-color: var(--c-dark-red);
+    color: var(--c-white);
+    padding: 8px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon-white {
+    font-variation-settings: 'FILL' 1;
+    font-size: 22px;
+}
+
+.logo-text-white {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.auth-header-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.auth-hint {
+    color: var(--c-gray-600);
+}
+
+.auth-link {
+    color: var(--c-red);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.15s;
+}
+
+.auth-link:hover {
+    color: var(--c-dark-red);
+}
+
+/* Main content */
+.auth-main {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+/* Form card */
+.auth-form-container {
+    background-color: var(--c-white);
+    border: 1px solid var(--c-gray-200);
+    border-radius: 16px;
+    padding: 36px 40px;
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
+.auth-form-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--c-dark-blue);
+    margin: 0 0 6px;
+    text-align: center;
+}
+
+/* Input */
+.auth-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 11px 42px 11px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--c-gray-300);
+    font-size: 15px;
+    font-family: var(--font-family-base);
+    color: var(--c-gray-900);
+    background-color: var(--c-white);
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.auth-input:focus {
+    border-color: var(--c-red);
+    box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.10);
+}
+
+.auth-input::placeholder {
+    color: var(--c-gray-400);
+}
+
+.auth-input:disabled {
+    background-color: var(--c-gray-100);
+    color: var(--c-gray-500);
+}
+
+.auth-input-icon {
+    position: absolute;
+    right: 14px;
+    font-size: 20px;
+    color: var(--c-gray-400);
+    pointer-events: none;
+    font-variation-settings: 'FILL' 0;
+}
+
+/* Submit button */
+.auth-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--c-red);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-family-base);
+    cursor: pointer;
+    margin-top: 6px;
+    width: 100%;
+    transition: background-color 0.18s, transform 0.1s, box-shadow 0.18s;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+    background-color: var(--c-dark-red);
+    box-shadow: 0 4px 14px rgba(193, 18, 31, 0.25);
+    transform: translateY(-1px);
+}
+
+.auth-submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.auth-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

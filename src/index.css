@@ -1,0 +1,171 @@
+:root {
+  /* Core brand colors */
+  --c-dark-red: #780000;
+  --c-red: #C1121F;
+  --c-bright-red: #E30613;
+  --c-dark-blue: #003049;
+  --c-white: #FFFFFF;
+
+  /* Neutrals */
+  --c-gray-100: #F8F9FA;
+  --c-gray-200: #E9ECEF;
+  --c-gray-300: #DEE2E6;
+  --c-gray-400: #CED4DA;
+  --c-gray-500: #ADB5BD;
+  --c-gray-600: #6C757D;
+  --c-gray-700: #495057;
+  --c-gray-800: #343A40;
+  --c-gray-900: #212529;
+
+  /* Typography */
+  --font-family-base: 'Nunito', sans-serif;
+}
+
+[data-theme='dark'] {
+  --c-white: #1A1A1A;
+  --c-dark-blue: #E9ECEF;
+  --c-gray-100: #121212;
+  --c-gray-200: #212529;
+  --c-gray-300: #343A40;
+  --c-gray-400: #495057;
+  --c-gray-500: #6C757D;
+  --c-gray-600: #ADB5BD;
+  --c-gray-700: #CED4DA;
+  --c-gray-800: #DEE2E6;
+  --c-gray-900: #F8F9FA;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-base);
+  color: var(--c-gray-900);
+  background-color: var(--c-gray-100);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Button Global Styles that can be reused */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--c-red);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--c-dark-red);
+  box-shadow: 0 4px 12px rgba(193, 18, 31, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--c-gray-800);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid var(--c-gray-400);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--c-gray-200);
+  border-color: var(--c-gray-500);
+  color: var(--c-gray-900);
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--c-gray-900);
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--c-white);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid var(--c-gray-300);
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ─── Entry animations (CSS-based, avoids React 19 + framer-motion first-paint flash) ─── */
+@keyframes animEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* fill-mode: both → element invisible BEFORE delay starts, stays visible after end */
+.animate-enter    { animation: animEnter 0.22s ease both; }
+.animate-enter-d1 { animation: animEnter 0.22s 0.05s ease both; }
+.animate-enter-d2 { animation: animEnter 0.22s 0.10s ease both; }
+.animate-enter-d3 { animation: animEnter 0.22s 0.15s ease both; }
+.animate-enter-d4 { animation: animEnter 0.22s 0.20s ease both; }
+
+/* Material Symbols Outlined — самохостинг через npm (без Google Fonts) */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined Variable';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
