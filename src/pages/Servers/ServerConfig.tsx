@@ -8,18 +8,17 @@ import styles from './Servers.module.css';
 
 export const ServerConfig: React.FC = () => {
     const { id } = useParams();
-    const proxmoxId = Number(id);
     const navigate = useNavigate();
     const { t } = useSettings();
     const queryClient = useQueryClient();
 
-    const { data: vmsResponse, isLoading: loadingVms } = useQuery({
-        queryKey: ['vps'],
-        queryFn: api.vps.getAll,
+    const { data: vmResponse, isLoading: loadingVms } = useQuery({
+        queryKey: ['vps', id],
+        queryFn: () => api.vps.getById(id!),
+        enabled: !!id,
     });
 
-    const vms: Vm[] = (vmsResponse?.data as Vm[] | undefined) ?? [];
-    const vm = vms.find(v => v.proxmox_id === proxmoxId);
+    const vm: Vm | undefined = vmResponse?.data as Vm | undefined;
 
     const [cores, setCores] = useState('');
     const [memory, setMemory] = useState('');
@@ -29,9 +28,9 @@ export const ServerConfig: React.FC = () => {
 
     // Initialise form from fetched VM once
     if (vm && !initialised) {
-        setCores(String(vm.configuration?.cores ?? ''));
-        setMemory(String(vm.configuration?.memory ?? ''));
-        setDisk(String(vm.configuration?.disk ?? ''));
+        setCores(String(vm.configuration?.cpu ?? ''));
+        setMemory(String(vm.configuration?.ram ?? ''));
+        setDisk(String(vm.configuration?.ssd ?? ''));
         setInitialised(true);
     }
 
@@ -41,13 +40,16 @@ export const ServerConfig: React.FC = () => {
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!vm) return;
         setIsSaving(true);
         try {
             await api.vps.update({
-                proxmox_id: proxmoxId,
-                cores: Number(cores) || undefined,
-                memory: Number(memory) || undefined,
-                disk: Number(disk) || undefined,
+                id: vm.id,
+                configuration: {
+                    cpu: Number(cores) || undefined,
+                    ram: Number(memory) || undefined,
+                    ssd: Number(disk) || undefined,
+                },
             });
             await queryClient.invalidateQueries({ queryKey: ['vps'] });
             navigate('/servers');

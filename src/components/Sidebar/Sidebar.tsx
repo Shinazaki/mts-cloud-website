@@ -13,9 +13,12 @@ export const Sidebar: React.FC = () => {
     const { t } = useSettings();
     const { user } = useAuth();
 
-    const role = user?.role ?? 'user';
-    const isCorporateAdmin = role === 'admin-corporation' || role === 'admin';
-    const isSuperAdmin = role === 'admin';
+    const userRoles = user?.roles?.map(r => r.role)
+        ?? (user?.role ? [user.role] : []);
+    const isCorporateAdmin = userRoles.some(
+        r => r === 'admin-corporation' || r === 'corporation_admin' || r === 'admin'
+    );
+    const isSuperAdmin = userRoles.includes('admin');
 
     // Mock list of servers to display in projects dropdown
     const mockServers = [

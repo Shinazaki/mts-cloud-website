@@ -34,18 +34,33 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const RoleRoute = ({ children, roles }: { children: React.ReactNode; roles: UserRole[] }) => {
   const { isAuthenticated, user } = useAuth();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
-  const userRole = (user?.role ?? 'user') as UserRole;
-  // admin can access everything
-  if (userRole !== 'admin' && !roles.includes(userRole)) {
+  // Support both roles array (from API) and legacy single role
+  const userRoles = user?.roles?.map(r => r.role)
+    ?? (user?.role ? [user.role] : []);
+  const isAdmin = userRoles.includes('admin');
+  if (!isAdmin && !roles.some(r => userRoles.includes(r))) {
     return <Navigate to="/servers" replace />;
   }
   return <>{children}</>;
 };
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useAuth();
-  if (isAuthenticated) return <Navigate to="/servers" replace />;
+  const { isAuthenticated, user } = useAuth();
+  if (isAuthenticated) {
+    const userRoles = user?.roles?.map(r => r.role) ?? (user?.role ? [user.role] : []);
+    return <Navigate to={userRoles.includes('admin') ? '/admin' : '/servers'} replace />;
+  }
   return <>{children}</>;
+};
+
+// Redirects to the right home based on role (used for the index route)
+const HomeRedirect = () => {
+  const { user } = useAuth();
+  const userRoles = user?.roles?.map(r => r.role) ?? (user?.role ? [user.role] : []);
+  if (userRoles.includes('admin')) return <Navigate to="/admin" replace />;
+  if (userRoles.some(r => r === 'corporation_admin' || r === 'admin-corporation'))
+    return <Navigate to="/corporate-admin" replace />;
+  return <Navigate to="/servers" replace />;
 };
 
 const ThemeSync = () => {
@@ -83,7 +98,7 @@ function App() {
             </Route>
 
             <Route path="/" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-              <Route index element={<Navigate to="/servers" replace />} />
+              <Route index element={<HomeRedirect />} />
               <Route path="servers" element={<Servers />} />
               <Route path="servers/:id" element={<ServerDetails />} />
               <Route path="servers/:id/config" element={<ServerConfig />} />

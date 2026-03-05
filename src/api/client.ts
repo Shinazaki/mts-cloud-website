@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type {
     ChangePasswordDto, LoginDto, RegisterDto, UpdateUserDto, UserRole,
-    CreateVmDto, UpdateVmDto, ChangeVmStatusDto,
+    AssignRolesDto, CreateVmDto, UpdateVmDto, ChangeVmStatusDto,
     CreateSnapshotDto, SnapshotActionDto,
     CreateTicketDto, CreateCorporationDto,
 } from '../types/auth';
@@ -106,12 +106,16 @@ export const api = {
         getAll:        () => apiClient.get('/users'),
         getById:       (id: string) => apiClient.get(`/users/${id}`),
         updateProfile: (data: UpdateUserDto) => apiClient.patch('/users/update_info', data),
+        assignRoles:   (id: string, data: AssignRolesDto) => apiClient.patch(`/users/${id}/roles`, data),
     },
 
     // ── VPS (Virtual Machines) ──────────────────────────────
     vps: {
         // Read
         getAll:             () => apiClient.get('/vps'),
+        getMy:              () => apiClient.get('/vps/my'),
+        getById:            (id: string) => apiClient.get(`/vps/${id}`),
+        getMonitoring:      (id: string) => apiClient.get(`/vps/${id}/monitoring`),
         getAdminProxmoxVms: () => apiClient.get('/vps/admin/proxmox-vms'),
         getClusterResources:() => apiClient.get('/vps/admin/cluster-resources'),
 
@@ -128,9 +132,9 @@ export const api = {
 
         // Snapshots
         createSnapshot:  (data: CreateSnapshotDto) => apiClient.post('/vps/snapshots/create', data),
-        listSnapshots:   (proxmoxId: number) => apiClient.get(`/vps/snapshots/${proxmoxId}`),
+        listSnapshots:   (id: string) => apiClient.get(`/vps/${id}/snapshots`),
         rollbackSnapshot:(data: SnapshotActionDto) => apiClient.post('/vps/snapshots/rollback', data),
-        deleteSnapshot:  (data: SnapshotActionDto) => apiClient.delete('/vps/snapshots', { data }),
+        deleteSnapshot:  (data: SnapshotActionDto) => apiClient.delete('/vps/snapshots/delete', { data }),
     },
 
     // ── Tickets ─────────────────────────────────────────────
@@ -142,12 +146,12 @@ export const api = {
 
     // ── Corporations ────────────────────────────────────────
     corporations: {
-        create:       (data: CreateCorporationDto) => apiClient.post('/api/corporations', data),
-        getAll:       () => apiClient.get('/api/corporations'),
-        getById:      (id: string) => apiClient.get(`/api/corporations/${id}`),
-        delete:       (id: string) => apiClient.delete(`/api/corporations/${id}`),
-        addMember:    (corpId: string, userId: string) => apiClient.post(`/api/corporations/${corpId}/members/${userId}`),
-        removeMember: (corpId: string, userId: string) => apiClient.delete(`/api/corporations/${corpId}/members/${userId}`),
+        create:       (data: CreateCorporationDto) => apiClient.post('/corporations', data),
+        getAll:       () => apiClient.get('/corporations'),
+        getById:      (id: string) => apiClient.get(`/corporations/${id}`),
+        delete:       (id: string) => apiClient.delete(`/corporations/${id}`),
+        addMember:    (corpId: string, userId: string) => apiClient.post(`/corporations/${corpId}/members/${userId}`),
+        removeMember: (corpId: string, userId: string) => apiClient.delete(`/corporations/${corpId}/members/${userId}`),
     },
 
     // ── Storage ─────────────────────────────────────────────

@@ -29,7 +29,9 @@ export const Login: React.FC = () => {
                 || response.headers['authorization']?.replace(/^Bearer\s+/i, '')
                 || response.data?.access_token
                 || response.data?.token;
-            // Extract role from JWT payload or response body
+            // Extract roles array from response body
+            const roles = Array.isArray(response.data?.roles) ? response.data.roles : [];
+            // Fallback single-role from JWT or body
             const role = getRoleFromToken(token) ?? response.data?.role ?? 'user';
             // Body is the User object directly
             const user = {
@@ -40,7 +42,9 @@ export const Login: React.FC = () => {
                 lastName:    response.data?.lastName,
                 surName:     response.data?.surName,
                 phoneNumber: response.data?.phoneNumber,
+                balance:     response.data?.balance,
                 role,
+                roles,
                 corporationId: response.data?.corporationId,
             };
             if (!token) {
@@ -48,9 +52,12 @@ export const Login: React.FC = () => {
             }
             
             login(token, user);
-            // Redirect based on role
-            if (role === 'admin') navigate('/admin');
-            else if (role === 'admin-corporation') navigate('/corporate-admin');
+            // Redirect by primary role: admin → admin panel, corp-admin → corp panel, else → servers
+            const isAdmin = roles.some((r: { role: string }) => r.role === 'admin');
+            const isCorporateAdmin = roles.some((r: { role: string }) =>
+                r.role === 'corporation_admin' || r.role === 'admin-corporation');
+            if (isAdmin) navigate('/admin');
+            else if (isCorporateAdmin) navigate('/corporate-admin');
             else navigate('/servers');
         } catch (err: unknown) {
             const errorData = err as { response?: { data?: { message?: string } } };

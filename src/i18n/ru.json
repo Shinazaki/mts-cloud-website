@@ -124,7 +124,15 @@
     "server_name_label": "Название сервера",
     "characteristics_label": "Характеристики",
     "settings_saved": "Изменения успешно сохранены!",
-    "configuration": "Конфигурация"
+    "configuration": "Конфигурация",
+    "admin_card_title": "Панель администратора",
+    "admin_card_desc": "Управление пользователями, виртуальными машинами, сетями, RBAC",
+    "admin_card_btn": "Открыть",
+    "stat_total": "Всего серверов",
+    "stat_running": "Запущено",
+    "stat_stopped": "Остановлено",
+    "stat_balance": "Ваш баланс",
+    "stat_topup": "Пополнить"
   },
 
   "server_details": {

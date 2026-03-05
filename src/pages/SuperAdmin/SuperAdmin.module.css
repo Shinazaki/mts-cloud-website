@@ -439,3 +439,140 @@
 .serverTable tr:last-child td {
     border-bottom: none;
 }
+
+/* Sub-tabs (e.g. RBAC: Roles / PVE Users) */
+.subTabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.subTabBtn {
+    padding: 6px 16px;
+    border: 1px solid var(--c-gray-200);
+    background: var(--c-white);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--c-gray-500);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.subTabBtn:hover {
+    background: var(--c-gray-50, #f8f9fa);
+    color: var(--c-dark-blue);
+}
+
+.subTabActive {
+    background: #ede7f6 !important;
+    color: #7c3aed !important;
+    border-color: #7c3aed !important;
+}
+
+/* ── Monitoring ─────────────────────────────────────────── */
+.monControls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    flex-wrap: wrap;
+}
+
+.monTypeToggle {
+    display: flex;
+    border: 1px solid var(--c-gray-200);
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.monTypeBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 14px;
+    border: none;
+    background: var(--c-white);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--c-gray-500);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.monTypeBtn + .monTypeBtn {
+    border-left: 1px solid var(--c-gray-200);
+}
+
+.monTypeBtnActive {
+    background: #ede7f6;
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+.monSelect {
+    flex: 1;
+    min-width: 200px;
+    max-width: 380px;
+    padding: 8px 14px;
+    border: 1px solid var(--c-gray-200);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--c-dark-blue);
+    background: var(--c-white);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: auto;
+}
+
+.monSelect:focus {
+    border-color: #7c3aed;
+}
+
+.monCharts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 20px 24px;
+    border-top: 1px solid var(--c-gray-200);
+}
+
+.metricCard {
+    background: var(--c-gray-50, #f8f9fa);
+    border: 1px solid var(--c-gray-200);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.metricHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.metricTitle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--c-dark-blue);
+}
+
+.metricVal {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--c-dark-blue);
+    font-variant-numeric: tabular-nums;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+

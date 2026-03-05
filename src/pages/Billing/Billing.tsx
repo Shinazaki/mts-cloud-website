@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../../api/client';
 import { useSettings } from '../../hooks/useSettings';
+import { useAuthStore } from '../../store/authStore';
 import styles from './Billing.module.css';
 import headerStyles from '../../Styles/PageHeaders.module.css'
 
@@ -24,45 +25,32 @@ export const Billing: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchBillingData = async () => {
+        const fetchBillingData = () => {
             setIsLoading(true);
             try {
-                const [balRes, profRes] = await Promise.all([
-                    api.billing.getBalance(),
-                    api.users.getProfile()
-                ]);
+                const user = useAuthStore.getState().user;
 
-                if (balRes.data && balRes.data.balance !== undefined) {
-                    const currentBalance = Number(balRes.data.balance).toFixed(2);
-                    setBalance(currentBalance);
-                    
-                    // Calculate next payment date (first day of next month)
-                    const today = new Date();
-                    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-                    const formatter = new Intl.DateTimeFormat('en-US', { 
-                        year: 'numeric', 
-                        month: '2-digit', 
-                        day: '2-digit' 
-                    });
-                    setNextPaymentDate(formatter.format(nextMonth));
-                    
-                    // Set already paid to current balance (amount already on account)
-                    setAlreadyPaid(currentBalance);
-                    
-                    // Calculate total usage (example: 40% of the current balance)
-                    const usage = (parseFloat(currentBalance) * 0.4).toFixed(2);
-                    setTotalUsage(usage);
-                }
+                // No billing API exists — show default state
+                setBalance('0.00');
+                setAlreadyPaid('0.00');
+                setTotalUsage('0.00');
 
-                if (profRes.data) {
+                const today = new Date();
+                const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                });
+                setNextPaymentDate(formatter.format(nextMonth));
+
+                if (user) {
                     setPaymentDetails({
-                        name: profRes.data.firstName || profRes.data.name || '',
-                        address: profRes.data.address || '',
-                        zip: profRes.data.zip || ''
+                        name: user.firstName || '',
+                        address: user.address || '',
+                        zip: user.zip || '',
                     });
                 }
-            } catch (err) {
-                console.error("Failed to load billing details", err);
             } finally {
                 setIsLoading(false);
             }

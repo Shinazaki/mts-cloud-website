@@ -32,7 +32,12 @@ export const Header: React.FC = () => {
     'admin-corporation': 'var(--c-accent)',
     user: 'var(--c-gray-500)',
   };
-  const role = user?.role ?? 'user';
+  // Resolve role from roles array (supports multiple roles) or legacy single role
+  const userRoles = user?.roles?.map(r => r.role) ?? (user?.role ? [user.role] : []);
+  const isAdminUser = userRoles.includes('admin');
+  const role = isAdminUser ? 'admin'
+    : userRoles.find(r => r === 'admin-corporation' || r === 'corporation_admin') ? 'admin-corporation'
+    : 'user';
   const roleName = roleLabel[role] ?? role;
 
   useEffect(() => {
@@ -127,7 +132,15 @@ export const Header: React.FC = () => {
             <div className={styles['account-text']}>
               <span className={styles['account-name']}>{displayName}</span>
               <span className={styles['account-role']} style={{ backgroundColor: roleBadgeColor[role] ?? 'var(--c-gray-500)' }}>{roleName}</span>
-              <span className={styles['account-balance']}>{t('header.balance')}: {balance} BYN</span>
+              <motion.span
+                key={balance}
+                className={styles['account-balance']}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35 }}
+              >
+                {t('header.balance')}: <strong style={{ color: 'var(--c-dark-blue)', fontWeight: 700 }}>{balance} BYN</strong>
+              </motion.span>
             </div>
             <div className={styles['avatar-wrapper']}>
               <button className={styles['avatar-btn']} tabIndex={-1} aria-hidden="true">

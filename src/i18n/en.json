@@ -124,7 +124,15 @@
     "server_name_label": "Server Name",
     "characteristics_label": "Characteristics",
     "settings_saved": "Changes saved successfully!",
-    "configuration": "Configuration"
+    "configuration": "Configuration",
+    "admin_card_title": "Admin Panel",
+    "admin_card_desc": "User management, virtual machines, networks, RBAC",
+    "admin_card_btn": "Open",
+    "stat_total": "Total servers",
+    "stat_running": "Running",
+    "stat_stopped": "Stopped",
+    "stat_balance": "Your balance",
+    "stat_topup": "Top up"
   },
 
   "server_details": {

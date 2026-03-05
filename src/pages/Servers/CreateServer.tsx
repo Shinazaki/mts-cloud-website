@@ -25,9 +25,8 @@ export const CreateServer: React.FC = () => {
         try {
             await api.vps.create({
                 name: serverName,
-                cores: vcpu,
-                memory: ram,
-                disk_size: disk,
+                configuration: { cpu: vcpu, ram, ssd: disk },
+                net0: 'name=eth0,bridge=vmbr0,ip=dhcp',
             });
             navigate('/servers');
         } catch (err) {

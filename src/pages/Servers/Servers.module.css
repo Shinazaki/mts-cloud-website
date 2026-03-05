@@ -302,3 +302,280 @@
     gap: 12px;
     margin-top: 12px;
 }
+
+/* ── Admin Panel Banner ────────────────────────────────────── */
+.admin-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: #ffffff;
+    border: 1.5px solid rgba(193, 18, 31, 0.18);
+    border-left: 4px solid #c1121f;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, background 0.2s, transform 0.1s;
+    user-select: none;
+    outline: none;
+    box-shadow: 0 2px 16px rgba(193, 18, 31, 0.07);
+}
+
+.admin-banner:hover {
+    background: #fff5f5;
+    border-color: rgba(193, 18, 31, 0.5);
+    box-shadow: 0 6px 24px rgba(193, 18, 31, 0.14);
+    transform: translateY(-1px);
+}
+
+.admin-banner:active {
+    transform: translateY(0);
+}
+
+.admin-banner:focus-visible {
+    box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.25);
+}
+
+.admin-banner-icon {
+    font-size: 32px;
+    color: #c1121f;
+    flex-shrink: 0;
+}
+
+.admin-banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.admin-banner-text strong {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: 0.01em;
+}
+
+.admin-banner-text span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #6b7280;
+}
+
+.admin-banner-arrow {
+    font-size: 22px;
+    color: #c1121f;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+}
+
+.admin-banner:hover .admin-banner-arrow {
+    transform: translateX(4px);
+}
+
+/* Dark theme compat */
+[data-theme='dark'] .admin-banner {
+    background: #1a0608;
+    border-color: rgba(193, 18, 31, 0.35);
+}
+[data-theme='dark'] .admin-banner-text strong { color: #f5f5f5; }
+[data-theme='dark'] .admin-banner-text span   { color: #9ca3af; }
+
+/* ══════════════════════════════════════════════════════════
+   Stats strip — 4 animated metric cards
+   ══════════════════════════════════════════════════════════ */
+.stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 1024px) {
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .stats-strip { grid-template-columns: 1fr; }
+}
+
+/* Base card */
+.stat-card {
+    border-radius: 16px;
+    padding: 22px 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    transition: transform 0.18s, box-shadow 0.18s;
+    cursor: default;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* Color variants — white-red brand palette */
+/* Card 1: deep crimson */
+.stat-blue   { background: linear-gradient(135deg, #3d0000 0%, #7b0d1e 55%, #c1121f 100%); }
+/* Card 2: MTS red → vivid rose (contrast with card 1) */
+.stat-green  { background: linear-gradient(135deg, #c1121f 0%, #e84057 60%, #ff6b81 100%); }
+/* Card 3: darker burgundy */
+.stat-amber  { background: linear-gradient(135deg, #780000 0%, #b5001e 100%); }
+/* Card 4: near-black deep red */
+.stat-purple { background: linear-gradient(135deg, #1a0000 0%, #4a0a0a 50%, #7b0d1e 100%); }
+
+/* Card top row: icon + optional arc */
+.stat-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.stat-icon {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.stat-donut-placeholder {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* Big number */
+.stat-num {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+}
+
+.stat-skeleton {
+    opacity: 0.35;
+}
+
+/* Label under the number */
+.stat-lbl {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+}
+
+/* Progress bar row */
+.stat-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.stat-bar-bg {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.stat-bar-fill-green {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 2px;
+}
+
+.stat-bar-fill-amber {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 2px;
+}
+
+.stat-bar-pct {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    min-width: 32px;
+    text-align: right;
+}
+
+/* Badge pill (BYN) */
+.stat-badge {
+    padding: 3px 9px;
+    background: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Top up link */
+.stat-topup {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: color 0.15s;
+}
+
+.stat-card:hover .stat-topup {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ── Running pulse indicator ─────────────────── */
+.pulse-ring-wrapper {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    position: relative;
+    z-index: 1;
+}
+
+.pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    animation: pulse-expand 1.8s ease-out infinite;
+}
+
+@keyframes pulse-expand {
+    0%   { transform: scale(0.7); opacity: 0.9; }
+    100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.35; }
+    50%       { opacity: 0.6; }
+}

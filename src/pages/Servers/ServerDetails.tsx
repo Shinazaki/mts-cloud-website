@@ -17,25 +17,25 @@ const statusColor = (status?: string) => {
 
 export const ServerDetails: React.FC = () => {
     const { id } = useParams();
-    const proxmoxId = Number(id);
     const navigate = useNavigate();
     const { t } = useSettings();
     const queryClient = useQueryClient();
     const [actionLoading, setActionLoading] = useState<string | null>(null);
 
-    const { data: vmsResponse, isLoading } = useQuery({
-        queryKey: ['vps'],
-        queryFn: api.vps.getAll,
+    const { data: vmResponse, isLoading } = useQuery({
+        queryKey: ['vps', id],
+        queryFn: () => api.vps.getById(id!),
+        enabled: !!id,
     });
 
-    const vms: Vm[] = (vmsResponse?.data as Vm[] | undefined) ?? [];
-    const vm = vms.find(v => v.proxmox_id === proxmoxId);
+    const vm: Vm | undefined = vmResponse?.data as Vm | undefined;
 
     const runAction = async (action: 'start' | 'stop' | 'restart' | 'shutdown') => {
+        if (!vm) return;
         setActionLoading(action);
         try {
-            await api.vps[action]({ proxmox_id: proxmoxId });
-            await queryClient.invalidateQueries({ queryKey: ['vps'] });
+            await api.vps[action]({ id: vm.id });
+            await queryClient.invalidateQueries({ queryKey: ['vps', id] });
         } finally {
             setActionLoading(null);
         }
@@ -135,17 +135,17 @@ export const ServerDetails: React.FC = () => {
                         <div className={detailStyles['config-stats']}>
                             <div className={detailStyles['config-stat']}>
                                 <span className="material-symbols-outlined">memory</span>
-                                <div className={detailStyles['config-stat-value']}>{vm.configuration.cores}</div>
+                                <div className={detailStyles['config-stat-value']}>{vm.configuration.cpu}</div>
                                 <div className={detailStyles['config-stat-label']}>vCPU</div>
                             </div>
                             <div className={detailStyles['config-stat']}>
                                 <span className="material-symbols-outlined">dynamic_form</span>
-                                <div className={detailStyles['config-stat-value']}>{vm.configuration.memory} MB</div>
+                                <div className={detailStyles['config-stat-value']}>{vm.configuration.ram} MB</div>
                                 <div className={detailStyles['config-stat-label']}>RAM</div>
                             </div>
                             <div className={detailStyles['config-stat']}>
                                 <span className="material-symbols-outlined">hard_drive</span>
-                                <div className={detailStyles['config-stat-value']}>{vm.configuration.disk} GB</div>
+                                <div className={detailStyles['config-stat-value']}>{vm.configuration.ssd} GB</div>
                                 <div className={detailStyles['config-stat-label']}>NVMe</div>
                             </div>
                         </div>

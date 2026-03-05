@@ -28,7 +28,7 @@ export const Support: React.FC = () => {
         setSubmitting(true);
         setSubmitError('');
         try {
-            await api.tickets.create({ subject: newSubject.trim(), message: newMessage.trim() });
+            await api.tickets.create({ name: newSubject.trim(), description: newMessage.trim() });
             await queryClient.invalidateQueries({ queryKey: ['tickets'] });
             setIsCreating(false);
             setNewSubject('');
@@ -102,7 +102,7 @@ export const Support: React.FC = () => {
                             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                                 {tickets.map(ticket => (
                                     <li key={ticket.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px', borderBottom: '1px solid var(--c-gray-200)' }}>
-                                        <span style={{ fontWeight: 'bold', color: 'var(--c-dark-blue)' }}>{ticket.subject}</span>
+                                        <span style={{ fontWeight: 'bold', color: 'var(--c-dark-blue)' }}>{ticket.name ?? ticket.subject}</span>
                                         <span style={{ color: 'var(--c-red)', backgroundColor: '#FEF2F2', padding: '6px 14px', borderRadius: '16px', fontSize: '13px', fontWeight: 'bold' }}>
                                             {ticket.status ?? t('support.status_open')}
                                         </span>

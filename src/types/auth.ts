@@ -1,9 +1,15 @@
 // src/types/auth.ts
 
-export type UserRole = 'user' | 'corporation_admin' | 'admin';
+export type UserRole = 'user' | 'admin-corporation' | 'corporation_admin' | 'admin';
+
+export interface Role {
+    id: number;
+    role: string;
+    description: string | null;
+}
 
 export interface User {
-    id?: string;
+    id?: string | number;
     username: string;
     email?: string;
     firstName?: string;
@@ -13,7 +19,9 @@ export interface User {
     name?: string;
     address?: string;
     zip?: string;
+    balance?: string | number;
     role?: UserRole;
+    roles?: Role[];
     corporationId?: string;
 }
 
@@ -54,11 +62,15 @@ export interface UpdateUserDto {
     password?: string;
 }
 
+export interface AssignRolesDto {
+    roles: string[];
+}
+
 // ── VPS / VM types ─────────────────────────────────────────
 export interface VmConfiguration {
-    cores?: number;
-    memory?: number;
-    disk?: string;
+    cpu?: number;
+    ram?: number;
+    ssd?: number;
 }
 
 export interface Vm {
@@ -75,10 +87,13 @@ export interface Vm {
 
 export interface CreateVmDto {
     name: string;
+    configuration: {
+        cpu: number;
+        ram: number;
+        ssd: number;
+    };
+    net0?: string;
     template_id?: number;
-    cores?: number;
-    memory?: number;            // MB
-    disk_size?: number;         // GB
     cloud_init_user?: string;
     cloud_init_password?: string;
     ssh_keys?: string;
@@ -86,36 +101,41 @@ export interface CreateVmDto {
 }
 
 export interface UpdateVmDto {
-    proxmox_id: number;
-    cores?: number;
-    memory?: number;
-    disk?: string;
+    id: string;
+    configuration: {
+        cpu?: number;
+        ram?: number;
+        ssd?: number;
+    };
 }
 
 export interface ChangeVmStatusDto {
-    proxmox_id: number;
+    id: string;
 }
 
 export interface CreateSnapshotDto {
-    proxmox_id: number;
+    vmId: string;
     snapname: string;
     description?: string;
+    vmstate?: boolean;
 }
 
 export interface SnapshotActionDto {
-    proxmox_id: number;
+    vmId: string;
     snapname: string;
 }
 
 // ── Tickets ────────────────────────────────────────────────
 export interface CreateTicketDto {
-    subject: string;
-    message: string;
+    name: string;
+    description: string;
 }
 
 export interface Ticket {
     id: string;
-    subject: string;
+    name?: string;
+    description?: string;
+    subject?: string;
     message?: string;
     status?: string;
     created_at?: string;
