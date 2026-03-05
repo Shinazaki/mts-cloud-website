@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../../api/client';
 import { useSettings } from '../../hooks/useSettings';
@@ -40,8 +41,18 @@ const StatusBadge = ({ status }: { status?: string }) => { const s = (status ?? 
 
 export const SuperAdmin: React.FC = () => {
     const { t } = useSettings();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<ActiveTab>('users');
     const [search, setSearch] = useState('');
+
+    // Create dropdown
+    const [createDropdownOpen, setCreateDropdownOpen] = useState(false);
+    const createDropdownRef = useRef<HTMLDivElement>(null);
+
+    // Create corporation modal (from admin panel)
+    const [showCreateCorpModal, setShowCreateCorpModal] = useState(false);
+    const [newCorpName, setNewCorpName] = useState('');
+    const [createCorpError, setCreateCorpError] = useState('');
 
     // Users
     const [users, setUsers] = useState<AdminUser[]>([]);
@@ -179,6 +190,33 @@ export const SuperAdmin: React.FC = () => {
         finally { setLxcAction(null); }
     };
 
+    // Close create-dropdown on outside click
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (createDropdownRef.current && !createDropdownRef.current.contains(e.target as Node)) {
+                setCreateDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
+
+    const handleCreateCorporation = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setCreateCorpError('');
+        if (!newCorpName.trim()) {
+            setCreateCorpError(t('corporate_admin.add_validation_error'));
+            return;
+        }
+        try {
+            await api.corporations.create({ name: newCorpName.trim() });
+            setShowCreateCorpModal(false);
+            setNewCorpName('');
+        } catch {
+            setCreateCorpError(t('corporate_admin.add_error'));
+        }
+    };
+
     const filteredUsers = users.filter(u => !search || u.username.toLowerCase().includes(search.toLowerCase()) || (u.email ?? '').toLowerCase().includes(search.toLowerCase()) || (u.firstName ?? '').toLowerCase().includes(search.toLowerCase()) || (u.lastName ?? '').toLowerCase().includes(search.toLowerCase()));
     const totalAdmins = users.filter(u => u.role === 'admin').length;
     const totalCorp = users.filter(u => u.role === 'admin-corporation').length;
@@ -259,6 +297,28 @@ export const SuperAdmin: React.FC = () => {
             <div className={styles.pageHeader}>
                 <h1 className={styles.pageTitle}>{t('super_admin.title')}</h1>
                 <span className={styles.badgeAdmin}>{t('super_admin.role_badge')}</span>
+                <div className={styles.createDropdownWrap} ref={createDropdownRef}>
+                    <button
+                        className={styles.btnPrimary}
+                        onClick={() => setCreateDropdownOpen(prev => !prev)}
+                    >
+                        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>add</span>
+                        {t('header.create')}
+                        <span className="material-symbols-outlined" style={{ fontSize: '16px', transition: 'transform 0.2s', transform: createDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>expand_more</span>
+                    </button>
+                    {createDropdownOpen && (
+                        <div className={styles.createMenu}>
+                            <button className={styles.createMenuItem} onClick={() => { setCreateDropdownOpen(false); navigate('/servers/create'); }}>
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>dns</span>
+                                {t('servers.create_server')}
+                            </button>
+                            <button className={styles.createMenuItem} onClick={() => { setCreateDropdownOpen(false); setShowCreateCorpModal(true); }}>
+                                <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>corporate_fare</span>
+                                {t('corporate_admin.create_corporation')}
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
             <p className={styles.subtitle}>{t('super_admin.subtitle')}</p>
 
@@ -635,6 +695,38 @@ export const SuperAdmin: React.FC = () => {
                     </div>
                 </div>
             ))}
+
+            {/* Create Corporation Modal */}
+            <AnimatePresence>
+                {showCreateCorpModal && (
+                    <motion.div className={styles.modalOverlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={(e) => { if (e.target === e.currentTarget) { setShowCreateCorpModal(false); setCreateCorpError(''); setNewCorpName(''); } }}>
+                        <motion.div className={styles.modal} initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} transition={{ duration: 0.2 }}>
+                            <h3 className={styles.modalTitle}>{t('corporate_admin.create_corporation')}</h3>
+                            <form onSubmit={handleCreateCorporation}>
+                                <div className={styles.formGroup}>
+                                    <label className={styles.formLabel}>{t('corporate_admin.corp_name_label')}</label>
+                                    <input
+                                        className={styles.formInput}
+                                        type="text"
+                                        placeholder={t('corporate_admin.corp_name_placeholder')}
+                                        value={newCorpName}
+                                        onChange={e => setNewCorpName(e.target.value)}
+                                        autoFocus
+                                    />
+                                </div>
+                                {createCorpError && <p style={{ color: '#c62828', fontSize: '13px', marginTop: '4px' }}>{createCorpError}</p>}
+                                <div className={styles.modalActions}>
+                                    <button type="button" className={styles.btnCancel} onClick={() => { setShowCreateCorpModal(false); setCreateCorpError(''); setNewCorpName(''); }}>{t('common.cancel')}</button>
+                                    <button type="submit" className={styles.btnPrimary}>
+                                        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>corporate_fare</span>
+                                        {t('corporate_admin.create_corporation')}
+                                    </button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Change Role Modal */}
             <AnimatePresence>

@@ -301,3 +301,35 @@
     background-color: var(--c-gray-100);
     color: var(--c-dark-blue);
 }
+
+/* ── Type selector extras ── */
+.option-card-disabled {
+    opacity: 0.48;
+    cursor: not-allowed !important;
+    pointer-events: none;
+    position: relative;
+}
+
+.badge-soon {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--c-gray-200);
+    color: var(--c-gray-500);
+    padding: 2px 7px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+/* OS / network info row */
+.os-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 14px;
+    background: var(--c-gray-50, #f8f9fa);
+    border: 1px solid var(--c-gray-200);
+    border-radius: 8px;
+}

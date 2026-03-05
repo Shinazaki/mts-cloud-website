@@ -82,12 +82,7 @@ export const Header: React.FC = () => {
     <header className={styles.header}>
       <div className={styles['header-right']}>
 
-        <button className={styles['btn-secondary']} onClick={() => navigate('/servers/create')}>
-          <span className="material-symbols-outlined">add</span>
-          {t('header.create')}
-        </button>
-
-        {/* ── Icon group ── */}
+          {/* ── Icon group ── */}
         <div className={styles['icon-group']}>
           <button className={styles['icon-btn']} title={t('sidebar.support')} onClick={() => navigate('/support')}>
             <span className="material-symbols-outlined">help</span>
